@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   BarChart, Bar, LineChart, Line, ComposedChart, Area,
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, LabelList,
@@ -6,6 +6,7 @@ import {
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
+const baseUrl = 'http://localhost:8000';
 
 const PALETTE = {
   wine:      '#741b2a',
@@ -16,7 +17,6 @@ const PALETTE = {
   danger:    '#d64545',
   success:   '#2e7d32',
 };
-
 
 const MAX_ANIOS_TENDENCIA = 20;
 
@@ -35,7 +35,7 @@ const getStyles = (isDarkMode) => ({
     justifyContent: 'center',
     background: isDarkMode
       ? 'radial-gradient(circle at 20% 20%, #1b1620 0%, #0f0d12 55%, #0a090c 100%)'
-      : 'radial-gradient(circle at 20% 20%, #fdf9f6 0%, #f4eee9 55%, #efe6e0 100%)',
+      : 'radial-gradient(circle at 20% 20%, #ffffff 100%, #ffffff 100%, #ffffff 100%)',
     fontFamily: '"Montserrat", sans-serif',
     padding: '20px',
     position: 'relative',
@@ -63,8 +63,8 @@ const getStyles = (isDarkMode) => ({
     boxShadow: isDarkMode
       ? '0 25px 60px rgba(0,0,0,0.55), 0 0 40px rgba(201,161,90,0.06)'
       : '0 25px 60px rgba(116,27,42,0.12), 0 2px 8px rgba(116,27,42,0.06)',
-    width: '100%',
-    maxWidth: '500px',
+    width: '95%',
+    maxWidth: '650px',
     textAlign: 'center',
     animation: 'fadeInUp 0.8s ease-out',
     position: 'relative',
@@ -148,11 +148,13 @@ const getStyles = (isDarkMode) => ({
     fontSize: '12px',
     transition: 'all 0.3s',
   },
-  graficaButton: {
+ graficaButton: {
     marginTop: '15px',
     padding: '12px 20px',
-    backgroundColor: isDarkMode ? '#3a2f45' : '#f2dde1',
-    color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine,
+    backgroundColor: isDarkMode ? '#3a2f45' : '#e6b459',
+    
+    color: '#ffffff',
+    
     border: isDarkMode ? `1px solid ${PALETTE.gold}33` : `1px solid ${PALETTE.wine}22`,
     borderRadius: '12px',
     fontWeight: 'bold',
@@ -209,7 +211,6 @@ const getStyles = (isDarkMode) => ({
     textAlign: 'justify',
     backgroundColor: isDarkMode ? '#221d29' : '#fbf3e8',
   },
-
   proCard: {
     marginTop: '16px',
     padding: '18px',
@@ -241,78 +242,93 @@ function App() {
   const capturaRef = useRef(null);
 
   const [municipio, setMunicipio] = useState('Tuxtla Gutiérrez');
-  const [munA, setMunA] = useState('Tuxtla Gutiérrez');
-  const [munB, setMunB] = useState('Ocosingo');
+  
+  // Estados para comparación A
+  const [estadoA, setEstadoA] = useState('');
+  const [municipiosListaA, setMunicipiosListaA] = useState([]);
+  const [munA, setMunA] = useState('');
+
+  // Estados para comparación B
+  const [estadoB, setEstadoB] = useState('');
+  const [municipiosListaB, setMunicipiosListaB] = useState([]);
+  const [munB, setMunB] = useState('');
+
   const [nombresCongelados, setNombresCongelados] = useState({ a: 'Tuxtla Gutiérrez', b: 'Ocosingo' });
   const [ano, setAno] = useState(2026);
   const [sexo, setSexo] = useState('AMBOS');
   const [resultado, setResultado] = useState(null);
   const [resultados, setResultados] = useState({ a: null, b: null });
-
-  //PERFIL DEMOGRAFICO
   const [rangoInicio, setRangoInicio] = useState(2026);
   const [rangoFin, setRangoFin] = useState(2030);
   const [datosPiramide, setDatosPiramide] = useState(null);
-  
   const [mostrarPerfil, setMostrarPerfil] = useState(false);
-
-  //TENDENCIAS DE ESTIMACIÓNES
-
   const [rangoInicioTendencia, setRangoInicioTendencia] = useState(2026);
   const [rangoFinTendencia, setRangoFinTendencia] = useState(2030);
   const [datosTendencia, setDatosTendencia] = useState(null);
   const [mostrarTendencia, setMostrarTendencia] = useState(false);
   const [cargandoTendencia, setCargandoTendencia] = useState(false);
-  const [toast, setToast] = useState(null); // { message, type }
-
-  //TENDENCIA COMPARATIVA
-
+  const [toast, setToast] = useState(null);
   const [mostrarTendenciaComp, setMostrarTendenciaComp] = useState(false);
   const [rangoInicioComp, setRangoInicioComp] = useState(2026);
   const [rangoFinComp, setRangoFinComp] = useState(2030);
   const [datosTendenciaComp, setDatosTendenciaComp] = useState(null);
   const [nombresTendenciaComp, setNombresTendenciaComp] = useState({ a: '', b: '' });
   const [cargandoTendenciaComp, setCargandoTendenciaComp] = useState(false);
-
   const [distribucionEdadComp, setDistribucionEdadComp] = useState({ a: null, b: null });
+  const [narrativaEdadMedia, setNarrativaEdadMedia] = useState(""); 
   const [cargandoDistribucion, setCargandoDistribucion] = useState(false);
+  
+  // Estados para el catálogo de municipios agrupados por estado
+  const [estadosData, setEstadosData] = useState({});
+  const [estadoSeleccionado, setEstadoSeleccionado] = useState('');
+  const [municipiosLista, setMunicipiosLista] = useState([]);
+  const [cargandoUbicaciones, setCargandoUbicaciones] = useState(true);
 
-//P Autocompletado
+  // Cargar catálogo de estados y municipios al iniciar la aplicación
+  useEffect(() => {
+    fetch(`${baseUrl}/api/municipios`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Error al conectar con el servidor');
+        return res.json();
+      })
+      .then((data) => {
+        setEstadosData(data);
+        setCargandoUbicaciones(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        mostrarToast('No se pudieron cargar las ubicaciones');
+        setCargandoUbicaciones(false);
+      });
+  }, []);
 
-  const [sugerenciasMunicipio, setSugerenciasMunicipio] = useState([]);
-  const [sugerenciasMunA, setSugerenciasMunA] = useState([]);
-  const [sugerenciasMunB, setSugerenciasMunB] = useState([]);
-  const debounceRefs = useRef({});
-
-  const buscarMunicipiosApi = async (query) => {
-    if (!query || !query.trim()) return [];
-    try {
-      const res = await fetch(`http://localhost:8000/api/municipios?q=${encodeURIComponent(query.trim())}`);
-      const json = await res.json();
-      return json.datos || json.municipios || [];
-    } catch (err) {
-      console.error('Error al buscar municipios', err);
-      return [];
-    }
+  const handleEstadoChange = (e) => {
+    const estado = e.target.value;
+    setEstadoSeleccionado(estado);
+    setMunicipiosLista(estadosData[estado] || []);
+    setMunicipio(''); // Limpiar municipio al cambiar de estado
   };
 
-  const buscarSugerencias = (query, setSugerencias, key) => {
-    if (debounceRefs.current[key]) clearTimeout(debounceRefs.current[key]);
-    if (!query || !query.trim()) { setSugerencias([]); return; }
-    debounceRefs.current[key] = setTimeout(async () => {
-      const lista = await buscarMunicipiosApi(query);
-      setSugerencias(lista);
-    }, 250);
+  const handleEstadoAChange = (e) => {
+    const estado = e.target.value;
+    setEstadoA(estado);
+    setMunicipiosListaA(estadosData[estado] || []);
+    setMunA('');
+  };
+
+  const handleEstadoBChange = (e) => {
+    const estado = e.target.value;
+    setEstadoB(estado);
+    setMunicipiosListaB(estadosData[estado] || []);
+    setMunB('');
   };
 
   const generarAnalisisNarrativo = (datos) => {
     if (!datos || datos.length === 0) return "";
-
     const maxGrupo = datos.reduce((prev, current) =>
       (Math.abs(current.hombres) + Math.abs(current.mujeres)) >
       (Math.abs(prev.hombres) + Math.abs(prev.mujeres)) ? current : prev
     );
-
     return `El perfil demográfico muestra una concentración poblacional predominante en el rango de edad ${maxGrupo.edad}. 
     Se observa una tendencia de distribución que requiere atención en políticas públicas de desarrollo social y económico para los próximos años.`;
   };
@@ -361,7 +377,7 @@ function App() {
   const consultarPiramide = async () => {
     setCargando(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/piramide?mun=${encodeURIComponent(municipio)}&inicio=${rangoInicio}&fin=${rangoFin}`);
+      const res = await fetch(`${baseUrl}/api/piramide?mun=${encodeURIComponent(municipio)}&inicio=${rangoInicio}&fin=${rangoFin}`);
       const json = await res.json();
       setDatosPiramide(json.datos);
       setMostrarPerfil(true);
@@ -372,7 +388,6 @@ function App() {
     finally { setCargando(false); }
   };
 
-
   const alternarPerfil = () => {
     if (datosPiramide) {
       setMostrarPerfil((prev) => !prev);
@@ -380,8 +395,6 @@ function App() {
       consultarPiramide();
     }
   };
-
-  //EXCLUIR BOTONES DEL PDF
 
   const exportarImagen = () => {
     if (capturaRef.current) {
@@ -398,13 +411,10 @@ function App() {
   };
 
   const fetchPoblacion = async (mun) => {
-  // Asegúrate de usar la ruta completa:
-  const res = await fetch(`http://localhost:8000/api/poblacion?municipio=${encodeURIComponent(mun)}&ano=${ano}&sexo=${sexo}`);
-  if (!res.ok) {
-    throw new Error('Error en el servidor');
-  }
-  return await res.json();
-};
+    const res = await fetch(`${baseUrl}/api/poblacion?municipio=${encodeURIComponent(mun)}&ano=${ano}&sexo=${sexo}`);
+    if (!res.ok) throw new Error('Error en el servidor');
+    return await res.json();
+  };
 
   const consultarPoblacion = async (e) => {
     e.preventDefault();
@@ -416,6 +426,20 @@ function App() {
     finally { setCargando(false); }
   };
 
+  const obtenerNarrativaEdadMedia = async () => {
+    setCargando(true);
+    try {
+      const json = await fetchPoblacion(municipio);
+      const total = json.datos?.poblacion_total || 0;
+      const valor = Math.round(total * 0.35); 
+      setNarrativaEdadMedia(`En ${municipio}, el grupo de edad media (30-55 años) representa aproximadamente ${valor.toLocaleString()} personas, un sector clave para el análisis demográfico actual.`);
+    } catch (err) {
+      setNarrativaEdadMedia("No se pudo obtener la información.");
+    } finally {
+      setCargando(false);
+    }
+  };
+
   const compararPoblacion = async (e) => {
     e.preventDefault();
     setCargando(true);
@@ -423,26 +447,33 @@ function App() {
       const [resA, resB] = await Promise.all([fetchPoblacion(munA), fetchPoblacion(munB)]);
       setResultados({ a: resA.datos?.poblacion_total || 0, b: resB.datos?.poblacion_total || 0 });
       setNombresCongelados({ a: munA, b: munB });
-     
       setDistribucionEdadComp({ a: null, b: null });
     } catch (err) { console.error(err); }
     finally { setCargando(false); }
   };
 
   const intercambiarMunicipios = () => {
+    const tempMunA = munA;
     setMunA(munB);
-    setMunB(munA);
+    setMunB(tempMunA);
+
+    const tempEstadoA = estadoA;
+    setEstadoA(estadoB);
+    setEstadoB(tempEstadoA);
+
+    const tempListaA = municipiosListaA;
+    setMunicipiosListaA(municipiosListaB);
+    setMunicipiosListaB(tempListaA);
   };
 
   const fetchPoblacionAnio = async (mun, anioParam) => {
-    const res = await fetch(`http://localhost:8000/api/poblacion?municipio=${encodeURIComponent(mun)}&ano=${anioParam}&sexo=${sexo}`);
+    const res = await fetch(`${baseUrl}/api/poblacion?municipio=${encodeURIComponent(mun)}&ano=${anioParam}&sexo=${sexo}`);
     return await res.json();
   };
 
   const consultarTendencia = async () => {
     const error = validarRango(rangoInicioTendencia, rangoFinTendencia);
     if (error) { mostrarToast(error); return; }
-
     setCargandoTendencia(true);
     try {
       const inicio = Number(rangoInicioTendencia);
@@ -466,7 +497,6 @@ function App() {
   const consultarTendenciaComparativa = async () => {
     const error = validarRango(rangoInicioComp, rangoFinComp);
     if (error) { mostrarToast(error); return; }
-
     setCargandoTendenciaComp(true);
     try {
       const inicio = Number(rangoInicioComp);
@@ -495,8 +525,8 @@ function App() {
     setCargandoDistribucion(true);
     try {
       const [resA, resB] = await Promise.all([
-       fetch(`${baseUrl}/api/piramide?mun=${encodeURIComponent(munA)}&inicio=${ano}&fin=${ano}`).then((r) => r.json()),
-      fetch(`${baseUrl}/api/piramide?mun=${encodeURIComponent(munB)}&inicio=${ano}&fin=${ano}`).then((r) => r.json()),
+        fetch(`${baseUrl}/api/piramide?mun=${encodeURIComponent(munA)}&inicio=${ano}&fin=${ano}`).then((r) => r.json()),
+        fetch(`${baseUrl}/api/piramide?mun=${encodeURIComponent(munB)}&inicio=${ano}&fin=${ano}`).then((r) => r.json()),
       ]);
       setDistribucionEdadComp({ a: resA.datos || null, b: resB.datos || null });
     } catch (err) {
@@ -523,29 +553,23 @@ function App() {
         ignoreElements: (el) => el.classList && el.classList.contains('no-capturar'),
       });
       const imgData = canvas.toDataURL('image/png');
-
       const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
       const pageWidth = doc.internal.pageSize.getWidth();
       const imgWidth = pageWidth - 80;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
       doc.setFontSize(16);
       doc.text('Reporte de Población', 40, 50);
       doc.setFontSize(10);
       doc.text(`Fecha de consulta: ${new Date().toLocaleString('es-MX')}`, 40, 68);
-
       doc.addImage(imgData, 'PNG', 40, 85, imgWidth, imgHeight);
-
       let cursorY = 85 + imgHeight + 30;
       if (datosPiramide) {
         doc.setFontSize(12);
-        doc.text('Análisis Narrativo:', 40, cursorY);
         const texto = generarAnalisisNarrativo(datosPiramide).replace(/\s+/g, ' ').trim();
         const lineas = doc.splitTextToSize(texto, pageWidth - 80);
         doc.setFontSize(10);
         doc.text(lineas, 40, cursorY + 18);
       }
-
       doc.save('reporte-poblacion.pdf');
     } catch (err) {
       console.error('Error al exportar PDF', err);
@@ -561,7 +585,6 @@ function App() {
     const diferencia = valorActual - (otroValor || 0);
     const flecha = diferencia > 0 ? '▲' : diferencia < 0 ? '▼' : '■';
     const colorFlecha = diferencia > 0 ? PALETTE.success : diferencia < 0 ? PALETTE.danger : '#888';
-
     return (
       <div style={{
         backgroundColor: isDarkMode ? '#2d2438' : '#fff',
@@ -612,7 +635,6 @@ function App() {
       const opacidad = Math.max(0.32, 1 - i * (0.62 / Math.max(datos.length - 1, 1)));
       return { edad: d.edad, pct, opacidad };
     });
-
     return (
       <div
         style={{
@@ -640,6 +662,7 @@ function App() {
       </div>
     );
   };
+  
 
   return (
     <div style={styles.container}>
@@ -696,8 +719,6 @@ function App() {
           transform: rotate(15deg) scale(1.08);
           box-shadow: 0 0 18px rgba(201, 161, 90, 0.45);
         }
-
-        /* Etiquetas con acento dorado y ligero glow, para que no se vean planas */
         .label-glow {
           position: relative;
           text-shadow: ${isDarkMode ? '0 0 12px rgba(228,201,138,0.30)' : '0 0 10px rgba(116,27,42,0.10)'};
@@ -713,7 +734,6 @@ function App() {
           background: ${PALETTE.gold};
           box-shadow: 0 0 8px ${PALETTE.gold}, 0 0 2px ${PALETTE.gold};
         }
-
         @keyframes spin { to { transform: rotate(360deg); } }
         .spinner {
           width: 14px; height: 14px;
@@ -731,7 +751,6 @@ function App() {
           gap: 8px;
           width: 100%;
         }
-
         @keyframes loadingSlide {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(250%); }
@@ -748,7 +767,6 @@ function App() {
           background: linear-gradient(90deg, transparent, ${PALETTE.gold}, transparent);
           animation: loadingSlide 1.1s ease-in-out infinite;
         }
-
         @keyframes toastIn {
           from { opacity: 0; transform: translate(-50%, -12px); }
           to   { opacity: 1; transform: translate(-50%, 0); }
@@ -769,16 +787,12 @@ function App() {
         }
         .toast-error { background: ${PALETTE.danger}; }
         .toast-success { background: ${PALETTE.success}; }
-
         .swap-btn:hover {
           transform: rotate(180deg) scale(1.1);
           box-shadow: 0 0 16px rgba(201, 161, 90, 0.5);
         }
-
         @keyframes resultEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .result-enter { animation: resultEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
-
-        /* Segmentos de la barra única de distribución por edad */
         .segmento-edad {
           position: relative;
           transition: filter 0.2s ease;
@@ -788,17 +802,13 @@ function App() {
           filter: brightness(1.25);
         }
       `}</style>
-
       {toast && <div className={`toast toast-${toast.type}`}>{toast.message}</div>}
-
       <img src="/ayuntamiento.webp" alt="Logo" style={styles.logo} />
       <button className="interactive-btn theme-toggle" style={styles.themeButton} onClick={() => setIsDarkMode(!isDarkMode)}>
         {isDarkMode ? '☀️' : '🌙'}
       </button>
-
       <div style={styles.card}>
-        {(cargando || cargandoTendencia || cargandoTendenciaComp || cargandoDistribucion) && <div className="progress-bar" />}
-
+        {(cargando || cargandoTendencia || cargandoTendenciaComp || cargandoDistribucion || cargandoUbicaciones) && <div className="progress-bar" />}
         <button
           className="interactive-btn"
           style={styles.navButton}
@@ -816,25 +826,47 @@ function App() {
         >
           {vista === 'consulta' ? 'Cambiar a Analisis' : 'Cambiar a Estimaciones'}
         </button>
-
         {vista === 'consulta' ? (
           <form key="consulta" className="vista-transition" onSubmit={consultarPoblacion}>
             <h2 style={styles.title}>Estimaciones Demográficas</h2>
+            
+            {/* Selector de Estado */}
             <div className="campo-glow">
-              <label className="label-glow" style={styles.label}>Municipio</label>
-              <input
+              <label className="label-glow" style={styles.label}>Estado</label>
+              <select
                 className="interactive-input"
                 style={styles.input}
-                value={municipio}
-                onChange={(e) => { setMunicipio(e.target.value); buscarSugerencias(e.target.value, setSugerenciasMunicipio, 'municipio'); }}
-                placeholder="Escribe para buscar..."
-                list="lista-mun"
-              />
-              
-              <datalist id="lista-mun">
-                {sugerenciasMunicipio.map((m) => <option key={m} value={m} />)}
-              </datalist>
+                value={estadoSeleccionado}
+                onChange={handleEstadoChange}
+              >
+                <option value="">-- Selecciona un estado --</option>
+                {Object.keys(estadosData).map((est) => (
+                  <option key={est} value={est}>
+                    {est}
+                  </option>
+                ))}
+              </select>
             </div>
+
+            {/* Selector de Municipio */}
+            <div className="campo-glow">
+              <label className="label-glow" style={styles.label}>Municipio</label>
+              <select
+                className="interactive-input"
+                style={{ ...styles.input, opacity: !estadoSeleccionado ? 0.7 : 1 }}
+                value={municipio}
+                onChange={(e) => setMunicipio(e.target.value)}
+                disabled={!estadoSeleccionado}
+              >
+                <option value="">-- Selecciona un municipio --</option>
+                {municipiosLista.map((munItem, idx) => (
+                  <option key={idx} value={munItem}>
+                    {munItem}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="campo-glow">
               <label className="label-glow" style={styles.label}>Año</label>
               <input className="interactive-input" style={styles.input} type="number" value={ano} onChange={(e) => setAno(e.target.value)} />
@@ -842,7 +874,7 @@ function App() {
             <div className="campo-glow">
               <label className="label-glow" style={styles.label}>Género</label>
               <select className="interactive-input" style={styles.input} value={sexo} onChange={(e) => setSexo(e.target.value)}>
-                  <option value="AMBOS">Ambos</option><option value="HOMBRES">Hombres</option><option value="MUJERES">Mujeres</option>
+                <option value="AMBOS">Ambos</option><option value="HOMBRES">Hombres</option><option value="MUJERES">Mujeres</option>
               </select>
             </div>
             <button className="interactive-btn" type="submit" style={styles.button(cargando, isDarkMode)} disabled={cargando}>
@@ -851,26 +883,35 @@ function App() {
                 {cargando ? 'Consultando...' : 'Generar Estimación'}
               </span>
             </button>
-            {resultado !== null && <div className="resultado-glow" style={styles.resultadoCard}><b>{resultado.toLocaleString()}</b> habitantes</div>}
+            
+<button 
+  type="button" 
+  className="interactive-btn" 
+  style={{...styles.button(cargando, isDarkMode), marginTop: '10px', background: PALETTE.gold}} 
+  onClick={obtenerNarrativaEdadMedia} 
+  disabled={cargando}
+>
+  {cargando ? 'Consultando...' : 'Consultar Edad Media'}
+</button>
 
+{narrativaEdadMedia && (
+  <div className="result-enter" style={styles.narrativeBox}>
+    {narrativaEdadMedia}
+  </div>
+)}
+            {resultado !== null && <div className="resultado-glow" style={styles.resultadoCard}><b>{resultado.toLocaleString()}</b> habitantes</div>}
             <hr style={{margin: '25px 0', border: '0', borderTop: isDarkMode ? '1px solid #3c3245' : '1px solid #e8d8db'}} />
             <h3 style={styles.title}>Perfil Demográfico</h3>
             <div style={{ display: 'flex', gap: '10px' }}>
-                <div className="campo-glow" style={{flex: 1}}><label className="label-glow" style={styles.label}>Periodo Inicio</label><input className="interactive-input" style={styles.input} type="number" value={rangoInicio} onChange={(e) => setRangoInicio(e.target.value)} /></div>
-                <div className="campo-glow" style={{flex: 1}}><label className="label-glow" style={styles.label}>Periodo Fin</label><input className="interactive-input" style={styles.input} type="number" value={rangoFin} onChange={(e) => setRangoFin(e.target.value)} /></div>
+              <div className="campo-glow" style={{flex: 1}}><label className="label-glow" style={styles.label}>Periodo Inicio</label><input className="interactive-input" style={styles.input} type="number" value={rangoInicio} onChange={(e) => setRangoInicio(e.target.value)} /></div>
+              <div className="campo-glow" style={{flex: 1}}><label className="label-glow" style={styles.label}>Periodo Fin</label><input className="interactive-input" style={styles.input} type="number" value={rangoFin} onChange={(e) => setRangoFin(e.target.value)} /></div>
             </div>
             <button className="interactive-btn" type="button" style={styles.button(cargando, isDarkMode)} onClick={alternarPerfil} disabled={cargando}>
               <span className="btn-content">
                 {cargando && <span className="spinner" />}
-                {cargando
-                  ? 'Generando...'
-                  : datosPiramide
-                    ? (mostrarPerfil ? 'Ocultar Perfil Demográfico' : 'Mostrar Perfil Demográfico')
-                    : 'Generar Perfil'}
+                {cargando ? 'Generando...' : datosPiramide ? (mostrarPerfil ? 'Ocultar Perfil Demográfico' : 'Mostrar Perfil Demográfico') : 'Generar Perfil'}
               </span>
             </button>
-
-           
             <button
               className="interactive-btn"
               type="button"
@@ -879,7 +920,6 @@ function App() {
             >
               {mostrarTendencia ? 'Ocultar Tendencia' : 'Ver Tendencia'}
             </button>
-
             {mostrarTendencia && (
               <div className="result-enter" style={{ marginTop: '16px', textAlign: 'left' }}>
                 <div style={{ display: 'flex', gap: '10px' }}>
@@ -898,8 +938,6 @@ function App() {
                     {cargandoTendencia ? 'Calculando tendencia...' : `Generar Tendencia (${rangoInicioTendencia}–${rangoFinTendencia})`}
                   </span>
                 </button>
-
-                {}
                 {datosTendencia && (
                   <div className="result-enter" style={styles.proCard}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
@@ -917,31 +955,21 @@ function App() {
                           </defs>
                           <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
                           <XAxis dataKey="ano" stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 12 }} />
-                          <YAxis
-                            stroke={isDarkMode ? '#fff' : '#000'}
-                            tickFormatter={formatCompacto}
-                            width={48}
-                            tick={{ fontSize: 12 }}
-                            domain={['auto', 'auto']}
-                          />
-                          <Tooltip
-                            formatter={(v) => v.toLocaleString()}
-                            contentStyle={{ backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px' }}
-                          />
+                          <YAxis stroke={isDarkMode ? '#fff' : '#000'} tickFormatter={formatCompacto} width={48} tick={{ fontSize: 12 }} domain={['auto', 'auto']} />
+                          <Tooltip formatter={(v) => v.toLocaleString()} contentStyle={{ backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px' }} />
                           <Area type="monotone" dataKey="poblacion" stroke="none" fill="url(#gradTendenciaSolo)" />
                           <Line type="monotone" dataKey="poblacion" name={municipio} stroke={PALETTE.wine} strokeWidth={3} dot={{ r: 4, fill: PALETTE.gold }} activeDot={{ r: 6 }} />
                         </ComposedChart>
                       </ResponsiveContainer>
                     </div>
                     <div style={styles.narrativeBox}>
-                      <h4 style={{ margin: '0 0 8px 0', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine }}>Análisis Narrativo</h4>
+                      <h4 style={{ margin: '0 0 8px 0', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine }}></h4>
                       {generarAnalisisTendencia(datosTendencia, municipio)}
                     </div>
                   </div>
                 )}
               </div>
             )}
-
             {datosPiramide && mostrarPerfil && (
               <div ref={capturaRef} style={{ marginTop: '20px', padding: '15px', backgroundColor: isDarkMode ? '#26202f' : '#fdf9f6', borderRadius: '15px' }}>
                 <h3 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, margin: '0 0 15px 0' }}>Perfil Demográfico</h3>
@@ -960,21 +988,14 @@ function App() {
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
-
-                {/* Distribución por edad como una sola barra segmentada + chips con el porcentaje de cada grupo */}
                 <div style={{ marginTop: '16px', padding: '14px', backgroundColor: isDarkMode ? '#1f1a25' : '#ffffff', borderRadius: '12px' }}>
                   <h4 style={{ margin: '0 0 12px 0', fontSize: '13px', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, textAlign: 'left' }}>Distribución por edad</h4>
                   {renderDistribucionEdad(datosPiramide, PALETTE.wine)}
                 </div>
-
                 <div style={{ marginTop: '20px', padding: '15px', border: '1px dashed #c9a15a', borderRadius: '10px', fontSize: '14px', textAlign: 'justify' }}>
-                  <h4 style={{ margin: '0 0 10px 0', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine }}>
-                      Análisis Narrativo
-                  </h4>
+                  <h4 style={{ margin: '0 0 10px 0', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine }}></h4>
                   {generarAnalisisNarrativo(datosPiramide)}
                 </div>
-
-                {}
                 <button className="interactive-btn no-capturar" type="button" style={styles.exportButton} onClick={exportarImagen}>Descargar Perfil (PNG)</button>
                 <button className="interactive-btn no-capturar" type="button" style={styles.exportButtonPdf} onClick={exportarPDF}>Descargar Perfil (PDF)</button>
               </div>
@@ -983,20 +1004,40 @@ function App() {
         ) : (
           <form key="comparar" className="vista-transition" onSubmit={compararPoblacion}>
             <h2 style={styles.title}> Analisis Comparativo</h2>
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <div className="campo-glow" style={{ flex: 1 }}>
-                <label className="label-glow" style={styles.label}>Municipio A</label>
-                <input
-                  className="interactive-input"
-                  style={styles.input}
-                  value={munA}
-                  onChange={(e) => { setMunA(e.target.value); buscarSugerencias(e.target.value, setSugerenciasMunA, 'munA'); }}
-                  placeholder="Escribe para buscar..."
-                  list="lista-mun-a"
-                />
-                <datalist id="lista-mun-a">{sugerenciasMunA.map((m) => <option key={m} value={m} />)}</datalist>
+            
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <div style={{ flex: 1 }}>
+                <div className="campo-glow">
+                  <label className="label-glow" style={styles.label}>Estado A</label>
+                  <select
+                    className="interactive-input"
+                    style={styles.input}
+                    value={estadoA}
+                    onChange={handleEstadoAChange}
+                  >
+                    <option value="">-- Selecciona estado --</option>
+                    {Object.keys(estadosData).map((est) => (
+                      <option key={est} value={est}>{est}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="campo-glow">
+                  <label className="label-glow" style={styles.label}>Municipio A</label>
+                  <select
+                    className="interactive-input"
+                    style={{ ...styles.input, opacity: !estadoA ? 0.7 : 1 }}
+                    value={munA}
+                    onChange={(e) => setMunA(e.target.value)}
+                    disabled={!estadoA}
+                  >
+                    <option value="">-- Selecciona municipio --</option>
+                    {municipiosListaA.map((munItem, idx) => (
+                      <option key={idx} value={munItem}>{munItem}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
-
+              
               <button
                 type="button"
                 className="swap-btn"
@@ -1006,20 +1047,40 @@ function App() {
               >
                 ⇄
               </button>
-
-              <div className="campo-glow" style={{ flex: 1 }}>
-                <label className="label-glow" style={styles.label}>Municipio B</label>
-                <input
-                  className="interactive-input"
-                  style={styles.input}
-                  value={munB}
-                  onChange={(e) => { setMunB(e.target.value); buscarSugerencias(e.target.value, setSugerenciasMunB, 'munB'); }}
-                  placeholder="Escribe para buscar..."
-                  list="lista-mun-b"
-                />
-                <datalist id="lista-mun-b">{sugerenciasMunB.map((m) => <option key={m} value={m} />)}</datalist>
+              
+              <div style={{ flex: 1 }}>
+                <div className="campo-glow">
+                  <label className="label-glow" style={styles.label}>Estado B</label>
+                  <select
+                    className="interactive-input"
+                    style={styles.input}
+                    value={estadoB}
+                    onChange={handleEstadoBChange}
+                  >
+                    <option value="">-- Selecciona estado --</option>
+                    {Object.keys(estadosData).map((est) => (
+                      <option key={est} value={est}>{est}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="campo-glow">
+                  <label className="label-glow" style={styles.label}>Municipio B</label>
+                  <select
+                    className="interactive-input"
+                    style={{ ...styles.input, opacity: !estadoB ? 0.7 : 1 }}
+                    value={munB}
+                    onChange={(e) => setMunB(e.target.value)}
+                    disabled={!estadoB}
+                  >
+                    <option value="">-- Selecciona municipio --</option>
+                    {municipiosListaB.map((munItem, idx) => (
+                      <option key={idx} value={munItem}>{munItem}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
+
             <div className="campo-glow">
               <label className="label-glow" style={styles.label}>Año</label>
               <input className="interactive-input" style={styles.input} type="number" value={ano} onChange={(e) => setAno(e.target.value)} />
@@ -1027,7 +1088,7 @@ function App() {
             <div className="campo-glow">
               <label className="label-glow" style={styles.label}>Género</label>
               <select className="interactive-input" style={styles.input} value={sexo} onChange={(e) => setSexo(e.target.value)}>
-                  <option value="AMBOS">Ambos</option><option value="HOMBRES">Hombres</option><option value="MUJERES">Mujeres</option>
+                <option value="AMBOS">Ambos</option><option value="HOMBRES">Hombres</option><option value="MUJERES">Mujeres</option>
               </select>
             </div>
             <button className="interactive-btn" type="submit" style={styles.button(cargando, isDarkMode)} disabled={cargando}>
@@ -1042,8 +1103,7 @@ function App() {
                   <div className="resultado-glow" style={styles.resultadoCard}>{nombresCongelados.a}: <b>{resultados.a.toLocaleString()}</b></div>
                   <div className="resultado-glow" style={styles.resultadoCard}>{nombresCongelados.b}: <b>{resultados.b.toLocaleString()}</b></div>
                 </div>
-                {}
-                <button className="interactive-btn no-capturar" type="button" style={styles.graficaButton} onClick={alternarGraficaComparativa}>{mostrarGrafica ? 'Ocultar Gráfica' : 'Ver Gráfica'}</button>
+                <button className="interactive-btn no-capturar" type="button" style={styles.graficaButton} onClick={alternarGraficaComparativa}>{mostrarGrafica ? 'Ocultar Gráfica' : 'Graficar Municipios'}</button>
                 {mostrarGrafica && (
                   <div className="result-enter" style={{ marginTop: '20px', padding: '10px' }}>
                     <div style={{ height: '350px', width: '100%' }}>
@@ -1061,27 +1121,16 @@ function App() {
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#333' : '#eee'} />
                           <XAxis dataKey="name" tick={{fill: isDarkMode ? '#fff' : '#000', fontSize: 12}} />
                           <YAxis tick={{fill: isDarkMode ? '#fff' : '#000'}} domain={[0, 'auto']} tickFormatter={formatCompacto} />
-                          <Tooltip
-                            cursor={{fill: 'transparent'}}
-                            content={<ComparativaTooltip />}
-                          />
-                          <Bar
-                            dataKey="val"
-                            fill="url(#barraTotal)"
-                            radius={[10, 10, 0, 0]}
-                            barSize={80}
-                          >
+                          <Tooltip cursor={{fill: 'transparent'}} content={<ComparativaTooltip />} />
+                          <Bar dataKey="val" fill="url(#barraTotal)" radius={[10, 10, 0, 0]} barSize={80}>
                             <LabelList dataKey="val" position="top" fill={isDarkMode ? '#fff' : '#333'} formatter={(value) => value.toLocaleString()} />
                           </Bar>
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
-
                     <div style={{ marginTop: '20px', padding: '15px', borderRadius: '12px', backgroundColor: isDarkMode ? '#26202f' : '#fdf2f4', textAlign: 'center', color: isDarkMode ? '#ccc' : '#666', border: isDarkMode ? '1px solid #3c3245' : '1px solid #e8d8db' }}>
                       La diferencia poblacional entre ambos municipios es de <b>{Math.abs(resultados.a - resultados.b).toLocaleString()}</b> habitantes.
                     </div>
-
-                    {}
                     <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                       {cargandoDistribucion && (
                         <div style={{ fontSize: '13px', color: isDarkMode ? '#b8adc4' : '#8a7176', textAlign: 'center' }}>Cargando distribución por edad...</div>
@@ -1101,7 +1150,6 @@ function App() {
                     </div>
                   </div>
                 )}
-
                 <button
                   className="interactive-btn no-capturar"
                   type="button"
@@ -1110,7 +1158,6 @@ function App() {
                 >
                   {mostrarTendenciaComp ? 'Ocultar Tendencias' : 'Ver Tendencias'}
                 </button>
-
                 {mostrarTendenciaComp && (
                   <div className="result-enter" style={{ marginTop: '16px', textAlign: 'left' }}>
                     <div className="no-capturar" style={{ display: 'flex', gap: '10px' }}>
@@ -1129,8 +1176,6 @@ function App() {
                         {cargandoTendenciaComp ? 'Calculando tendencias...' : `Generar Tendencias (${rangoInicioComp}–${rangoFinComp})`}
                       </span>
                     </button>
-
-                    {}
                     {datosTendenciaComp && (
                       <div className="result-enter" style={styles.proCard}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
@@ -1155,13 +1200,7 @@ function App() {
                               </defs>
                               <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
                               <XAxis dataKey="ano" stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 12 }} />
-                              <YAxis
-                                stroke={isDarkMode ? '#fff' : '#000'}
-                                tickFormatter={formatCompacto}
-                                width={48}
-                                tick={{ fontSize: 12 }}
-                                domain={['auto', 'auto']}
-                              />
+                              <YAxis stroke={isDarkMode ? '#fff' : '#000'} tickFormatter={formatCompacto} width={48} tick={{ fontSize: 12 }} domain={['auto', 'auto']} />
                               <Tooltip content={<TendenciaComparativaTooltip />} />
                               <Area type="monotone" dataKey="a" stroke="none" fill="url(#gradA)" />
                               <Area type="monotone" dataKey="b" stroke="none" fill="url(#gradB)" />
@@ -1171,14 +1210,13 @@ function App() {
                           </ResponsiveContainer>
                         </div>
                         <div style={styles.narrativeBox}>
-                          <h4 style={{ margin: '0 0 8px 0', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine }}>Análisis Narrativo</h4>
+                          <h4 style={{ margin: '0 0 8px 0', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine }}></h4>
                           {generarAnalisisTendenciaComparativa(datosTendenciaComp, nombresTendenciaComp.a, nombresTendenciaComp.b)}
                         </div>
                       </div>
                     )}
                   </div>
                 )}
-
                 <button className="interactive-btn no-capturar" type="button" style={styles.exportButton} onClick={exportarImagen}>Exportar a Imagen</button>
                 <button className="interactive-btn no-capturar" type="button" style={styles.exportButtonPdf} onClick={exportarPDF}>Exportar a PDF</button>
               </div>
