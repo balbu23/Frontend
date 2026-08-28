@@ -6,9 +6,8 @@ import {
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import MapaInteractivo from './MapaInteractivo';
-import Delitos_Mujer from './delitos_mujer';
 
-const baseUrl = 'https://backend-production-1a3af.up.railway.app';
+const baseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
 const PALETTE = {
   wine:      '#741b2a',
@@ -57,11 +56,11 @@ const ordenarEdades = (datos) => {
   });
 };
 
-const getStyles = (isDarkMode) => ({
+const getStyles = (isDarkMode, vista) => ({
   container: {
     minHeight: '100vh',
     width: '100%',
-    maxWidth: '1300px',
+    maxWidth: vista === 'mapa' ? '100%' : '1300px',
     display: 'flex',
     flexDirection: 'column',
     background: isDarkMode
@@ -92,11 +91,11 @@ const getStyles = (isDarkMode) => ({
   },
   card: {
     backgroundColor: isDarkMode ? '#1a1520' : '#ffffff',
-    padding: '32px 48px',
+    padding: vista === 'mapa' ? '0px' : '32px 48px',
     borderRadius: '0px',
     border: 'none',
     boxShadow: 'none',
-    width: '100%', // Corrección de sintaxis: '100p%' -> '100%'
+    width: '100%',
     maxWidth: '100%',
     minHeight: 'calc(100vh - 90px)',
     textAlign: 'center',
@@ -115,7 +114,7 @@ const getStyles = (isDarkMode) => ({
     marginBottom: '30px',
     position: 'fixed',
     top: 0,
-    left: 0, // Corrección de ubicación visual (-37px -> 0px)
+    left: 0,
     width: '100%',
     zIndex: 1000, 
     backgroundColor: isDarkMode ? '#1a1520' : '#ffffff',
@@ -374,8 +373,8 @@ const getStyles = (isDarkMode) => ({
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const styles = getStyles(isDarkMode);
   const [vista, setVista] = useState('inicio'); 
+  const styles = getStyles(isDarkMode, vista);
   const [cargando, setCargando] = useState(false);
   const [mostrarGrafica, setMostrarGrafica] = useState(false);
   const capturaRef = useRef(null);
@@ -1123,9 +1122,9 @@ function App() {
         )}
 
         {vista === 'mapa' && (
-        <div style={{ width: '100%', minHeight: 'calc(100vh - 200px)', flex: 1 }}>
-        <MapaInteractivo />
-        </div>
+          <div style={{ width: '100%', height: 'calc(100vh - 90px)', position: 'relative' }}>
+            <MapaInteractivo />
+          </div>
         )}
 
         {vista === 'mujer' && (

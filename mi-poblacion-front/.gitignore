@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 
 .env
-__pycache__/
+__pycache__/public/tuxtla_colonias_limpio.geojson
+public/tuxtla_colonias_limpio.geojson
