@@ -6,17 +6,18 @@ import {
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import MapaInteractivo from './MapaInteractivo';
+import FondoAnimado from './FondoAnimado';
 
-const baseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+const baseUrl = 'https://backend-production-1a3af.up.railway.app';
 
 const PALETTE = {
-  wine:      '#741b2a',
-  wineDeep:  '#4f0f1c',
+  wine: '#741b2a',
+  wineDeep: '#4f0f1c',
   wineLight: '#a62a40',
-  gold:      '#c9a15a',
-  goldSoft:  '#e4c98a',
-  danger:    '#d64545',
-  success:   '#2e7d32',
+  gold: '#c9a15a',
+  goldSoft: '#e4c98a',
+  danger: '#d64545',
+  success: '#2e7d32',
   piramideHombres: '#a62a40',
   piramideMujeres: '#e4c98a',
 };
@@ -56,48 +57,51 @@ const ordenarEdades = (datos) => {
   });
 };
 
-const getStyles = (isDarkMode, vista) => ({
+const getStyles = (isDarkMode) => ({
   container: {
     minHeight: '100vh',
     width: '100%',
-    maxWidth: vista === 'mapa' ? '100%' : '1300px',
+    maxWidth: '100%',
     display: 'flex',
     flexDirection: 'column',
-    background: isDarkMode
-      ? 'radial-gradient(circle at 20% 20%, #17131b 0%, #0d0b10 55%, #070609 100%)'
-      : 'radial-gradient(circle at 20% 20%, #fdfbf7 0%, #f4ecdf 100%)',
+    background: 'transparent',
     fontFamily: '"Montserrat", sans-serif',
     padding: '0',
-    margin: '0 auto',
+    margin: '0',
     position: 'relative',
-    transition: 'background 0.4s ease',
     overflowX: 'hidden',
-    paddingTop: '90px',
+    paddingTop: '135px',
     boxSizing: 'border-box',
+    zIndex: 1,
   },
   themeButton: {
-    position: 'absolute',
-    top: '14px',
-    right: '34px',
-    padding: '12px',
+    padding: '8px',
+    width: '40px',
+    height: '40px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: '50%',
     border: isDarkMode ? `1px solid ${PALETTE.gold}55` : `1px solid ${PALETTE.wine}33`,
     cursor: 'pointer',
-    background: isDarkMode ? '#221c28' : '#ffffff',
+    background: isDarkMode ? 'rgba(34, 28, 40, 0.85)' : 'rgba(255, 255, 255, 0.90)',
+    backdropFilter: 'blur(8px)',
     fontSize: '18px',
     transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
     boxShadow: isDarkMode ? '0 4px 16px rgba(0,0,0,0.4)' : '0 4px 16px rgba(116,27,42,0.1)',
     zIndex: 1100,
+    flexShrink: 0,
   },
   card: {
-    backgroundColor: isDarkMode ? '#1a1520' : '#ffffff',
-    padding: vista === 'mapa' ? '0px' : '32px 48px',
+    backgroundColor: 'transparent',
+    padding: '24px 36px',
     borderRadius: '0px',
     border: 'none',
     boxShadow: 'none',
     width: '100%',
-    maxWidth: '100%',
-    minHeight: 'calc(100vh - 90px)',
+    maxWidth: '1350px',
+    margin: '0 auto',
+    minHeight: 'calc(100vh - 135px)',
     textAlign: 'center',
     position: 'relative',
     boxSizing: 'border-box',
@@ -109,29 +113,34 @@ const getStyles = (isDarkMode, vista) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottom: '3px solid #c5bf6c', 
-    paddingBottom: '0px',
-    marginBottom: '30px',
+    borderBottom: '3px solid #c5bf6c',
+    paddingBottom: '8px',
+    marginBottom: '20px',
     position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
-    zIndex: 1000, 
-    backgroundColor: isDarkMode ? '#1a1520' : '#ffffff',
-    paddingTop: '0px',
-    paddingLeft: '38px',
-    paddingRight: '38px',
+    zIndex: 1000,
+    backgroundColor: isDarkMode ? 'rgba(26, 21, 32, 0.88)' : 'rgba(255, 255, 255, 0.90)',
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+    paddingTop: '6px',
+    paddingLeft: '32px',
+    paddingRight: '32px',
     boxSizing: 'border-box',
-    boxShadow: isDarkMode 
-      ? '0 10px 20px -10px rgba(0,0,0,0.6)' 
-      : '0 10px 20px -10px rgba(116,27,42,0.1)',
+    boxShadow: isDarkMode
+      ? '0 10px 24px -10px rgba(0,0,0,0.6)'
+      : '0 10px 24px -10px rgba(116,27,42,0.12)',
     transition: 'background-color 0.4s ease, box-shadow 0.3s ease',
   },
   headerLeft: {
     flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '14px',
   },
   headerLogo: {
-    width: '140px',
+    width: '135px',
     height: 'auto',
     filter: isDarkMode ? 'drop-shadow(0 2px 8px rgba(201,161,90,0.2))' : 'none',
   },
@@ -144,11 +153,11 @@ const getStyles = (isDarkMode, vista) => ({
   },
   sedTitle: {
     margin: 0,
-    fontSize: '60px',
+    fontSize: '38px',
     fontWeight: '1000',
     color: isDarkMode ? PALETTE.goldSoft : '#2a2233',
     letterSpacing: '5px',
-    textShadow: isDarkMode ? '0 4px 12px rgba(201,161,90,0.2)' : '0 4px 12px rgba(116,27,42,0.1)',
+    textShadow: isDarkMode ? '0 4px 12px rgba(201,161,90,0.25)' : '0 4px 12px rgba(116,27,42,0.1)',
     lineHeight: '1',
   },
   headerRight: {
@@ -158,7 +167,7 @@ const getStyles = (isDarkMode, vista) => ({
     textAlign: 'right',
   },
   secretariaText: {
-    fontSize: '15px',
+    fontSize: '14px',
     fontWeight: '700',
     color: isDarkMode ? '#d0c2db' : '#5c2d36',
     textTransform: 'uppercase',
@@ -180,20 +189,21 @@ const getStyles = (isDarkMode, vista) => ({
     alignItems: 'flex-start',
     justifyContent: 'center',
     textAlign: 'left',
-    maxWidth: '550px',
+    maxWidth: '580px',
     paddingRight: '40px',
+    marginTop: '40px',
   },
   inicioTitle: {
-    fontSize: '45px',
+    fontSize: '46px',
     fontWeight: '800',
     color: isDarkMode ? '#fff' : PALETTE.wine,
     marginBottom: '26px',
-    lineHeight: '1.4',
+    lineHeight: '1.3',
   },
   inicioSubText: {
-    fontSize: '15px',
+    fontSize: '15.5px',
     color: isDarkMode ? '#b8adc4' : '#6a5057',
-    lineHeight: '1.6',
+    lineHeight: '1.65',
     marginBottom: '24px',
   },
   panelToggleBtn: (isOpen) => ({
@@ -221,10 +231,12 @@ const getStyles = (isDarkMode, vista) => ({
   sidePanel: (isOpen) => ({
     position: 'fixed',
     right: isOpen ? '0px' : '-300px',
-    top: '90px',
+    top: '135px',
     bottom: '0px',
     width: '300px',
-    backgroundColor: isDarkMode ? '#1a1520' : '#f8f4ec',
+    backgroundColor: isDarkMode ? 'rgba(26, 21, 32, 0.94)' : 'rgba(248, 244, 236, 0.94)',
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
     borderLeft: isDarkMode ? '1px solid #b8860b44' : '1px solid #80002022',
     padding: '24px 20px',
     boxSizing: 'border-box',
@@ -373,14 +385,14 @@ const getStyles = (isDarkMode, vista) => ({
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [vista, setVista] = useState('inicio'); 
-  const styles = getStyles(isDarkMode, vista);
+  const styles = getStyles(isDarkMode);
+  const [vista, setVista] = useState('inicio');
   const [cargando, setCargando] = useState(false);
   const [mostrarGrafica, setMostrarGrafica] = useState(false);
   const capturaRef = useRef(null);
 
   const [municipio, setMunicipio] = useState('');
-  
+
   const [estadoA, setEstadoA] = useState('');
   const [municipiosListaA, setMunicipiosListaA] = useState([]);
   const [munA, setMunA] = useState('');
@@ -410,9 +422,9 @@ function App() {
   const [nombresTendenciaComp, setNombresTendenciaComp] = useState({ a: '', b: '' });
   const [cargandoTendenciaComp, setCargandoTendenciaComp] = useState(false);
   const [distribucionEdadComp, setDistribucionEdadComp] = useState({ a: null, b: null });
-  const [narrativaEdadMedia, setNarrativaEdadMedia] = useState(""); 
+  const [narrativaEdadMedia, setNarrativaEdadMedia] = useState("");
   const [cargandoDistribucion, setCargandoDistribucion] = useState(false);
-  
+
   const [tipoGraficaPerfil, setTipoGraficaPerfil] = useState('piramide');
   const [tipoGraficaTendencia, setTipoGraficaTendencia] = useState('linea');
   const [tipoGraficaTendenciaComp, setTipoGraficaTendenciaComp] = useState('linea');
@@ -467,7 +479,7 @@ function App() {
     if (!datos || datos.length === 0) return "";
     const maxGrupo = datos.reduce((prev, current) =>
       (Math.abs(current.hombres) + Math.abs(current.mujeres)) >
-      (Math.abs(prev.hombres) + Math.abs(prev.mujeres)) ? current : prev
+        (Math.abs(prev.hombres) + Math.abs(prev.mujeres)) ? current : prev
     );
     return `El perfil demográfico muestra una concentración poblacional predominante en el rango de edad ${maxGrupo.edad}. 
     Se observa una tendencia de distribución que requiere atención en políticas públicas de desarrollo social y económico para los próximos años.`;
@@ -532,8 +544,8 @@ function App() {
     } catch (err) {
       console.error("Error al obtener pirámide", err);
       mostrarToast('No se pudo generar el Perfil Demográfico.');
-    } finally { 
-      setCargando(false); 
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -568,11 +580,11 @@ function App() {
     try {
       const json = await fetchPoblacion(municipio);
       setResultado(json.datos?.poblacion_total || 0);
-    } catch (err) { 
+    } catch (err) {
       console.error(err);
       mostrarToast(err.message || 'Error al consultar población.');
-    } finally { 
-      setCargando(false); 
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -589,7 +601,7 @@ function App() {
     try {
       const json = await fetchPoblacion(municipio);
       const total = json.datos?.poblacion_total || 0;
-      const valor = Math.round(total * 0.35); 
+      const valor = Math.round(total * 0.35);
       setNarrativaEdadMedia(`En ${municipio}, el grupo de edad media (30-55 años) representa aproximadamente ${valor.toLocaleString()} personas, un sector clave para el análisis demográfico actual.`);
     } catch (err) {
       setNarrativaEdadMedia("No se pudo obtener la información.");
@@ -612,11 +624,11 @@ function App() {
       setDistribucionEdadComp({ a: null, b: null });
       setMostrarGrafica(false);
       setMostrarTendenciaComp(false);
-    } catch (err) { 
+    } catch (err) {
       console.error(err);
       mostrarToast(err.message || 'Error al comparar municipios.');
-    } finally { 
-      setCargando(false); 
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -676,7 +688,7 @@ function App() {
 
     const error = validarRango(rangoInicioComp, rangoFinComp);
     if (error) { mostrarToast(error); return; }
-    
+
     setCargandoTendenciaComp(true);
     try {
       const [resA, resB] = await Promise.all([
@@ -729,7 +741,7 @@ function App() {
     const abrir = !mostrarGrafica;
     setMostrarGrafica(abrir);
     setMostrarTendenciaComp(false);
-    
+
     if (abrir) {
       if (!munA || !munB) {
         mostrarToast('Selecciona ambos municipios primero.');
@@ -741,7 +753,7 @@ function App() {
         const [resA, resB] = await Promise.all([fetchPoblacion(munA), fetchPoblacion(munB)]);
         setResultados({ a: resA.datos?.poblacion_total || 0, b: resB.datos?.poblacion_total || 0 });
         setNombresCongelados({ a: munA, b: munB });
-        
+
         if (!distribucionEdadComp.a && !cargandoDistribucion) {
           consultarDistribucionEdad();
         }
@@ -1003,30 +1015,97 @@ function App() {
         .segmento-edad:hover {
           filter: brightness(1.25);
         }
+        .home-card {
+          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .home-card:hover {
+          transform: translateY(-6px) scale(1.015);
+          box-shadow: ${isDarkMode
+          ? '0 20px 40px rgba(0,0,0,0.6), 0 0 24px rgba(201,161,90,0.25)'
+          : '0 20px 40px rgba(116,27,42,0.14), 0 0 20px rgba(201,161,90,0.20)'} !important;
+          border-color: ${PALETTE.gold} !important;
+        }
+        .nav-tab-btn {
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-tab-btn:hover:not(.active) {
+          background-color: ${isDarkMode ? 'rgba(201,161,90,0.15)' : 'rgba(116,27,42,0.08)'} !important;
+          color: ${isDarkMode ? PALETTE.goldSoft : PALETTE.wine} !important;
+          transform: translateY(-1px);
+        }
+        /* ================= FONDO DINÁMICO EN VIVO (SIN TEXTO) ================= */
+        .dynamic-background {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          overflow: hidden;
+          pointer-events: none;
+          z-index: 0;
+        }
+        .bg-gradient-base {
+          position: absolute;
+          inset: 0;
+          background: ${isDarkMode
+          ? 'linear-gradient(135deg, #0b090f 0%, #150f1c 25%, #1d1324 50%, #130d1a 75%, #08060a 100%)'
+          : 'linear-gradient(135deg, #fdfbf7 0%, #f6eee3 25%, #faebdd 50%, #fbf4eb 75%, #fbf8f2 100%)'};
+          background-size: 400% 400%;
+          animation: gradientShift 24s ease infinite;
+        }
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .bg-grid-overlay {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(${isDarkMode ? 'rgba(201,161,90,0.13)' : 'rgba(116,27,42,0.05)'} 1.2px, transparent 1.2px);
+          background-size: 36px 36px;
+          opacity: ${isDarkMode ? '0.6' : '0.45'};
+          animation: gridDrift 45s linear infinite;
+        }
+        @keyframes gridDrift {
+          0% { background-position: 0px 0px; }
+          100% { background-position: 72px 72px; }
+        }
       `}</style>
-      
+
+      {/* CAPA DE FONDO DINÁMICO INTERACTIVO */}
+      <div className="dynamic-background" aria-hidden="true">
+        <div className="bg-gradient-base" />
+        <FondoAnimado isDarkMode={isDarkMode} />
+        <div className="bg-grid-overlay" />
+      </div>
+
       {toast && <div className={`toast toast-${toast.type}`}>{toast.message}</div>}
-      
-      <button className="interactive-btn theme-toggle" style={styles.themeButton} onClick={() => setIsDarkMode(!isDarkMode)}>
-        {isDarkMode ? '☀️' : '🌙'}
-      </button>
-      
+
       <div style={styles.card}>
         {(cargando || cargandoTendencia || cargandoTendenciaComp || cargandoDistribucion || cargandoUbicaciones) && <div className="progress-bar" />}
-        
-        {/* ENCABEZADO GLOBAL */}
+
+        {/* ENCABEZADO GLOBAL SIN BARRA DE NAVEGACIÓN */}
         <div style={styles.header}>
           <div style={styles.headerLeft}>
             <img src="/ayuntamiento.webp" alt="Ayuntamiento" style={styles.headerLogo} />
+            <button
+              className="interactive-btn theme-toggle"
+              style={styles.themeButton}
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              title={isDarkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+              aria-label="Cambiar tema"
+            >
+              {isDarkMode ? '☀️' : '🌙'}
+            </button>
           </div>
           <div style={styles.headerCenter}>
             <h1 style={styles.sedTitle}>S E D</h1>
-            <span style={{ fontSize: '15px', color: isDarkMode ? PALETTE.goldSoft : PALETTE.gold, fontWeight: '900', letterSpacing: '0.5px', marginTop: '4px' }}>
-              (Sistema de Estimación Demográfica)
+            <span style={{ fontSize: '13px', color: isDarkMode ? PALETTE.goldSoft : PALETTE.gold, fontWeight: '800', letterSpacing: '0.8px', marginTop: '2px', textTransform: 'uppercase' }}>
+              Sistema de Estimación Demográfica
             </span>
           </div>
           <div style={styles.headerRight}>
-            <span style={styles.secretariaText}>Secretaría<br/>de Planeación</span>
+            <span style={styles.secretariaText}>Secretaría<br />de Planeación</span>
           </div>
         </div>
 
@@ -1046,70 +1125,62 @@ function App() {
           <p style={{ fontSize: '12.5px', color: isDarkMode ? '#bbb' : '#555', lineHeight: '1.4', margin: '0 0 15px 0' }}>
             Acceso rápido a las funciones principales del sistema.
           </p>
-          
-          <button 
+
+          <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={{ ...styles.button(vista === 'inicio', isDarkMode), fontSize: '13px', padding: '12px' }}
             onClick={() => { setVista('inicio'); setPanelLateralAbierto(false); }}
           >
             Inicio
           </button>
 
-          <button 
+          <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={{ ...styles.button(vista === 'estimacion', isDarkMode), fontSize: '13px', padding: '12px' }}
             onClick={() => { setVista('estimacion'); setPanelLateralAbierto(false); }}
           >
             Estimación de Municipios
           </button>
 
-          <button 
+          <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={{ ...styles.button(vista === 'comparar', isDarkMode), fontSize: '13px', padding: '12px' }}
             onClick={() => { setVista('comparar'); setPanelLateralAbierto(false); }}
           >
             Comparativa de Municipios
           </button>
 
-          <button 
+          <button
             type="button"
             className="interactive-btn"
-            style={{...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px'}}
+            style={{ ...styles.button(vista === 'mapa', isDarkMode), fontSize: '13px', padding: '12px' }}
             onClick={() => { setVista('mapa'); setPanelLateralAbierto(false); }}
           >
             Datos por Colonias
           </button>
 
-         <button 
-          type="button"
-          className="interactive-btn"
-          style={{...styles.button(vista === 'mujer', isDarkMode), fontSize: '13px', padding: '12px'}}
-          onClick={() => setVista('mujer')}
-         >
-         Índice delictivo Mujer
-          </button>
-          <button 
+          <button
             type="button"
             className="interactive-btn"
-            style={{...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px'}}
+            style={{ ...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px' }}
             onClick={() => mostrarToast('Función en desarrollo', 'success')}
           >
             Comparativa de Colonias
           </button>
-          <button 
+          <button
             type="button"
             className="interactive-btn"
-            style={{...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px'}}
+            style={{ ...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px' }}
             onClick={() => exportarPDF()}
           >
             Generar Reportes PDF
           </button>
         </div>
 
-       
+
         {vista === 'inicio' && (
           <div className="vista-transition" style={styles.inicioMainWrapper}>
             <div style={styles.inicioContainer}>
@@ -1122,16 +1193,11 @@ function App() {
         )}
 
         {vista === 'mapa' && (
-          <div style={{ width: '100%', height: 'calc(100vh - 90px)', position: 'relative' }}>
+          <div style={{ width: '100%', minHeight: 'calc(100vh - 200px)', flex: 1 }}>
             <MapaInteractivo />
           </div>
         )}
 
-        {vista === 'mujer' && (
-        <div style={{ width: '100%', minHeight: 'calc(100vh - 200px)', flex: 1 }}>
-        <Delitos_Mujer/>
-        </div>
-        )}
 
         {/* VISTA ESTIMACIÓN */}
         {vista === 'estimacion' && (
@@ -1144,7 +1210,7 @@ function App() {
                 alignItems: 'start',
                 marginBottom: '30px'
               }}>
-                
+
                 <div style={{
                   backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
                   padding: '24px',
@@ -1204,12 +1270,12 @@ function App() {
                           <option value="MUJERES">Mujeres</option>
                         </select>
                       </div>
-                      
-                      <button 
-                        className="interactive-btn" 
-                        type="button" 
+
+                      <button
+                        className="interactive-btn"
+                        type="button"
                         onClick={consultarPoblacion}
-                        style={styles.button(cargando, isDarkMode)} 
+                        style={styles.button(cargando, isDarkMode)}
                         disabled={cargando}
                       >
                         <span className="btn-content">
@@ -1266,7 +1332,7 @@ function App() {
                           </button>
                         </div>
                       </div>
-                      
+
                       {tipoGraficaPerfil === 'piramide' ? (
                         <>
                           <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '10px', fontSize: '12px' }}>
@@ -1282,12 +1348,12 @@ function App() {
                                   mujeres: -Math.abs(d.mujeres || 0),
                                   hombres: Math.abs(d.hombres || 0)
                                 }))}
-                                margin={{top: 10, right: 15, left: 15, bottom: 10}}
+                                margin={{ top: 10, right: 15, left: 15, bottom: 10 }}
                               >
                                 <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
                                 <XAxis type="number" tickFormatter={(val) => Math.abs(val)} stroke={isDarkMode ? '#fff' : '#000'} domain={['auto', 'auto']} tick={{ fontSize: 10 }} />
                                 <YAxis dataKey="edad" type="category" reversed={true} stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 10 }} width={45} interval={0} orientation="left" />
-                                <Tooltip formatter={(val) => Math.abs(val)} contentStyle={{backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px', fontSize: '12px'}} />
+                                <Tooltip formatter={(val) => Math.abs(val)} contentStyle={{ backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px', fontSize: '12px' }} />
                                 <Bar dataKey="mujeres" fill={PALETTE.piramideMujeres} name="Mujeres" barSize={10} radius={[4, 0, 0, 4]}>
                                   <LabelList dataKey="mujeres" position="left" formatter={(v) => Math.abs(v).toLocaleString()} style={{ fontSize: '9px', fill: isDarkMode ? '#ccc' : '#444' }} />
                                 </Bar>
@@ -1301,11 +1367,11 @@ function App() {
                       ) : (
                         <div style={{ height: '450px' }}>
                           <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={ordenarEdades(datosPiramide).map(d => ({ ...d, hombres: Math.abs(d.hombres || 0), mujeres: Math.abs(d.mujeres || 0) }))} margin={{top: 20, right: 10, left: 0, bottom: 20}}>
+                            <BarChart data={ordenarEdades(datosPiramide).map(d => ({ ...d, hombres: Math.abs(d.hombres || 0), mujeres: Math.abs(d.mujeres || 0) }))} margin={{ top: 20, right: 10, left: 0, bottom: 20 }}>
                               <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
                               <XAxis dataKey="edad" stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 9 }} interval={0} angle={-30} textAnchor="end" />
                               <YAxis stroke={isDarkMode ? '#fff' : '#000'} tickFormatter={formatCompacto} tick={{ fontSize: 10 }} />
-                              <Tooltip formatter={(val) => Math.abs(val)} contentStyle={{backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px', fontSize: '12px'}} />
+                              <Tooltip formatter={(val) => Math.abs(val)} contentStyle={{ backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px', fontSize: '12px' }} />
                               <Bar dataKey="hombres" fill={PALETTE.piramideHombres} name="Hombres" barSize={10} radius={[4, 4, 0, 0]}>
                                 <LabelList dataKey="hombres" position="top" formatter={formatCompacto} style={{ fontSize: '8px', fontWeight: '700', fill: PALETTE.piramideHombres }} />
                               </Bar>
@@ -1405,11 +1471,11 @@ function App() {
                     <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
                       Edad Media
                     </h4>
-                    <button 
-                      type="button" 
-                      className="interactive-btn" 
-                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0', background: PALETTE.gold }} 
-                      onClick={obtenerNarrativaEdadMedia} 
+                    <button
+                      type="button"
+                      className="interactive-btn"
+                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0', background: PALETTE.gold }}
+                      onClick={obtenerNarrativaEdadMedia}
                       disabled={cargando}
                     >
                       {cargando ? 'Consultando...' : narrativaEdadMedia ? 'Ocultar Edad Media' : 'Consultar Edad Media'}
@@ -1441,11 +1507,11 @@ function App() {
                         <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoFin} onChange={(e) => setRangoFin(e.target.value)} />
                       </div>
                     </div>
-                    <button 
-                      className="interactive-btn" 
-                      type="button" 
-                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0' }} 
-                      onClick={() => { setMostrarPerfil(true); consultarPiramide(); }} 
+                    <button
+                      className="interactive-btn"
+                      type="button"
+                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0' }}
+                      onClick={() => { setMostrarPerfil(true); consultarPiramide(); }}
                       disabled={cargando}
                     >
                       <span className="btn-content">
@@ -1475,11 +1541,11 @@ function App() {
                         <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoFinTendencia} onChange={(e) => setRangoFinTendencia(e.target.value)} />
                       </div>
                     </div>
-                    <button 
-                      className="interactive-btn" 
-                      type="button" 
-                      style={{ ...styles.button(cargandoTendencia, isDarkMode), marginTop: '0' }} 
-                      onClick={consultarTendencia} 
+                    <button
+                      className="interactive-btn"
+                      type="button"
+                      style={{ ...styles.button(cargandoTendencia, isDarkMode), marginTop: '0' }}
+                      onClick={consultarTendencia}
                       disabled={cargandoTendencia}
                     >
                       <span className="btn-content">
@@ -1553,7 +1619,7 @@ function App() {
                             </select>
                           </div>
                         </div>
-                        
+
                         <button
                           type="button"
                           className="swap-btn"
@@ -1563,7 +1629,7 @@ function App() {
                         >
                           ⇄
                         </button>
-                        
+
                         <div style={{ flex: 1 }}>
                           <div className="campo-glow">
                             <label className="label-glow" style={styles.label}>Estado B</label>
@@ -1774,9 +1840,9 @@ function App() {
                                 </linearGradient>
                               </defs>
                               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#333' : '#eee'} />
-                              <XAxis dataKey="name" tick={{fill: isDarkMode ? '#fff' : '#000', fontSize: 12}} />
-                              <YAxis tick={{fill: isDarkMode ? '#fff' : '#000'}} domain={[0, 'auto']} tickFormatter={formatCompacto} />
-                              <Tooltip cursor={{fill: 'transparent'}} content={<ComparativaTooltip />} />
+                              <XAxis dataKey="name" tick={{ fill: isDarkMode ? '#fff' : '#000', fontSize: 12 }} />
+                              <YAxis tick={{ fill: isDarkMode ? '#fff' : '#000' }} domain={[0, 'auto']} tickFormatter={formatCompacto} />
+                              <Tooltip cursor={{ fill: 'transparent' }} content={<ComparativaTooltip />} />
                               <Bar dataKey="val" fill="url(#barraTotal)" radius={[10, 10, 0, 0]} barSize={80}>
                                 <LabelList dataKey="val" position="top" fill={isDarkMode ? PALETTE.goldSoft : PALETTE.wine} formatter={(value) => value.toLocaleString()} style={{ fontSize: '12px', fontWeight: '700' }} />
                               </Bar>
@@ -1790,8 +1856,8 @@ function App() {
                               margin={{ top: 35, right: 30, left: 20, bottom: 5 }}
                             >
                               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#333' : '#eee'} />
-                              <XAxis dataKey="name" tick={{fill: isDarkMode ? '#fff' : '#000', fontSize: 12}} />
-                              <YAxis tick={{fill: isDarkMode ? '#fff' : '#000'}} domain={[0, 'auto']} tickFormatter={formatCompacto} />
+                              <XAxis dataKey="name" tick={{ fill: isDarkMode ? '#fff' : '#000', fontSize: 12 }} />
+                              <YAxis tick={{ fill: isDarkMode ? '#fff' : '#000' }} domain={[0, 'auto']} tickFormatter={formatCompacto} />
                               <Tooltip content={<ComparativaTooltip />} />
                               <Line type="monotone" dataKey="val" stroke={PALETTE.wine} strokeWidth={4} dot={{ r: 6, fill: PALETTE.gold, stroke: isDarkMode ? '#1c1720' : '#ffffff', strokeWidth: 2 }} activeDot={{ r: 8, fill: PALETTE.wineLight, stroke: PALETTE.gold, strokeWidth: 3 }}>
                                 <LabelList dataKey="val" position="top" fill={isDarkMode ? PALETTE.goldSoft : PALETTE.wine} formatter={(value) => value.toLocaleString()} style={{ fontSize: '12px', fontWeight: '700' }} />
@@ -1930,17 +1996,17 @@ function App() {
                     <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
                       Contraste de Datos
                     </h4>
-                    <button 
-                      type="button" 
-                      className="interactive-btn" 
-                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0', background: PALETTE.gold }} 
+                    <button
+                      type="button"
+                      className="interactive-btn"
+                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0', background: PALETTE.gold }}
                       onClick={() => {
                         if (!munA || !munB) {
                           mostrarToast('Selecciona ambos municipios para contrastar.');
                           return;
                         }
                         compararPoblacion();
-                      }} 
+                      }}
                       disabled={cargando}
                     >
                       {cargando ? 'Contrastando...' : resultados.a !== null ? 'Ocultar Contraste' : 'Consultar Contraste'}
@@ -1957,10 +2023,10 @@ function App() {
                     <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
                       Gráfica de municipios
                     </h4>
-                    <button 
-                      className="interactive-btn" 
-                      type="button" 
-                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0' }} 
+                    <button
+                      className="interactive-btn"
+                      type="button"
+                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0' }}
                       onClick={alternarGraficaComparativa}
                       disabled={cargando}
                     >
@@ -1991,10 +2057,10 @@ function App() {
                         <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoFinComp} onChange={(e) => setRangoFinComp(e.target.value)} />
                       </div>
                     </div>
-                    <button 
-                      className="interactive-btn" 
-                      type="button" 
-                      style={{ ...styles.button(cargandoTendenciaComp, isDarkMode), marginTop: '0' }} 
+                    <button
+                      className="interactive-btn"
+                      type="button"
+                      style={{ ...styles.button(cargandoTendenciaComp, isDarkMode), marginTop: '0' }}
                       onClick={() => {
                         const targetA = munA || nombresCongelados.a;
                         const targetB = munB || nombresCongelados.b;
@@ -2006,7 +2072,7 @@ function App() {
                         setMostrarGrafica(false);
                         setResultados({ a: null, b: null });
                         consultarTendenciaComparativa();
-                      }} 
+                      }}
                       disabled={cargandoTendenciaComp}
                     >
                       <span className="btn-content">
