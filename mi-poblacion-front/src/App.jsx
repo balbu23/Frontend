@@ -11,15 +11,18 @@ import FondoAnimado from './FondoAnimado';
 const baseUrl = 'https://backend-production-1a3af.up.railway.app';
 
 const PALETTE = {
-  wine: '#741b2a',
-  wineDeep: '#4f0f1c',
-  wineLight: '#a62a40',
-  gold: '#c9a15a',
-  goldSoft: '#e4c98a',
-  danger: '#d64545',
-  success: '#2e7d32',
-  piramideHombres: '#a62a40',
-  piramideMujeres: '#e4c98a',
+  wine: '#6b1d2f',
+  wineDeep: '#4a121f',
+  wineLight: '#8c273e',
+  gold: '#8b9bb0', // Botón principal gris-azulado idéntico a la imagen
+  goldSoft: '#718096',
+  danger: '#dc2626',
+  success: '#16a34a',
+  piramideHombres: '#6b1d2f',
+  piramideMujeres: '#8b9bb0',
+  navyTitle: '#2b3648',
+  navyLabel: '#4a5568',
+  borderLight: '#e2e8f0',
 };
 
 const MAX_ANIOS_TENDENCIA = 20;
@@ -64,44 +67,43 @@ const getStyles = (isDarkMode) => ({
     maxWidth: '100%',
     display: 'flex',
     flexDirection: 'column',
-    background: 'transparent',
-    fontFamily: '"Montserrat", sans-serif',
+    background: isDarkMode ? '#0f172a' : '#f8fafc',
+    fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     padding: '0',
     margin: '0',
     position: 'relative',
     overflowX: 'hidden',
-    paddingTop: '135px',
+    paddingTop: '100px',
     boxSizing: 'border-box',
     zIndex: 1,
   },
   themeButton: {
-    padding: '8px',
-    width: '40px',
-    height: '40px',
+    padding: '6px',
+    width: '36px',
+    height: '36px',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '50%',
-    border: isDarkMode ? `1px solid ${PALETTE.gold}55` : `1px solid ${PALETTE.wine}33`,
+    borderRadius: '6px',
+    border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1',
     cursor: 'pointer',
-    background: isDarkMode ? 'rgba(34, 28, 40, 0.85)' : 'rgba(255, 255, 255, 0.90)',
-    backdropFilter: 'blur(8px)',
-    fontSize: '18px',
-    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-    boxShadow: isDarkMode ? '0 4px 16px rgba(0,0,0,0.4)' : '0 4px 16px rgba(116,27,42,0.1)',
+    background: isDarkMode ? '#1e293b' : '#ffffff',
+    fontSize: '16px',
+    transition: 'all 0.2s ease',
+    boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
     zIndex: 1100,
     flexShrink: 0,
   },
   card: {
     backgroundColor: 'transparent',
-    padding: '24px 36px',
+    padding: '20px',
     borderRadius: '0px',
     border: 'none',
     boxShadow: 'none',
     width: '100%',
     maxWidth: '1350px',
     margin: '0 auto',
-    minHeight: 'calc(100vh - 135px)',
+    minHeight: 'calc(100vh - 100px)',
     textAlign: 'center',
     position: 'relative',
     boxSizing: 'border-box',
@@ -113,36 +115,28 @@ const getStyles = (isDarkMode) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottom: '3px solid #c5bf6c',
-    paddingBottom: '8px',
-    marginBottom: '20px',
+    borderBottom: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+    padding: '12px 32px',
     position: 'fixed',
     top: 0,
     left: 0,
     width: '100%',
     zIndex: 1000,
-    backgroundColor: isDarkMode ? 'rgba(26, 21, 32, 0.88)' : 'rgba(255, 255, 255, 0.90)',
-    backdropFilter: 'blur(16px)',
-    WebkitBackdropFilter: 'blur(16px)',
-    paddingTop: '6px',
-    paddingLeft: '32px',
-    paddingRight: '32px',
+    backgroundColor: isDarkMode ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
     boxSizing: 'border-box',
-    boxShadow: isDarkMode
-      ? '0 10px 24px -10px rgba(0,0,0,0.6)'
-      : '0 10px 24px -10px rgba(116,27,42,0.12)',
-    transition: 'background-color 0.4s ease, box-shadow 0.3s ease',
+    boxShadow: isDarkMode ? '0 4px 12px rgba(0,0,0,0.3)' : '0 1px 3px rgba(0,0,0,0.05)',
   },
   headerLeft: {
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    gap: '14px',
+    gap: '12px',
   },
   headerLogo: {
-    width: '135px',
+    width: '120px',
     height: 'auto',
-    filter: isDarkMode ? 'drop-shadow(0 2px 8px rgba(201,161,90,0.2))' : 'none',
   },
   headerCenter: {
     flex: 5.5,
@@ -153,11 +147,10 @@ const getStyles = (isDarkMode) => ({
   },
   sedTitle: {
     margin: 0,
-    fontSize: '38px',
-    fontWeight: '1000',
-    color: isDarkMode ? PALETTE.goldSoft : '#2a2233',
-    letterSpacing: '5px',
-    textShadow: isDarkMode ? '0 4px 12px rgba(201,161,90,0.25)' : '0 4px 12px rgba(116,27,42,0.1)',
+    fontSize: '28px',
+    fontWeight: '700',
+    color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
+    letterSpacing: '3px',
     lineHeight: '1',
   },
   headerRight: {
@@ -167,12 +160,12 @@ const getStyles = (isDarkMode) => ({
     textAlign: 'right',
   },
   secretariaText: {
-    fontSize: '14px',
-    fontWeight: '700',
-    color: isDarkMode ? '#d0c2db' : '#5c2d36',
+    fontSize: '11px',
+    fontWeight: '600',
+    color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel,
     textTransform: 'uppercase',
-    letterSpacing: '1px',
-    lineHeight: '1.2',
+    letterSpacing: '0.5px',
+    lineHeight: '1.3',
   },
   inicioMainWrapper: {
     display: 'flex',
@@ -191,195 +184,175 @@ const getStyles = (isDarkMode) => ({
     textAlign: 'left',
     maxWidth: '580px',
     paddingRight: '40px',
-    marginTop: '40px',
+    marginTop: '30px',
   },
   inicioTitle: {
-    fontSize: '46px',
-    fontWeight: '800',
-    color: isDarkMode ? '#fff' : PALETTE.wine,
-    marginBottom: '26px',
-    lineHeight: '1.3',
+    fontSize: '36px',
+    fontWeight: '700',
+    color: isDarkMode ? '#fff' : PALETTE.navyTitle,
+    marginBottom: '20px',
+    lineHeight: '1.25',
   },
   inicioSubText: {
-    fontSize: '15.5px',
-    color: isDarkMode ? '#b8adc4' : '#6a5057',
-    lineHeight: '1.65',
+    fontSize: '15px',
+    color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel,
+    lineHeight: '1.6',
     marginBottom: '24px',
   },
   panelToggleBtn: (isOpen) => ({
     position: 'fixed',
-    right: isOpen ? '300px' : '0px',
+    right: isOpen ? '280px' : '0px',
     top: '50%',
     transform: 'translateY(-50%)',
-    width: '32px',
-    height: '46px',
-    backgroundColor: isDarkMode ? '#b8860b' : '#2a2233',
+    width: '28px',
+    height: '38px',
+    backgroundColor: '#8b9bb0',
     color: '#ffffff',
     border: 'none',
-    borderTopLeftRadius: '10px',
-    borderBottomLeftRadius: '10px',
+    borderTopLeftRadius: '6px',
+    borderBottomLeftRadius: '6px',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '18px',
+    fontSize: '14px',
     fontWeight: 'bold',
-    transition: 'right 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s',
+    transition: 'right 0.3s ease',
     zIndex: 1001,
-    boxShadow: '-4px 0 15px rgba(0,0,0,0.15)',
+    boxShadow: '-2px 0 8px rgba(0,0,0,0.1)',
   }),
   sidePanel: (isOpen) => ({
     position: 'fixed',
-    right: isOpen ? '0px' : '-300px',
-    top: '135px',
+    right: isOpen ? '0px' : '-280px',
+    top: '100px',
     bottom: '0px',
-    width: '300px',
-    backgroundColor: isDarkMode ? 'rgba(26, 21, 32, 0.94)' : 'rgba(248, 244, 236, 0.94)',
-    backdropFilter: 'blur(16px)',
-    WebkitBackdropFilter: 'blur(16px)',
-    borderLeft: isDarkMode ? '1px solid #b8860b44' : '1px solid #80002022',
-    padding: '24px 20px',
+    width: '280px',
+    backgroundColor: isDarkMode ? 'rgba(15, 23, 42, 0.98)' : 'rgba(255, 255, 255, 0.98)',
+    backdropFilter: 'blur(12px)',
+    borderLeft: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+    padding: '20px 16px',
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
-    transition: 'right 0.40s cubic-bezier(0.16, 1, 0.3, 1)',
+    gap: '12px',
+    transition: 'right 0.3s ease',
     zIndex: 1000,
-    boxShadow: isOpen ? '-10px 0 30px rgba(0,0,0,0.15)' : 'none',
+    boxShadow: isOpen ? '-4px 0 20px rgba(0,0,0,0.08)' : 'none',
     overflowY: 'auto',
     textAlign: 'left',
   }),
   title: {
-    color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine,
-    fontSize: '26px',
-    marginBottom: '26px',
-    fontWeight: '800',
-    letterSpacing: '-0.3px',
-  },
-  label: {
-    color: isDarkMode ? '#d0c2db' : '#5c2d36',
-    fontWeight: '800',
-    fontSize: '11.5px',
-    marginBottom: '8px',
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'left',
+    color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
+    fontSize: '13px',
+    marginBottom: '14px',
+    fontWeight: '700',
+    textAlign: 'center',
     textTransform: 'uppercase',
     letterSpacing: '0.8px',
   },
+  label: {
+    color: isDarkMode ? '#cbd5e1' : PALETTE.navyLabel,
+    fontWeight: '600',
+    fontSize: '12px',
+    marginBottom: '6px',
+    display: 'block',
+    textAlign: 'left',
+  },
   input: {
     width: '100%',
-    padding: '14px 16px',
-    marginBottom: '16px',
-    borderRadius: '16px',
-    border: isDarkMode ? `1.5px solid ${PALETTE.gold}35` : `1.5px solid ${PALETTE.wine}25`,
-    fontSize: '15px',
+    padding: '10px 12px',
+    marginBottom: '12px',
+    borderRadius: '6px',
+    border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+    fontSize: '13.5px',
     boxSizing: 'border-box',
-    textAlign: 'center',
-    backgroundColor: isDarkMode ? '#231d2b' : '#fffcf9',
-    backgroundImage: isDarkMode
-      ? `linear-gradient(160deg, #251f2e 0%, #1e1826 100%)`
-      : `linear-gradient(160deg, #ffffff 0%, #fbf5ef 100%)`,
-    color: isDarkMode ? '#fff' : '#1f191b',
-    boxShadow: isDarkMode
-      ? `0 4px 18px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(201,161,90,0.06)`
-      : `0 4px 16px rgba(116,27,42,0.06), inset 0 0 0 1px rgba(116,27,42,0.02)`,
-    transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+    textAlign: 'left',
+    backgroundColor: isDarkMode ? '#0f172a' : '#ffffff',
+    color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
     outline: 'none',
+    transition: 'border-color 0.2s ease',
   },
   button: (isCargando, isDarkMode) => ({
     width: '100%',
-    padding: '15px',
-    backgroundImage: isDarkMode
-      ? `linear-gradient(135deg, ${PALETTE.wineLight}, ${PALETTE.wineDeep})`
-      : `linear-gradient(135deg, ${PALETTE.wine}, ${PALETTE.wineDeep})`,
+    padding: '10px 16px',
+    backgroundColor: '#8b9bb0',
     color: '#ffffff',
     border: 'none',
-    borderRadius: '16px',
-    fontSize: '16px',
-    fontWeight: '700',
+    borderRadius: '6px',
+    fontSize: '13.5px',
+    fontWeight: '600',
     cursor: isCargando ? 'not-allowed' : 'pointer',
-    marginTop: '10px',
-    opacity: isCargando ? 0.75 : 1,
-    transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-    boxShadow: isDarkMode
-      ? '0 8px 24px rgba(166,42,64,0.38)'
-      : '0 8px 24px rgba(116,27,42,0.26)',
+    marginTop: '6px',
+    opacity: isCargando ? 0.7 : 1,
+    transition: 'background-color 0.2s ease',
   }),
   resultadoCard: {
-    padding: '16px',
-    backgroundColor: isDarkMode ? '#231d2b' : '#fdf2f4',
-    borderRadius: '16px',
-    border: isDarkMode ? `1px solid ${PALETTE.gold}44` : `1px solid ${PALETTE.wine}44`,
+    padding: '14px',
+    backgroundColor: isDarkMode ? '#0f172a' : '#ffffff',
+    borderRadius: '6px',
+    border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
     marginTop: '12px',
-    color: isDarkMode ? '#fff' : '#1f191b',
-    transition: 'all 0.3s ease',
+    color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
   },
   exportButton: {
-    marginTop: '16px',
-    padding: '14px 20px',
-    backgroundImage: isDarkMode
-      ? `linear-gradient(135deg, ${PALETTE.wineDeep}, #1f1826)`
-      : 'linear-gradient(135deg, #2c2c2c, #0d0d0d)',
+    marginTop: '14px',
+    padding: '10px 16px',
+    backgroundColor: isDarkMode ? '#334155' : '#4a5568',
     color: '#fff',
     border: 'none',
-    borderRadius: '14px',
-    fontWeight: '700',
+    borderRadius: '6px',
+    fontSize: '13px',
+    fontWeight: '600',
     cursor: 'pointer',
     width: '100%',
-    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-    boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
   },
   swapButton: {
     alignSelf: 'center',
-    marginTop: '24px',
-    width: '42px',
-    height: '42px',
-    minWidth: '42px',
+    marginTop: '18px',
+    width: '34px',
+    height: '34px',
+    minWidth: '34px',
     borderRadius: '50%',
-    border: isDarkMode ? `1.5px solid ${PALETTE.gold}66` : `1.5px solid ${PALETTE.wine}44`,
-    background: isDarkMode ? '#231d2b' : '#ffffff',
-    color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine,
-    fontSize: '18px',
+    border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1',
+    background: isDarkMode ? '#1e293b' : '#ffffff',
+    color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
+    fontSize: '16px',
     cursor: 'pointer',
-    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-    boxShadow: isDarkMode ? '0 4px 14px rgba(0,0,0,0.4)' : '0 4px 14px rgba(116,27,42,0.12)',
   },
   exportButtonPdf: {
-    marginTop: '12px',
-    padding: '14px 20px',
+    marginTop: '8px',
+    padding: '10px 16px',
     backgroundColor: 'transparent',
-    color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine,
-    border: isDarkMode ? `1.5px solid ${PALETTE.gold}66` : `1.5px solid ${PALETTE.wine}55`,
-    borderRadius: '14px',
-    fontWeight: '700',
+    color: isDarkMode ? '#94a3b8' : '#4a5568',
+    border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1',
+    borderRadius: '6px',
+    fontSize: '13px',
+    fontWeight: '600',
     cursor: 'pointer',
     width: '100%',
-    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
   },
   narrativeBox: {
-    marginTop: '18px',
-    padding: '16px 18px',
-    border: `1.5px dashed ${PALETTE.gold}`,
-    borderRadius: '14px',
-    fontSize: '13.5px',
-    lineHeight: '1.5',
+    marginTop: '14px',
+    padding: '14px 16px',
+    borderLeft: '4px solid #8b9bb0',
+    borderRadius: '0 6px 6px 0',
+    fontSize: '13px',
+    lineHeight: '1.6',
     textAlign: 'justify',
-    backgroundColor: isDarkMode ? '#1f1926' : '#fcf5ec',
-    color: isDarkMode ? '#e4dbe8' : '#3a2d2a',
+    backgroundColor: isDarkMode ? '#0f172a' : '#f8fafc',
+    color: isDarkMode ? '#cbd5e1' : PALETTE.navyLabel,
   },
   legendChip: (color, isDarkMode) => ({
     display: 'inline-flex',
     alignItems: 'center',
     gap: '6px',
-    padding: '6px 14px',
-    borderRadius: '999px',
-    fontSize: '12px',
-    fontWeight: '700',
-    backgroundColor: `${color}1f`,
-    color: isDarkMode ? '#fff' : color,
-    border: `1px solid ${color}55`,
-    boxShadow: `0 2px 10px ${color}15`,
+    padding: '4px 10px',
+    borderRadius: '4px',
+    fontSize: '11px',
+    fontWeight: '600',
+    backgroundColor: isDarkMode ? '#0f172a' : '#f8fafc',
+    color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
+    border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
   }),
 });
 
@@ -552,7 +525,7 @@ function App() {
   const exportarImagen = () => {
     if (capturaRef.current) {
       html2canvas(capturaRef.current, {
-        backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
+        backgroundColor: isDarkMode ? '#0f172a' : '#ffffff',
         ignoreElements: (el) => el.classList && el.classList.contains('no-capturar'),
       }).then((canvas) => {
         const link = document.createElement('a');
@@ -771,7 +744,7 @@ function App() {
     if (!capturaRef.current) return;
     try {
       const canvas = await html2canvas(capturaRef.current, {
-        backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
+        backgroundColor: isDarkMode ? '#0f172a' : '#ffffff',
         ignoreElements: (el) => el.classList && el.classList.contains('no-capturar'),
       });
       const imgData = canvas.toDataURL('image/png');
@@ -798,16 +771,15 @@ function App() {
     const otroValor = esA ? resultados.b : resultados.a;
     const diferencia = valorActual - (otroValor || 0);
     const flecha = diferencia > 0 ? '▲' : diferencia < 0 ? '▼' : '■';
-    const colorFlecha = diferencia > 0 ? PALETTE.success : diferencia < 0 ? PALETTE.danger : '#888';
+    const colorFlecha = diferencia > 0 ? PALETTE.success : diferencia < 0 ? PALETTE.danger : '#64748b';
     return (
       <div style={{
-        backgroundColor: isDarkMode ? '#2d2438' : '#fff',
+        backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
         padding: '10px 14px',
-        borderRadius: '10px',
-        border: `1px solid ${PALETTE.gold}55`,
-        boxShadow: '0 8px 22px rgba(0,0,0,0.18)',
+        borderRadius: '6px',
+        border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
         fontSize: '13px',
-        color: isDarkMode ? '#fff' : '#333',
+        color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
       }}>
         <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>{label}</div>
         <div>Año: <b>{ano}</b></div>
@@ -825,13 +797,12 @@ function App() {
     const valB = payload.find((p) => p.dataKey === 'b')?.value ?? 0;
     return (
       <div style={{
-        backgroundColor: isDarkMode ? '#2d2438' : '#fff',
+        backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
         padding: '10px 14px',
-        borderRadius: '10px',
-        border: `1px solid ${PALETTE.gold}55`,
-        boxShadow: '0 8px 22px rgba(0,0,0,0.18)',
+        borderRadius: '6px',
+        border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
         fontSize: '13px',
-        color: isDarkMode ? '#fff' : '#333',
+        color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
       }}>
         <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>Año {label}</div>
         <div style={{ color: PALETTE.wine }}>{nombresTendenciaComp.a}: <b>{valA.toLocaleString()}</b></div>
@@ -855,10 +826,9 @@ function App() {
         style={{
           display: 'flex',
           width: '100%',
-          height: '30px',
-          borderRadius: '10px',
+          height: '24px',
+          borderRadius: '4px',
           overflow: 'hidden',
-          boxShadow: isDarkMode ? '0 4px 14px rgba(0,0,0,0.35)' : '0 4px 14px rgba(116,27,42,0.14)',
         }}
       >
         {segmentos.map((s) => (
@@ -870,7 +840,7 @@ function App() {
               width: `${s.pct}%`,
               backgroundColor: colorBase,
               opacity: s.opacidad,
-              borderRight: isDarkMode ? '1px solid rgba(0,0,0,0.3)' : '1px solid rgba(255,255,255,0.55)',
+              borderRight: '1px solid rgba(255,255,255,0.4)',
             }}
           />
         ))}
@@ -881,72 +851,58 @@ function App() {
   return (
     <div style={styles.container}>
       <style>{`
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes viewEnter {
-          from { opacity: 0; transform: translateY(16px) scale(0.98); filter: blur(3px); }
-          to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        body { margin: 0; background-color: #f8fafc; }
+        .vista-transition { animation: fadeIn 0.25s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ESTILO FORMAL DE CONTENEDORES COMO LA IMAGEN */
+        .panel-section {
+          background-color: ${isDarkMode ? '#1e293b' : '#ffffff'};
+          border-radius: 10px;
+          border: ${isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0'};
+          padding: 18px 20px;
+          margin-bottom: 14px;
+          box-shadow: ${isDarkMode ? '0 1px 3px rgba(0,0,0,0.3)' : '0 1px 3px rgba(0,0,0,0.02)'};
+          box-sizing: border-box;
+          width: 100%;
         }
-        .vista-transition { animation: viewEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .section-header {
+          font-size: 11px;
+          font-weight: 700;
+          color: ${isDarkMode ? '#94a3b8' : '#64748b'};
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+          text-align: center;
+          margin-bottom: 14px;
+        }
+
         .interactive-btn:hover:not(:disabled) {
-          transform: translateY(-2px) scale(1.015);
-          filter: brightness(1.12);
-          box-shadow: 0 10px 28px rgba(116, 27, 42, 0.4), 0 0 22px rgba(201, 161, 90, 0.35);
+          background-color: #718096 !important;
         }
-        .interactive-btn:active:not(:disabled) {
-          transform: translateY(0) scale(0.99);
-        }
-        .interactive-input:hover {
-          border-color: ${PALETTE.gold} !important;
-          box-shadow: 0 0 0 3px rgba(201, 161, 90, 0.16), 0 8px 20px rgba(116, 27, 42, 0.16);
-          transform: translateY(-1px);
-        }
+        
         .interactive-input:focus {
-          border-color: ${PALETTE.gold} !important;
-          box-shadow: 0 0 0 4px rgba(201, 161, 90, 0.22), 0 0 16px rgba(116, 27, 42, 0.18);
-          transform: translateY(-1px);
+          border-color: #3b82f6 !important;
+          box-shadow: 0 0 0 1px #3b82f6;
+        }
+        .interactive-input::placeholder {
+          color: #94a3b8;
+          font-size: 13px;
         }
         select.interactive-input {
-          appearance: none; -webkit-appearance: none; -moz-appearance: none;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
           cursor: pointer;
-          background-image: linear-gradient(45deg, transparent 50%, ${PALETTE.gold} 50%), linear-gradient(135deg, ${PALETTE.gold} 50%, transparent 50%);
-          background-position: calc(100% - 22px) calc(1em + 2px), calc(100% - 17px) calc(1em + 2px);
-          background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 40px;
+          background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%3a475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+          background-repeat: no-repeat;
+          background-position: right 12px center;
+          background-size: 14px;
+          padding-right: 32px;
         }
-        select.interactive-input::-ms-expand { display: none; }
         select.interactive-input option {
-          background-color: ${isDarkMode ? '#252030' : '#fffdfb'};
-          color: ${isDarkMode ? '#ffffff' : '#3a2a2f'};
-        }
-        .resultado-glow:hover {
-          box-shadow: 0 0 0 2px rgba(201, 161, 90, 0.35), 0 8px 24px rgba(116, 27, 42, 0.18);
-          transform: translateY(-2px);
-        }
-        .campo-glow {
-          border-radius: 16px; padding: 8px 8px 0 8px; transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-        }
-        .campo-glow:hover {
-          background: ${isDarkMode ? 'rgba(201, 161, 90, 0.06)' : 'rgba(116, 27, 42, 0.04)'};
-          box-shadow: 0 8px 20px rgba(116, 27, 42, 0.10), 0 0 14px rgba(201, 161, 90, 0.16);
-          transform: translateY(-2px);
-        }
-        .theme-toggle:hover {
-          transform: rotate(15deg) scale(1.08);
-          box-shadow: 0 0 18px rgba(201, 161, 90, 0.45);
-        }
-        .label-glow {
-          position: relative;
-          text-shadow: ${isDarkMode ? '0 0 12px rgba(228,201,138,0.30)' : '0 0 10px rgba(116,27,42,0.10)'};
-        }
-        .label-glow::before {
-          content: '';
-          display: inline-block;
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          margin-right: 7px;
-          flex-shrink: 0;
-          background: ${PALETTE.gold};
-          box-shadow: 0 0 8px ${PALETTE.gold}, 0 0 2px ${PALETTE.gold};
+          background-color: ${isDarkMode ? '#1e293b' : '#ffffff'};
+          color: ${isDarkMode ? '#f8fafc' : '#2b3648'};
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .spinner {
@@ -956,7 +912,6 @@ function App() {
           border-radius: 50%;
           display: inline-block;
           animation: spin 0.7s linear infinite;
-          flex-shrink: 0;
         }
         .btn-content {
           display: inline-flex;
@@ -965,118 +920,28 @@ function App() {
           gap: 8px;
           width: 100%;
         }
-        @keyframes loadingSlide {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(250%); }
-        }
         .progress-bar {
-          position: absolute; top: 0; left: 0; right: 0; height: 3px;
-          overflow: hidden;
-          background: ${isDarkMode ? 'rgba(201,161,90,0.15)' : 'rgba(116,27,42,0.10)'};
-          z-index: 5;
+          position: fixed; top: 0; left: 0; right: 0; height: 3px;
+          overflow: hidden; background: #e2e8f0; z-index: 2000;
         }
         .progress-bar::after {
-          content: '';
-          position: absolute; top: 0; left: 0; height: 100%; width: 40%;
-          background: linear-gradient(90deg, transparent, ${PALETTE.gold}, transparent);
-          animation: loadingSlide 1.1s ease-in-out infinite;
+          content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 50%;
+          background: #8b9bb0;
+          animation: loadingSlide 1s infinite ease-in-out;
         }
-        @keyframes toastIn {
-          from { opacity: 0; transform: translate(-50%, -12px); }
-          to   { opacity: 1; transform: translate(-50%, 0); }
-        }
+        @keyframes loadingSlide { 0% { left: -50%; } 100% { left: 100%; } }
         .toast {
-          position: fixed;
-          top: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          padding: 12px 22px;
-          border-radius: 12px;
-          z-index: 2000;
-          font-size: 13px;
-          font-weight: 600;
-          box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-          animation: toastIn 0.3s ease-out;
-          color: #fff;
+          position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+          padding: 10px 18px; border-radius: 6px; z-index: 3000;
+          font-size: 13px; font-weight: 500; color: #fff;
         }
         .toast-error { background: ${PALETTE.danger}; }
         .toast-success { background: ${PALETTE.success}; }
-        .swap-btn:hover {
-          transform: rotate(180deg) scale(1.1);
-          box-shadow: 0 0 16px rgba(201, 161, 90, 0.5);
-        }
-        @keyframes resultEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .result-enter { animation: resultEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
-        .segmento-edad {
-          position: relative;
-          transition: filter 0.2s ease;
-          cursor: default;
-        }
-        .segmento-edad:hover {
-          filter: brightness(1.25);
-        }
-        .home-card {
-          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-        .home-card:hover {
-          transform: translateY(-6px) scale(1.015);
-          box-shadow: ${isDarkMode
-          ? '0 20px 40px rgba(0,0,0,0.6), 0 0 24px rgba(201,161,90,0.25)'
-          : '0 20px 40px rgba(116,27,42,0.14), 0 0 20px rgba(201,161,90,0.20)'} !important;
-          border-color: ${PALETTE.gold} !important;
-        }
-        .nav-tab-btn {
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .nav-tab-btn:hover:not(.active) {
-          background-color: ${isDarkMode ? 'rgba(201,161,90,0.15)' : 'rgba(116,27,42,0.08)'} !important;
-          color: ${isDarkMode ? PALETTE.goldSoft : PALETTE.wine} !important;
-          transform: translateY(-1px);
-        }
-        /* ================= FONDO DINÁMICO EN VIVO (SIN TEXTO) ================= */
-        .dynamic-background {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          overflow: hidden;
-          pointer-events: none;
-          z-index: 0;
-        }
-        .bg-gradient-base {
-          position: absolute;
-          inset: 0;
-          background: ${isDarkMode
-          ? 'linear-gradient(135deg, #0b090f 0%, #150f1c 25%, #1d1324 50%, #130d1a 75%, #08060a 100%)'
-          : 'linear-gradient(135deg, #fdfbf7 0%, #f6eee3 25%, #faebdd 50%, #fbf4eb 75%, #fbf8f2 100%)'};
-          background-size: 400% 400%;
-          animation: gradientShift 24s ease infinite;
-        }
-        @keyframes gradientShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .bg-grid-overlay {
-          position: absolute;
-          inset: 0;
-          background-image: radial-gradient(${isDarkMode ? 'rgba(201,161,90,0.13)' : 'rgba(116,27,42,0.05)'} 1.2px, transparent 1.2px);
-          background-size: 36px 36px;
-          opacity: ${isDarkMode ? '0.6' : '0.45'};
-          animation: gridDrift 45s linear infinite;
-        }
-        @keyframes gridDrift {
-          0% { background-position: 0px 0px; }
-          100% { background-position: 72px 72px; }
-        }
       `}</style>
 
-      {/* CAPA DE FONDO DINÁMICO INTERACTIVO */}
-      <div className="dynamic-background" aria-hidden="true">
-        <div className="bg-gradient-base" />
+      {/* CAPA DE FONDO DINÁMICO */}
+      <div className="dynamic-background" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }} aria-hidden="true">
         <FondoAnimado isDarkMode={isDarkMode} />
-        <div className="bg-grid-overlay" />
       </div>
 
       {toast && <div className={`toast toast-${toast.type}`}>{toast.message}</div>}
@@ -1084,7 +949,7 @@ function App() {
       <div style={styles.card}>
         {(cargando || cargandoTendencia || cargandoTendenciaComp || cargandoDistribucion || cargandoUbicaciones) && <div className="progress-bar" />}
 
-        {/* ENCABEZADO GLOBAL SIN BARRA DE NAVEGACIÓN */}
+        {/* ENCABEZADO GLOBAL */}
         <div style={styles.header}>
           <div style={styles.headerLeft}>
             <img src="/ayuntamiento.webp" alt="Ayuntamiento" style={styles.headerLogo} />
@@ -1100,7 +965,7 @@ function App() {
           </div>
           <div style={styles.headerCenter}>
             <h1 style={styles.sedTitle}>S E D</h1>
-            <span style={{ fontSize: '13px', color: isDarkMode ? PALETTE.goldSoft : PALETTE.gold, fontWeight: '800', letterSpacing: '0.8px', marginTop: '2px', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '11px', color: isDarkMode ? '#cbd5e1' : PALETTE.navyLabel, fontWeight: '700', letterSpacing: '1px', marginTop: '4px', textTransform: 'uppercase' }}>
               Sistema de Estimación Demográfica
             </span>
           </div>
@@ -1109,7 +974,7 @@ function App() {
           </div>
         </div>
 
-        {/* BOTÓN MÓVIL/DESPLEGABLE Y PANEL LATERAL */}
+        {/* PANEL LATERAL */}
         <button
           style={styles.panelToggleBtn(panelLateralAbierto)}
           onClick={() => setPanelLateralAbierto(!panelLateralAbierto)}
@@ -1119,17 +984,14 @@ function App() {
         </button>
 
         <div style={styles.sidePanel(panelLateralAbierto)}>
-          <h3 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '15px', fontWeight: '800', margin: '0 0 10px 0' }}>
+          <h3 style={{ color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle, fontSize: '13px', fontWeight: '700', margin: '0 0 10px 0', textTransform: 'uppercase' }}>
             Menú Principal
           </h3>
-          <p style={{ fontSize: '12.5px', color: isDarkMode ? '#bbb' : '#555', lineHeight: '1.4', margin: '0 0 15px 0' }}>
-            Acceso rápido a las funciones principales del sistema.
-          </p>
 
           <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(vista === 'inicio', isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={{ ...styles.button(false, isDarkMode), backgroundColor: vista === 'inicio' ? '#4a5568' : '#8b9bb0' }}
             onClick={() => { setVista('inicio'); setPanelLateralAbierto(false); }}
           >
             Inicio
@@ -1138,7 +1000,7 @@ function App() {
           <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(vista === 'estimacion', isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={{ ...styles.button(false, isDarkMode), backgroundColor: vista === 'estimacion' ? '#4a5568' : '#8b9bb0' }}
             onClick={() => { setVista('estimacion'); setPanelLateralAbierto(false); }}
           >
             Estimación de Municipios
@@ -1147,7 +1009,7 @@ function App() {
           <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(vista === 'comparar', isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={{ ...styles.button(false, isDarkMode), backgroundColor: vista === 'comparar' ? '#4a5568' : '#8b9bb0' }}
             onClick={() => { setVista('comparar'); setPanelLateralAbierto(false); }}
           >
             Comparativa de Municipios
@@ -1156,7 +1018,7 @@ function App() {
           <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(vista === 'mapa', isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={{ ...styles.button(false, isDarkMode), backgroundColor: vista === 'mapa' ? '#4a5568' : '#8b9bb0' }}
             onClick={() => { setVista('mapa'); setPanelLateralAbierto(false); }}
           >
             Datos por Colonias
@@ -1165,7 +1027,7 @@ function App() {
           <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={styles.button(false, isDarkMode)}
             onClick={() => mostrarToast('Función en desarrollo', 'success')}
           >
             Comparativa de Colonias
@@ -1173,18 +1035,17 @@ function App() {
           <button
             type="button"
             className="interactive-btn"
-            style={{ ...styles.button(false, isDarkMode), fontSize: '13px', padding: '12px' }}
+            style={styles.button(false, isDarkMode)}
             onClick={() => exportarPDF()}
           >
             Generar Reportes PDF
           </button>
         </div>
 
-
         {vista === 'inicio' && (
           <div className="vista-transition" style={styles.inicioMainWrapper}>
             <div style={styles.inicioContainer}>
-              <h2 style={styles.inicioTitle}>Plataforma de Análisis, Proyecciones y Visualización de tendencias poblacionales</h2>
+              <h2 style={styles.inicioTitle}>Plataforma de Análisis y Visualización Demográfica</h2>
               <p style={styles.inicioSubText}>
                 Herramienta institucional para la consulta demográfica municipal, análisis de tendencias y proyecciones estratégicas de población en el estado.
               </p>
@@ -1198,36 +1059,25 @@ function App() {
           </div>
         )}
 
-
         {/* VISTA ESTIMACIÓN */}
         {vista === 'estimacion' && (
           <div className="vista-transition" style={styles.inicioMainWrapper}>
             <div style={{ width: '100%', paddingBottom: '20px', textAlign: 'left' }}>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 340px',
-                gap: '24px',
+                gridTemplateColumns: '1fr 320px',
+                gap: '20px',
                 alignItems: 'start',
-                marginBottom: '30px'
+                marginBottom: '20px'
               }}>
 
-                <div style={{
-                  backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
-                  padding: '24px',
-                  borderRadius: '20px',
-                  border: isDarkMode ? `1px solid ${PALETTE.gold}22` : `1px solid ${PALETTE.wine}15`,
-                  boxSizing: 'border-box',
-                  width: '100%',
-                  overflow: 'hidden'
-                }}>
+                <div className="panel-section">
                   {(!mostrarPerfil || !datosPiramide) && !datosTendencia ? (
                     <div>
-                      <h3 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '15px', fontWeight: '800', marginBottom: '20px' }}>
-                        Parámetros de Consulta
-                      </h3>
+                      <h3 style={styles.title}>Parámetros de Consulta</h3>
 
-                      <div className="campo-glow">
-                        <label className="label-glow" style={styles.label}>Estado</label>
+                      <div>
+                        <label style={styles.label}>Estado</label>
                         <select
                           className="interactive-input"
                           style={styles.input}
@@ -1241,11 +1091,11 @@ function App() {
                         </select>
                       </div>
 
-                      <div className="campo-glow">
-                        <label className="label-glow" style={styles.label}>Municipio</label>
+                      <div>
+                        <label style={styles.label}>Municipio</label>
                         <select
                           className="interactive-input"
-                          style={{ ...styles.input, opacity: !estadoSeleccionado ? 0.7 : 1 }}
+                          style={{ ...styles.input, opacity: !estadoSeleccionado ? 0.6 : 1 }}
                           value={municipio}
                           onChange={(e) => setMunicipio(e.target.value)}
                           disabled={!estadoSeleccionado}
@@ -1257,13 +1107,13 @@ function App() {
                         </select>
                       </div>
 
-                      <div className="campo-glow">
-                        <label className="label-glow" style={styles.label}>Año</label>
+                      <div>
+                        <label style={styles.label}>Año</label>
                         <input className="interactive-input" style={styles.input} type="number" value={ano} onChange={(e) => setAno(e.target.value)} />
                       </div>
 
-                      <div className="campo-glow">
-                        <label className="label-glow" style={styles.label}>Género</label>
+                      <div>
+                        <label style={styles.label}>Género</label>
                         <select className="interactive-input" style={styles.input} value={sexo} onChange={(e) => setSexo(e.target.value)}>
                           <option value="AMBOS">Ambos</option>
                           <option value="HOMBRES">Hombres</option>
@@ -1285,22 +1135,22 @@ function App() {
                       </button>
 
                       {resultado !== null && (
-                        <div className="resultado-glow" style={{ ...styles.resultadoCard, marginTop: '16px', textAlign: 'center' }}>
-                          <b>{resultado.toLocaleString()}</b> habitantes
+                        <div style={{ ...styles.resultadoCard, marginTop: '14px', textAlign: 'center' }}>
+                          <span style={{ fontSize: '18px', fontWeight: '700', display: 'block' }}>{resultado.toLocaleString()} habitantes</span>
                           <button
                             type="button"
                             className="interactive-btn no-capturar"
                             style={{
                               display: 'block',
                               margin: '8px auto 0 auto',
-                              padding: '5px 12px',
-                              fontSize: '11.5px',
-                              borderRadius: '8px',
+                              padding: '4px 10px',
+                              fontSize: '11px',
+                              borderRadius: '4px',
                               background: 'transparent',
-                              border: `1px solid ${isDarkMode ? PALETTE.goldSoft : PALETTE.wine}`,
-                              color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine,
+                              border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1',
+                              color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel,
                               cursor: 'pointer',
-                              fontWeight: 'bold'
+                              fontWeight: '600'
                             }}
                             onClick={() => setResultado(null)}
                           >
@@ -1311,13 +1161,13 @@ function App() {
                     </div>
                   ) : mostrarPerfil && datosPiramide ? (
                     <div ref={capturaRef} style={{ width: '100%' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }}>
-                        <h3 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, margin: 0, fontSize: '15px' }}>Perfil Demográfico (0-4 a 85+ años)</h3>
-                        <div style={{ display: 'flex', gap: '8px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+                        <h3 style={{ ...styles.title, margin: 0, textAlign: 'left' }}>Perfil Demográfico</h3>
+                        <div style={{ display: 'flex', gap: '6px' }}>
                           <button
                             className="interactive-btn no-capturar"
                             type="button"
-                            style={{ padding: '6px 12px', fontSize: '11px', borderRadius: '8px', background: PALETTE.gold, border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 'bold' }}
+                            style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: '#8b9bb0', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: '600' }}
                             onClick={() => setTipoGraficaPerfil(prev => prev === 'piramide' ? 'barras' : 'piramide')}
                           >
                             {tipoGraficaPerfil === 'piramide' ? 'Ver Vertical' : 'Ver Pirámide'}
@@ -1325,7 +1175,7 @@ function App() {
                           <button
                             className="interactive-btn no-capturar"
                             type="button"
-                            style={{ padding: '6px 12px', fontSize: '11px', borderRadius: '8px', background: 'transparent', border: `1px solid ${isDarkMode ? PALETTE.goldSoft : PALETTE.wine}`, color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, cursor: 'pointer', fontWeight: 'bold' }}
+                            style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: 'transparent', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, cursor: 'pointer', fontWeight: '600' }}
                             onClick={() => { setMostrarPerfil(false); setDatosPiramide(null); }}
                           >
                             Ocultar Perfil
@@ -1335,11 +1185,11 @@ function App() {
 
                       {tipoGraficaPerfil === 'piramide' ? (
                         <>
-                          <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '10px', fontSize: '12px' }}>
-                            <span style={{ color: PALETTE.piramideMujeres, fontWeight: 'bold' }}>● Mujeres</span>
-                            <span style={{ color: PALETTE.piramideHombres, fontWeight: 'bold' }}>● Hombres</span>
+                          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '8px', fontSize: '11px' }}>
+                            <span style={{ color: PALETTE.piramideMujeres, fontWeight: '600' }}>● Mujeres</span>
+                            <span style={{ color: PALETTE.piramideHombres, fontWeight: '600' }}>● Hombres</span>
                           </div>
-                          <div style={{ height: '450px' }}>
+                          <div style={{ height: '420px' }}>
                             <ResponsiveContainer width="100%" height="100%">
                               <BarChart
                                 layout="vertical"
@@ -1350,58 +1200,58 @@ function App() {
                                 }))}
                                 margin={{ top: 10, right: 15, left: 15, bottom: 10 }}
                               >
-                                <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
-                                <XAxis type="number" tickFormatter={(val) => Math.abs(val)} stroke={isDarkMode ? '#fff' : '#000'} domain={['auto', 'auto']} tick={{ fontSize: 10 }} />
-                                <YAxis dataKey="edad" type="category" reversed={true} stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 10 }} width={45} interval={0} orientation="left" />
-                                <Tooltip formatter={(val) => Math.abs(val)} contentStyle={{ backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px', fontSize: '12px' }} />
-                                <Bar dataKey="mujeres" fill={PALETTE.piramideMujeres} name="Mujeres" barSize={10} radius={[4, 0, 0, 4]}>
-                                  <LabelList dataKey="mujeres" position="left" formatter={(v) => Math.abs(v).toLocaleString()} style={{ fontSize: '9px', fill: isDarkMode ? '#ccc' : '#444' }} />
+                                <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
+                                <XAxis type="number" tickFormatter={(val) => Math.abs(val)} stroke={isDarkMode ? '#94a3b8' : '#475569'} domain={['auto', 'auto']} tick={{ fontSize: 10 }} />
+                                <YAxis dataKey="edad" type="category" reversed={true} stroke={isDarkMode ? '#94a3b8' : '#475569'} tick={{ fontSize: 10 }} width={45} interval={0} orientation="left" />
+                                <Tooltip formatter={(val) => Math.abs(val)} contentStyle={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', borderRadius: '6px', fontSize: '12px', border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0' }} />
+                                <Bar dataKey="mujeres" fill={PALETTE.piramideMujeres} name="Mujeres" barSize={8} radius={[2, 0, 0, 2]}>
+                                  <LabelList dataKey="mujeres" position="left" formatter={(v) => Math.abs(v).toLocaleString()} style={{ fontSize: '9px', fill: isDarkMode ? '#94a3b8' : '#475569' }} />
                                 </Bar>
-                                <Bar dataKey="hombres" fill={PALETTE.piramideHombres} name="Hombres" barSize={10} radius={[0, 4, 4, 0]}>
-                                  <LabelList dataKey="hombres" position="right" formatter={(v) => Math.abs(v).toLocaleString()} style={{ fontSize: '9px', fill: isDarkMode ? '#ccc' : '#444' }} />
+                                <Bar dataKey="hombres" fill={PALETTE.piramideHombres} name="Hombres" barSize={8} radius={[0, 2, 2, 0]}>
+                                  <LabelList dataKey="hombres" position="right" formatter={(v) => Math.abs(v).toLocaleString()} style={{ fontSize: '9px', fill: isDarkMode ? '#94a3b8' : '#475569' }} />
                                 </Bar>
                               </BarChart>
                             </ResponsiveContainer>
                           </div>
                         </>
                       ) : (
-                        <div style={{ height: '450px' }}>
+                        <div style={{ height: '420px' }}>
                           <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={ordenarEdades(datosPiramide).map(d => ({ ...d, hombres: Math.abs(d.hombres || 0), mujeres: Math.abs(d.mujeres || 0) }))} margin={{ top: 20, right: 10, left: 0, bottom: 20 }}>
-                              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
-                              <XAxis dataKey="edad" stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 9 }} interval={0} angle={-30} textAnchor="end" />
-                              <YAxis stroke={isDarkMode ? '#fff' : '#000'} tickFormatter={formatCompacto} tick={{ fontSize: 10 }} />
-                              <Tooltip formatter={(val) => Math.abs(val)} contentStyle={{ backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px', fontSize: '12px' }} />
-                              <Bar dataKey="hombres" fill={PALETTE.piramideHombres} name="Hombres" barSize={10} radius={[4, 4, 0, 0]}>
-                                <LabelList dataKey="hombres" position="top" formatter={formatCompacto} style={{ fontSize: '8px', fontWeight: '700', fill: PALETTE.piramideHombres }} />
+                              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
+                              <XAxis dataKey="edad" stroke={isDarkMode ? '#94a3b8' : '#475569'} tick={{ fontSize: 9 }} interval={0} angle={-30} textAnchor="end" />
+                              <YAxis stroke={isDarkMode ? '#94a3b8' : '#475569'} tickFormatter={formatCompacto} tick={{ fontSize: 10 }} />
+                              <Tooltip formatter={(val) => Math.abs(val)} contentStyle={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', borderRadius: '6px', fontSize: '12px', border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0' }} />
+                              <Bar dataKey="hombres" fill={PALETTE.piramideHombres} name="Hombres" barSize={8} radius={[2, 2, 0, 0]}>
+                                <LabelList dataKey="hombres" position="top" formatter={formatCompacto} style={{ fontSize: '8px', fontWeight: '600', fill: PALETTE.piramideHombres }} />
                               </Bar>
-                              <Bar dataKey="mujeres" fill={PALETTE.piramideMujeres} name="Mujeres" barSize={10} radius={[4, 4, 0, 0]}>
-                                <LabelList dataKey="mujeres" position="top" formatter={formatCompacto} style={{ fontSize: '8px', fontWeight: '700', fill: PALETTE.piramideMujeres }} />
+                              <Bar dataKey="mujeres" fill={PALETTE.piramideMujeres} name="Mujeres" barSize={8} radius={[2, 2, 0, 0]}>
+                                <LabelList dataKey="mujeres" position="top" formatter={formatCompacto} style={{ fontSize: '8px', fontWeight: '600', fill: PALETTE.piramideMujeres }} />
                               </Bar>
                             </BarChart>
                           </ResponsiveContainer>
                         </div>
                       )}
 
-                      <div style={{ marginTop: '12px', padding: '10px', backgroundColor: isDarkMode ? '#1f1a25' : '#ffffff', borderRadius: '10px' }}>
-                        <h4 style={{ margin: '0 0 8px 0', fontSize: '12px', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, textAlign: 'left' }}>Distribución por edad</h4>
+                      <div style={{ marginTop: '12px', padding: '10px', backgroundColor: isDarkMode ? '#0f172a' : '#f8fafc', borderRadius: '6px', border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0' }}>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '11px', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, textAlign: 'left', textTransform: 'uppercase' }}>Distribución por edad</h4>
                         {renderDistribucionEdad(datosPiramide, PALETTE.piramideHombres)}
                       </div>
-                      <div style={{ marginTop: '14px', padding: '12px', border: '1px dashed #c9a15a', borderRadius: '10px', fontSize: '12px', textAlign: 'justify' }}>
+                      <div style={styles.narrativeBox}>
                         {generarAnalisisNarrativo(datosPiramide)}
                       </div>
-                      <button className="interactive-btn no-capturar" type="button" style={{ ...styles.exportButton, marginTop: '12px', padding: '10px' }} onClick={exportarImagen}>Descargar PNG</button>
-                      <button className="interactive-btn no-capturar" type="button" style={{ ...styles.exportButtonPdf, marginTop: '8px', padding: '10px' }} onClick={exportarPDF}>Descargar PDF</button>
+                      <button className="interactive-btn no-capturar" type="button" style={styles.exportButton} onClick={exportarImagen}>Descargar PNG</button>
+                      <button className="interactive-btn no-capturar" type="button" style={styles.exportButtonPdf} onClick={exportarPDF}>Descargar PDF</button>
                     </div>
                   ) : datosTendencia ? (
                     <div style={{ width: '100%' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
-                        <span style={{ fontSize: '13px', fontWeight: 800, color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine }}>Tendencia (CONAPO)</span>
+                        <span style={{ fontSize: '13px', fontWeight: '700', color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle, textTransform: 'uppercase' }}>Tendencia Poblacional</span>
                         <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
                           <button
                             className="interactive-btn no-capturar"
                             type="button"
-                            style={{ padding: '5px 10px', fontSize: '11px', borderRadius: '8px', background: PALETTE.gold, border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 'bold' }}
+                            style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: '#8b9bb0', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: '600' }}
                             onClick={() => setTipoGraficaTendencia(prev => prev === 'linea' ? 'barras' : 'linea')}
                           >
                             {tipoGraficaTendencia === 'linea' ? 'Ver Barras' : 'Ver Líneas'}
@@ -1409,108 +1259,81 @@ function App() {
                           <button
                             className="interactive-btn no-capturar"
                             type="button"
-                            style={{ padding: '5px 10px', fontSize: '11px', borderRadius: '8px', background: 'transparent', border: `1px solid ${isDarkMode ? PALETTE.goldSoft : PALETTE.wine}`, color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, cursor: 'pointer', fontWeight: 'bold' }}
+                            style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: 'transparent', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, cursor: 'pointer', fontWeight: '600' }}
                             onClick={() => setDatosTendencia(null)}
                           >
                             Ocultar
                           </button>
                         </div>
                       </div>
-                      <div style={{ height: '450px', width: '100%' }}>
+                      <div style={{ height: '420px', width: '100%' }}>
                         <ResponsiveContainer width="100%" height="100%">
                           {tipoGraficaTendencia === 'barras' ? (
                             <BarChart data={ordenarPorAno(datosTendencia)} margin={{ top: 20, right: 15, left: 0, bottom: 5 }}>
-                              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
-                              <XAxis dataKey="ano" stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 10 }} />
-                              <YAxis stroke={isDarkMode ? '#fff' : '#000'} tickFormatter={formatCompacto} width={45} tick={{ fontSize: 10 }} domain={['auto', 'auto']} />
-                              <Tooltip formatter={(v) => v.toLocaleString()} contentStyle={{ backgroundColor: isDarkMode ? '#333' : '#fff', borderRadius: '8px', fontSize: '12px' }} />
-                              <Bar dataKey="poblacion" fill={PALETTE.wine} radius={[6, 6, 0, 0]}>
-                                <LabelList dataKey="poblacion" position="top" fill={isDarkMode ? PALETTE.goldSoft : PALETTE.wine} formatter={formatCompacto} style={{ fontSize: '9px', fontWeight: '700' }} />
+                              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
+                              <XAxis dataKey="ano" stroke={isDarkMode ? '#94a3b8' : '#475569'} tick={{ fontSize: 10 }} />
+                              <YAxis stroke={isDarkMode ? '#94a3b8' : '#475569'} tickFormatter={formatCompacto} width={45} tick={{ fontSize: 10 }} domain={['auto', 'auto']} />
+                              <Tooltip formatter={(v) => v.toLocaleString()} contentStyle={{ backgroundColor: isDarkMode ? '#1e293b' : '#fff', borderRadius: '6px', fontSize: '12px', border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0' }} />
+                              <Bar dataKey="poblacion" fill="#8b9bb0" radius={[4, 4, 0, 0]}>
+                                <LabelList dataKey="poblacion" position="top" fill={isDarkMode ? '#f8fafc' : PALETTE.navyTitle} formatter={formatCompacto} style={{ fontSize: '9px', fontWeight: '600' }} />
                               </Bar>
                             </BarChart>
                           ) : (
                             <ComposedChart data={ordenarPorAno(datosTendencia)} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
-                              <defs>
-                                <linearGradient id="gradTendenciaSolo" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor={PALETTE.wineLight} stopOpacity={0.45} />
-                                  <stop offset="95%" stopColor={PALETTE.wineDeep} stopOpacity={0.02} />
-                                </linearGradient>
-                                <linearGradient id="lineaGradient" x1="0" y1="0" x2="1" y2="0">
-                                  <stop offset="0%" stopColor={PALETTE.wineLight} />
-                                  <stop offset="100%" stopColor={PALETTE.wine} />
-                                </linearGradient>
-                              </defs>
-                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#3c3245' : '#e0e0e0'} />
-                              <XAxis dataKey="ano" stroke={isDarkMode ? '#e0d8e5' : '#4a3f42'} tick={{ fontSize: 10, fontWeight: '600' }} />
-                              <YAxis stroke={isDarkMode ? '#e0d8e5' : '#4a3f42'} tickFormatter={formatCompacto} width={45} tick={{ fontSize: 10 }} domain={['auto', 'auto']} />
-                              <Tooltip formatter={(v) => [v.toLocaleString(), 'Población']} contentStyle={{ backgroundColor: isDarkMode ? '#281f33' : '#ffffff', borderRadius: '12px', border: `1px solid ${PALETTE.gold}`, fontSize: '12px' }} />
-                              <Area type="monotone" dataKey="poblacion" stroke="none" fill="url(#gradTendenciaSolo)" />
-                              <Line type="monotone" dataKey="poblacion" name={municipio} stroke="url(#lineaGradient)" strokeWidth={3} dot={{ r: 5, fill: PALETTE.gold, stroke: isDarkMode ? '#1a1520' : '#ffffff', strokeWidth: 2 }} activeDot={{ r: 7 }}>
-                                <LabelList dataKey="poblacion" position="top" dy={-8} fill={isDarkMode ? PALETTE.goldSoft : PALETTE.wine} formatter={formatCompacto} style={{ fontSize: '10px', fontWeight: '800' }} />
+                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
+                              <XAxis dataKey="ano" stroke={isDarkMode ? '#94a3b8' : '#475569'} tick={{ fontSize: 10 }} />
+                              <YAxis stroke={isDarkMode ? '#94a3b8' : '#475569'} tickFormatter={formatCompacto} width={45} tick={{ fontSize: 10 }} domain={['auto', 'auto']} />
+                              <Tooltip formatter={(v) => [v.toLocaleString(), 'Población']} contentStyle={{ backgroundColor: isDarkMode ? '#1e293b' : '#ffffff', borderRadius: '6px', border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0', fontSize: '12px' }} />
+                              <Line type="monotone" dataKey="poblacion" name={municipio} stroke="#8b9bb0" strokeWidth={2} dot={{ r: 4, fill: '#2563eb' }} activeDot={{ r: 6 }}>
+                                <LabelList dataKey="poblacion" position="top" dy={-8} fill={isDarkMode ? '#f8fafc' : PALETTE.navyTitle} formatter={formatCompacto} style={{ fontSize: '10px', fontWeight: '600' }} />
                               </Line>
                             </ComposedChart>
                           )}
                         </ResponsiveContainer>
                       </div>
-                      <div style={{ ...styles.narrativeBox, fontSize: '12px', marginTop: '12px' }}>
+                      <div style={styles.narrativeBox}>
                         {generarAnalisisTendencia(datosTendencia, municipio)}
                       </div>
                     </div>
                   ) : null}
                 </div>
 
-                {/* COLUMNA DERECHA: Herramientas de consulta */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div style={{
-                    backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
-                    padding: '18px',
-                    borderRadius: '20px',
-                    border: isDarkMode ? `1px solid ${PALETTE.gold}33` : `1px solid ${PALETTE.wine}22`,
-                    boxShadow: isDarkMode ? '0 4px 16px rgba(0,0,0,0.3)' : '0 4px 16px rgba(116,27,42,0.06)'
-                  }}>
-                    <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
-                      Edad Media
-                    </h4>
+                {/* COLUMNA DERECHA */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  <div className="panel-section">
+                    <div className="section-header">Edad Media</div>
                     <button
                       type="button"
                       className="interactive-btn"
-                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0', background: PALETTE.gold }}
+                      style={styles.button(cargando, isDarkMode)}
                       onClick={obtenerNarrativaEdadMedia}
                       disabled={cargando}
                     >
                       {cargando ? 'Consultando...' : narrativaEdadMedia ? 'Ocultar Edad Media' : 'Consultar Edad Media'}
                     </button>
                     {narrativaEdadMedia && (
-                      <div className="result-enter" style={{ ...styles.narrativeBox, marginTop: '12px', fontSize: '12px' }}>
+                      <div style={styles.narrativeBox}>
                         {narrativaEdadMedia}
                       </div>
                     )}
                   </div>
 
-                  <div style={{
-                    backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
-                    padding: '18px',
-                    borderRadius: '20px',
-                    border: isDarkMode ? `1px solid ${PALETTE.gold}33` : `1px solid ${PALETTE.wine}22`,
-                    boxShadow: isDarkMode ? '0 4px 16px rgba(0,0,0,0.3)' : '0 4px 16px rgba(116,27,42,0.06)'
-                  }}>
-                    <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
-                      Gráfica Perfil Demográfico
-                    </h4>
-                    <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+                  <div className="panel-section">
+                    <div className="section-header">Gráfica Perfil Demográfico</div>
+                    <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
                       <div style={{ flex: 1 }}>
                         <label style={{ ...styles.label, fontSize: '10px', marginBottom: '4px' }}>Inicio</label>
-                        <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoInicio} onChange={(e) => setRangoInicio(e.target.value)} />
+                        <input className="interactive-input" style={{ ...styles.input, padding: '8px', marginBottom: '0' }} type="number" value={rangoInicio} onChange={(e) => setRangoInicio(e.target.value)} />
                       </div>
                       <div style={{ flex: 1 }}>
                         <label style={{ ...styles.label, fontSize: '10px', marginBottom: '4px' }}>Fin</label>
-                        <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoFin} onChange={(e) => setRangoFin(e.target.value)} />
+                        <input className="interactive-input" style={{ ...styles.input, padding: '8px', marginBottom: '0' }} type="number" value={rangoFin} onChange={(e) => setRangoFin(e.target.value)} />
                       </div>
                     </div>
                     <button
                       className="interactive-btn"
                       type="button"
-                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0' }}
+                      style={styles.button(cargando, isDarkMode)}
                       onClick={() => { setMostrarPerfil(true); consultarPiramide(); }}
                       disabled={cargando}
                     >
@@ -1521,30 +1344,22 @@ function App() {
                     </button>
                   </div>
 
-                  <div style={{
-                    backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
-                    padding: '18px',
-                    borderRadius: '20px',
-                    border: isDarkMode ? `1px solid ${PALETTE.gold}33` : `1px solid ${PALETTE.wine}22`,
-                    boxShadow: isDarkMode ? '0 4px 16px rgba(0,0,0,0.3)' : '0 4px 16px rgba(116,27,42,0.06)'
-                  }}>
-                    <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
-                      Ver Tendencia
-                    </h4>
-                    <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+                  <div className="panel-section">
+                    <div className="section-header">Ver Tendencia</div>
+                    <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
                       <div style={{ flex: 1 }}>
                         <label style={{ ...styles.label, fontSize: '10px', marginBottom: '4px' }}>Inicio</label>
-                        <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoInicioTendencia} onChange={(e) => setRangoInicioTendencia(e.target.value)} />
+                        <input className="interactive-input" style={{ ...styles.input, padding: '8px', marginBottom: '0' }} type="number" value={rangoInicioTendencia} onChange={(e) => setRangoInicioTendencia(e.target.value)} />
                       </div>
                       <div style={{ flex: 1 }}>
                         <label style={{ ...styles.label, fontSize: '10px', marginBottom: '4px' }}>Fin</label>
-                        <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoFinTendencia} onChange={(e) => setRangoFinTendencia(e.target.value)} />
+                        <input className="interactive-input" style={{ ...styles.input, padding: '8px', marginBottom: '0' }} type="number" value={rangoFinTendencia} onChange={(e) => setRangoFinTendencia(e.target.value)} />
                       </div>
                     </div>
                     <button
                       className="interactive-btn"
                       type="button"
-                      style={{ ...styles.button(cargandoTendencia, isDarkMode), marginTop: '0' }}
+                      style={styles.button(cargandoTendencia, isDarkMode)}
                       onClick={consultarTendencia}
                       disabled={cargandoTendencia}
                     >
@@ -1567,30 +1382,20 @@ function App() {
             <div style={{ width: '100%', paddingBottom: '20px', textAlign: 'left' }}>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 340px',
-                gap: '24px',
+                gridTemplateColumns: '1fr 320px',
+                gap: '20px',
                 alignItems: 'start',
-                marginBottom: '30px'
+                marginBottom: '20px'
               }}>
-                <div style={{
-                  backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
-                  padding: '24px',
-                  borderRadius: '20px',
-                  border: isDarkMode ? `1px solid ${PALETTE.gold}22` : `1px solid ${PALETTE.wine}15`,
-                  boxSizing: 'border-box',
-                  width: '100%',
-                  overflow: 'hidden'
-                }}>
+                <div className="panel-section">
                   {resultados.a === null && !mostrarGrafica && !mostrarTendenciaComp ? (
                     <form onSubmit={compararPoblacion}>
-                      <h3 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '15px', fontWeight: '800', marginBottom: '20px' }}>
-                        Parámetros de Consulta Comparativa
-                      </h3>
+                      <h3 style={styles.title}>Parámetros de Consulta Comparativa</h3>
 
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '16px' }}>
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '12px' }}>
                         <div style={{ flex: 1 }}>
-                          <div className="campo-glow">
-                            <label className="label-glow" style={styles.label}>Estado A</label>
+                          <div>
+                            <label style={styles.label}>Estado A</label>
                             <select
                               className="interactive-input"
                               style={styles.input}
@@ -1603,11 +1408,11 @@ function App() {
                               ))}
                             </select>
                           </div>
-                          <div className="campo-glow">
-                            <label className="label-glow" style={styles.label}>Municipio A</label>
+                          <div>
+                            <label style={styles.label}>Municipio A</label>
                             <select
                               className="interactive-input"
-                              style={{ ...styles.input, opacity: !estadoA ? 0.7 : 1 }}
+                              style={{ ...styles.input, opacity: !estadoA ? 0.6 : 1 }}
                               value={munA}
                               onChange={(e) => setMunA(e.target.value)}
                               disabled={!estadoA}
@@ -1622,7 +1427,7 @@ function App() {
 
                         <button
                           type="button"
-                          className="swap-btn"
+                          className="interactive-btn swap-btn"
                           style={styles.swapButton}
                           onClick={intercambiarMunicipios}
                           title="Intercambiar municipios"
@@ -1631,8 +1436,8 @@ function App() {
                         </button>
 
                         <div style={{ flex: 1 }}>
-                          <div className="campo-glow">
-                            <label className="label-glow" style={styles.label}>Estado B</label>
+                          <div>
+                            <label style={styles.label}>Estado B</label>
                             <select
                               className="interactive-input"
                               style={styles.input}
@@ -1645,11 +1450,11 @@ function App() {
                               ))}
                             </select>
                           </div>
-                          <div className="campo-glow">
-                            <label className="label-glow" style={styles.label}>Municipio B</label>
+                          <div>
+                            <label style={styles.label}>Municipio B</label>
                             <select
                               className="interactive-input"
-                              style={{ ...styles.input, opacity: !estadoB ? 0.7 : 1 }}
+                              style={{ ...styles.input, opacity: !estadoB ? 0.6 : 1 }}
                               value={munB}
                               onChange={(e) => setMunB(e.target.value)}
                               disabled={!estadoB}
@@ -1663,12 +1468,12 @@ function App() {
                         </div>
                       </div>
 
-                      <div className="campo-glow">
-                        <label className="label-glow" style={styles.label}>Año</label>
+                      <div>
+                        <label style={styles.label}>Año</label>
                         <input className="interactive-input" style={styles.input} type="number" value={ano} onChange={(e) => setAno(e.target.value)} />
                       </div>
-                      <div className="campo-glow">
-                        <label className="label-glow" style={styles.label}>Género</label>
+                      <div>
+                        <label style={styles.label}>Género</label>
                         <select className="interactive-input" style={styles.input} value={sexo} onChange={(e) => setSexo(e.target.value)}>
                           <option value="AMBOS">Ambos</option>
                           <option value="HOMBRES">Hombres</option>
@@ -1678,12 +1483,12 @@ function App() {
                     </form>
                   ) : resultados.a !== null && !mostrarGrafica && !mostrarTendenciaComp ? (
                     <div ref={capturaRef} style={{ width: '100%' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '10px' }}>
-                        <h3 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, margin: 0, fontSize: '15px' }}>Resultado de Contraste</h3>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+                        <h3 style={{ ...styles.title, margin: 0, textAlign: 'left' }}>Resultado de Contraste</h3>
                         <button
                           type="button"
                           className="interactive-btn no-capturar"
-                          style={{ padding: '6px 12px', fontSize: '11px', borderRadius: '8px', background: 'transparent', border: `1px solid ${isDarkMode ? PALETTE.goldSoft : PALETTE.wine}`, color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, cursor: 'pointer', fontWeight: 'bold' }}
+                          style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: 'transparent', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, cursor: 'pointer', fontWeight: '600' }}
                           onClick={() => setResultados({ a: null, b: null })}
                         >
                           Ocultar Contraste
@@ -1707,13 +1512,9 @@ function App() {
                           position: 'relative',
                           overflow: 'hidden',
                           border: esMayor
-                            ? `2px solid ${PALETTE.gold}`
-                            : isDarkMode ? `1px solid ${PALETTE.gold}33` : `1px solid ${PALETTE.wine}22`,
-                          boxShadow: esMayor
-                            ? `0 0 20px ${PALETTE.gold}35, 0 8px 24px rgba(0,0,0,0.12)`
-                            : 'none',
-                          paddingBottom: '26px',
-                          transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                            ? '2px solid #8b9bb0'
+                            : isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0',
+                          paddingBottom: '20px',
                         });
 
                         return (
@@ -1725,12 +1526,12 @@ function App() {
                             flexWrap: 'wrap',
                             marginTop: '10px'
                           }}>
-                            <div className="resultado-glow" style={getCardStyle(esAMayor)}>
-                              <div style={{ fontSize: '13.5px', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontWeight: '700', marginBottom: '6px' }}>
-                                {nombresCongelados.a} {esAMayor && <span style={{ color: PALETTE.gold, marginLeft: '4px' }}>★</span>}
+                            <div style={getCardStyle(esAMayor)}>
+                              <div style={{ fontSize: '13px', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, fontWeight: '600', marginBottom: '4px' }}>
+                                {nombresCongelados.a}
                               </div>
-                              <div style={{ fontSize: '20px', fontWeight: '800' }}>
-                                {valA.toLocaleString()} <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.8 }}>hab.</span>
+                              <div style={{ fontSize: '18px', fontWeight: '700' }}>
+                                {valA.toLocaleString()} <span style={{ fontSize: '11px', fontWeight: 'normal', opacity: 0.8 }}>hab.</span>
                               </div>
                               <div
                                 title={`Escala: ${pctA}%`}
@@ -1738,40 +1539,36 @@ function App() {
                                   position: 'absolute',
                                   bottom: 0,
                                   left: 0,
-                                  height: '6px',
+                                  height: '4px',
                                   width: `${pctA}%`,
-                                  backgroundColor: esAMayor ? PALETTE.gold : PALETTE.wine,
-                                  borderRadius: '0 4px 4px 0',
-                                  transition: 'width 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                                  backgroundColor: '#8b9bb0',
                                 }}
                               />
                             </div>
 
                             <div style={{
-                              backgroundColor: isDarkMode ? '#110e16' : '#231d2b',
-                              color: '#ffffff',
-                              padding: '10px 18px',
-                              borderRadius: '999px',
-                              fontSize: '13px',
-                              fontWeight: '700',
+                              backgroundColor: isDarkMode ? '#334155' : '#f1f5f9',
+                              color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle,
+                              padding: '8px 14px',
+                              borderRadius: '4px',
+                              fontSize: '12px',
+                              fontWeight: '600',
                               display: 'flex',
                               alignItems: 'center',
-                              gap: '8px',
-                              boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
-                              whiteSpace: 'nowrap',
-                              border: `1px solid ${PALETTE.gold}55`,
-                              margin: '10px 0'
+                              gap: '6px',
+                              border: isDarkMode ? '1px solid #475569' : '1px solid #cbd5e1',
+                              margin: '8px 0'
                             }}>
-                              <span style={{ color: PALETTE.goldSoft }}>Dif:</span>
-                              <span style={{ color: '#fff', letterSpacing: '0.4px' }}> {brecha.toLocaleString()} hab.</span>
+                              <span>Diferencia:</span>
+                              <span>{brecha.toLocaleString()} hab.</span>
                             </div>
 
-                            <div className="resultado-glow" style={getCardStyle(esBMayor)}>
-                              <div style={{ fontSize: '13.5px', color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontWeight: '700', marginBottom: '6px' }}>
-                                {nombresCongelados.b} {esBMayor && <span style={{ color: PALETTE.gold, marginLeft: '4px' }}>★</span>}
+                            <div style={getCardStyle(esBMayor)}>
+                              <div style={{ fontSize: '13px', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, fontWeight: '600', marginBottom: '4px' }}>
+                                {nombresCongelados.b}
                               </div>
-                              <div style={{ fontSize: '20px', fontWeight: '800' }}>
-                                {valB.toLocaleString()} <span style={{ fontSize: '12px', fontWeight: 'normal', opacity: 0.8 }}>hab.</span>
+                              <div style={{ fontSize: '18px', fontWeight: '700' }}>
+                                {valB.toLocaleString()} <span style={{ fontSize: '11px', fontWeight: 'normal', opacity: 0.8 }}>hab.</span>
                               </div>
                               <div
                                 title={`Escala: ${pctB}%`}
@@ -1779,51 +1576,49 @@ function App() {
                                   position: 'absolute',
                                   bottom: 0,
                                   left: 0,
-                                  height: '6px',
+                                  height: '4px',
                                   width: `${pctB}%`,
-                                  backgroundColor: esBMayor ? PALETTE.gold : PALETTE.wine,
-                                  borderRadius: '0 4px 4px 0',
-                                  transition: 'width 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                                  backgroundColor: '#8b9bb0',
                                 }}
                               />
                             </div>
                           </div>
                         );
                       })()}
-                      <button className="interactive-btn no-capturar" type="button" style={{ ...styles.exportButton, marginTop: '20px', padding: '10px' }} onClick={exportarImagen}>Descargar PNG</button>
-                      <button className="interactive-btn no-capturar" type="button" style={{ ...styles.exportButtonPdf, marginTop: '8px', padding: '10px' }} onClick={exportarPDF}>Descargar PDF</button>
+                      <button className="interactive-btn no-capturar" type="button" style={styles.exportButton} onClick={exportarImagen}>Descargar PNG</button>
+                      <button className="interactive-btn no-capturar" type="button" style={styles.exportButtonPdf} onClick={exportarPDF}>Descargar PDF</button>
                     </div>
                   ) : mostrarGrafica ? (
                     <div ref={capturaRef} style={{ width: '100%', textAlign: 'left' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
-                        <span style={{ fontSize: '13px', fontWeight: 800, color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, letterSpacing: '0.2px' }}>
+                        <span style={{ fontSize: '13px', fontWeight: '700', color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle, textTransform: 'uppercase' }}>
                           Gráfica de municipios
                         </span>
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
                           <button
                             className="interactive-btn no-capturar"
                             type="button"
-                            style={{ padding: '6px 12px', fontSize: '12px', borderRadius: '8px', background: PALETTE.gold, border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 'bold' }}
+                            style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: '#8b9bb0', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: '600' }}
                             onClick={() => setTipoGraficaComp(prev => prev === 'barras' ? 'linea' : 'barras')}
                           >
-                            {tipoGraficaComp === 'barras' ? 'Ver Gráfica de Líneas' : 'Ver Gráfica de Barras'}
+                            {tipoGraficaComp === 'barras' ? 'Ver Líneas' : 'Ver Barras'}
                           </button>
                           <button
                             className="interactive-btn no-capturar"
                             type="button"
-                            style={{ padding: '6px 12px', fontSize: '12px', borderRadius: '8px', background: 'transparent', border: `1px solid ${isDarkMode ? PALETTE.goldSoft : PALETTE.wine}`, color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, cursor: 'pointer', fontWeight: 'bold' }}
+                            style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: 'transparent', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, cursor: 'pointer', fontWeight: '600' }}
                             onClick={() => setMostrarGrafica(false)}
                           >
                             Ocultar Gráfica
                           </button>
                         </div>
                       </div>
-                      <div style={{ display: 'flex', gap: '10px', marginBottom: '12px' }}>
+                      <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
                         <span style={styles.legendChip(PALETTE.wine, isDarkMode)}>● {nombresCongelados.a || munA || 'Municipio A'}</span>
-                        <span style={styles.legendChip(PALETTE.gold, isDarkMode)}>● {nombresCongelados.b || munB || 'Municipio B'}</span>
+                        <span style={styles.legendChip('#8b9bb0', isDarkMode)}>● {nombresCongelados.b || munB || 'Municipio B'}</span>
                       </div>
 
-                      <div style={{ height: '450px', width: '100%' }}>
+                      <div style={{ height: '420px', width: '100%' }}>
                         <ResponsiveContainer>
                           {tipoGraficaComp === 'barras' ? (
                             <BarChart
@@ -1831,20 +1626,14 @@ function App() {
                                 { name: nombresCongelados.a || munA || 'Municipio A', val: resultados.a !== null ? resultados.a : 0 },
                                 { name: nombresCongelados.b || munB || 'Municipio B', val: resultados.b !== null ? resultados.b : 0 }
                               ])}
-                              margin={{ top: 35, right: 30, left: 20, bottom: 5 }}
+                              margin={{ top: 25, right: 30, left: 20, bottom: 5 }}
                             >
-                              <defs>
-                                <linearGradient id="barraTotal" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="0%" stopColor={isDarkMode ? PALETTE.wineLight : PALETTE.wine} />
-                                  <stop offset="100%" stopColor={PALETTE.wineDeep} />
-                                </linearGradient>
-                              </defs>
-                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#333' : '#eee'} />
-                              <XAxis dataKey="name" tick={{ fill: isDarkMode ? '#fff' : '#000', fontSize: 12 }} />
-                              <YAxis tick={{ fill: isDarkMode ? '#fff' : '#000' }} domain={[0, 'auto']} tickFormatter={formatCompacto} />
+                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
+                              <XAxis dataKey="name" tick={{ fill: isDarkMode ? '#94a3b8' : '#475569', fontSize: 11 }} />
+                              <YAxis tick={{ fill: isDarkMode ? '#94a3b8' : '#475569' }} domain={[0, 'auto']} tickFormatter={formatCompacto} />
                               <Tooltip cursor={{ fill: 'transparent' }} content={<ComparativaTooltip />} />
-                              <Bar dataKey="val" fill="url(#barraTotal)" radius={[10, 10, 0, 0]} barSize={80}>
-                                <LabelList dataKey="val" position="top" fill={isDarkMode ? PALETTE.goldSoft : PALETTE.wine} formatter={(value) => value.toLocaleString()} style={{ fontSize: '12px', fontWeight: '700' }} />
+                              <Bar dataKey="val" fill="#8b9bb0" radius={[4, 4, 0, 0]} barSize={60}>
+                                <LabelList dataKey="val" position="top" fill={isDarkMode ? '#f8fafc' : PALETTE.navyTitle} formatter={(value) => value.toLocaleString()} style={{ fontSize: '11px', fontWeight: '600' }} />
                               </Bar>
                             </BarChart>
                           ) : (
@@ -1853,48 +1642,48 @@ function App() {
                                 { name: nombresCongelados.a || munA || 'Municipio A', val: resultados.a !== null ? resultados.a : 0 },
                                 { name: nombresCongelados.b || munB || 'Municipio B', val: resultados.b !== null ? resultados.b : 0 }
                               ])}
-                              margin={{ top: 35, right: 30, left: 20, bottom: 5 }}
+                              margin={{ top: 25, right: 30, left: 20, bottom: 5 }}
                             >
-                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#333' : '#eee'} />
-                              <XAxis dataKey="name" tick={{ fill: isDarkMode ? '#fff' : '#000', fontSize: 12 }} />
-                              <YAxis tick={{ fill: isDarkMode ? '#fff' : '#000' }} domain={[0, 'auto']} tickFormatter={formatCompacto} />
+                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
+                              <XAxis dataKey="name" tick={{ fill: isDarkMode ? '#94a3b8' : '#475569', fontSize: 11 }} />
+                              <YAxis tick={{ fill: isDarkMode ? '#94a3b8' : '#475569' }} domain={[0, 'auto']} tickFormatter={formatCompacto} />
                               <Tooltip content={<ComparativaTooltip />} />
-                              <Line type="monotone" dataKey="val" stroke={PALETTE.wine} strokeWidth={4} dot={{ r: 6, fill: PALETTE.gold, stroke: isDarkMode ? '#1c1720' : '#ffffff', strokeWidth: 2 }} activeDot={{ r: 8, fill: PALETTE.wineLight, stroke: PALETTE.gold, strokeWidth: 3 }}>
-                                <LabelList dataKey="val" position="top" fill={isDarkMode ? PALETTE.goldSoft : PALETTE.wine} formatter={(value) => value.toLocaleString()} style={{ fontSize: '12px', fontWeight: '700' }} />
+                              <Line type="monotone" dataKey="val" stroke="#8b9bb0" strokeWidth={2} dot={{ r: 5, fill: '#2563eb' }} activeDot={{ r: 7 }}>
+                                <LabelList dataKey="val" position="top" fill={isDarkMode ? '#f8fafc' : PALETTE.navyTitle} formatter={(value) => value.toLocaleString()} style={{ fontSize: '11px', fontWeight: '600' }} />
                               </Line>
                             </LineChart>
                           )}
                         </ResponsiveContainer>
                       </div>
 
-                      <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                      <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {cargandoDistribucion && (
-                          <div style={{ fontSize: '13px', color: isDarkMode ? '#b8adc4' : '#8a7176', textAlign: 'center' }}>Cargando distribución por edad...</div>
+                          <div style={{ fontSize: '12px', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, textAlign: 'center' }}>Cargando distribución por edad...</div>
                         )}
                         {distribucionEdadComp.a && (
-                          <div className="result-enter" style={{ padding: '14px', borderRadius: '12px', backgroundColor: isDarkMode ? '#1f1a25' : '#fdf9f6' }}>
-                            <h4 style={{ margin: '0 0 10px 0', fontSize: '13px', color: PALETTE.wine, textAlign: 'left' }}>Distribución por edad (0-4 a 85+) — {nombresCongelados.a || munA}</h4>
+                          <div style={{ padding: '12px', borderRadius: '6px', backgroundColor: isDarkMode ? '#0f172a' : '#f8fafc', border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0' }}>
+                            <h4 style={{ margin: '0 0 8px 0', fontSize: '11px', color: PALETTE.navyTitle, textAlign: 'left', textTransform: 'uppercase' }}>Distribución por edad — {nombresCongelados.a || munA}</h4>
                             {renderDistribucionEdad(distribucionEdadComp.a, PALETTE.piramideHombres)}
                           </div>
                         )}
                         {distribucionEdadComp.b && (
-                          <div className="result-enter" style={{ padding: '14px', borderRadius: '12px', backgroundColor: isDarkMode ? '#1f1a25' : '#fdf9f6' }}>
-                            <h4 style={{ margin: '0 0 10px 0', fontSize: '13px', color: '#a67c1f', textAlign: 'left' }}>Distribución por edad (0-4 a 85+) — {nombresCongelados.b || munB}</h4>
+                          <div style={{ padding: '12px', borderRadius: '6px', backgroundColor: isDarkMode ? '#0f172a' : '#f8fafc', border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0' }}>
+                            <h4 style={{ margin: '0 0 8px 0', fontSize: '11px', color: '#8b9bb0', textAlign: 'left', textTransform: 'uppercase' }}>Distribución por edad — {nombresCongelados.b || munB}</h4>
                             {renderDistribucionEdad(distribucionEdadComp.b, PALETTE.piramideMujeres)}
                           </div>
                         )}
                       </div>
-                      <button className="interactive-btn no-capturar" type="button" style={{ ...styles.exportButton, marginTop: '16px', padding: '10px' }} onClick={exportarImagen}>Descargar PNG</button>
-                      <button className="interactive-btn no-capturar" type="button" style={{ ...styles.exportButtonPdf, marginTop: '8px', padding: '10px' }} onClick={exportarPDF}>Descargar PDF</button>
+                      <button className="interactive-btn no-capturar" type="button" style={styles.exportButton} onClick={exportarImagen}>Descargar PNG</button>
+                      <button className="interactive-btn no-capturar" type="button" style={styles.exportButtonPdf} onClick={exportarPDF}>Descargar PDF</button>
                     </div>
                   ) : mostrarTendenciaComp ? (
                     <div style={{ width: '100%', textAlign: 'left' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
-                        <span style={{ fontSize: '13px', fontWeight: 800, color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine }}>Tendencia Poblacional Comparada</span>
+                        <span style={{ fontSize: '13px', fontWeight: '700', color: isDarkMode ? '#f8fafc' : PALETTE.navyTitle, textTransform: 'uppercase' }}>Tendencia Comparada</span>
                         <button
                           className="interactive-btn no-capturar"
                           type="button"
-                          style={{ padding: '5px 10px', fontSize: '11px', borderRadius: '8px', background: 'transparent', border: `1px solid ${isDarkMode ? PALETTE.goldSoft : PALETTE.wine}`, color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, cursor: 'pointer', fontWeight: 'bold' }}
+                          style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: 'transparent', border: isDarkMode ? '1px solid #334155' : '1px solid #cbd5e1', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, cursor: 'pointer', fontWeight: '600' }}
                           onClick={() => setMostrarTendenciaComp(false)}
                         >
                           Ocultar Tendencia
@@ -1902,56 +1691,44 @@ function App() {
                       </div>
 
                       {datosTendenciaComp ? (
-                        <div className="result-enter" style={{ width: '100%' }}>
+                        <div style={{ width: '100%' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
                               <button
                                 className="interactive-btn no-capturar"
                                 type="button"
-                                style={{ padding: '6px 12px', fontSize: '12px', borderRadius: '8px', background: PALETTE.gold, border: 'none', color: '#fff', cursor: 'pointer', fontWeight: 'bold' }}
+                                style={{ padding: '4px 8px', fontSize: '11px', borderRadius: '4px', background: '#8b9bb0', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: '600' }}
                                 onClick={() => setTipoGraficaTendenciaComp(prev => prev === 'linea' ? 'barras' : 'linea')}
                               >
-                                {tipoGraficaTendenciaComp === 'linea' ? 'Ver Gráfica de Barras' : 'Ver Gráfica de Líneas'}
+                                {tipoGraficaTendenciaComp === 'linea' ? 'Ver Barras' : 'Ver Líneas'}
                               </button>
                               <span style={styles.legendChip(PALETTE.wine, isDarkMode)}>● {nombresTendenciaComp.a}</span>
-                              <span style={styles.legendChip(PALETTE.gold, isDarkMode)}>● {nombresTendenciaComp.b}</span>
+                              <span style={styles.legendChip('#8b9bb0', isDarkMode)}>● {nombresTendenciaComp.b}</span>
                             </div>
                           </div>
-                          <div style={{ height: '450px', width: '100%' }}>
+                          <div style={{ height: '420px', width: '100%' }}>
                             <ResponsiveContainer width="100%" height="100%">
                               {tipoGraficaTendenciaComp === 'barras' ? (
-                                <BarChart data={ordenarPorAno(datosTendenciaComp)} margin={{ top: 25, right: 25, left: 0, bottom: 5 }}>
-                                  <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
-                                  <XAxis dataKey="ano" stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 12 }} />
-                                  <YAxis stroke={isDarkMode ? '#fff' : '#000'} tickFormatter={formatCompacto} width={55} tick={{ fontSize: 12 }} domain={['auto', 'auto']} />
+                                <BarChart data={ordenarPorAno(datosTendenciaComp)} margin={{ top: 20, right: 25, left: 0, bottom: 5 }}>
+                                  <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
+                                  <XAxis dataKey="ano" stroke={isDarkMode ? '#94a3b8' : '#475569'} tick={{ fontSize: 11 }} />
+                                  <YAxis stroke={isDarkMode ? '#94a3b8' : '#475569'} tickFormatter={formatCompacto} width={45} tick={{ fontSize: 11 }} domain={['auto', 'auto']} />
                                   <Tooltip content={<TendenciaComparativaTooltip />} />
-                                  <Bar dataKey="a" name={nombresTendenciaComp.a} fill={PALETTE.wine} radius={[6, 6, 0, 0]}>
-                                    <LabelList dataKey="a" position="top" fill={isDarkMode ? PALETTE.goldSoft : PALETTE.wine} formatter={formatCompacto} style={{ fontSize: '10px', fontWeight: '700' }} />
+                                  <Bar dataKey="a" name={nombresTendenciaComp.a} fill={PALETTE.wine} radius={[4, 4, 0, 0]}>
+                                    <LabelList dataKey="a" position="top" fill={isDarkMode ? '#f8fafc' : PALETTE.navyTitle} formatter={formatCompacto} style={{ fontSize: '9px', fontWeight: '600' }} />
                                   </Bar>
-                                  <Bar dataKey="b" name={nombresTendenciaComp.b} fill={PALETTE.gold} radius={[6, 6, 0, 0]}>
-                                    <LabelList dataKey="b" position="top" fill={isDarkMode ? PALETTE.goldSoft : PALETTE.gold} formatter={formatCompacto} style={{ fontSize: '10px', fontWeight: '700' }} />
+                                  <Bar dataKey="b" name={nombresTendenciaComp.b} fill="#8b9bb0" radius={[4, 4, 0, 0]}>
+                                    <LabelList dataKey="b" position="top" fill={isDarkMode ? '#f8fafc' : '#8b9bb0'} formatter={formatCompacto} style={{ fontSize: '9px', fontWeight: '600' }} />
                                   </Bar>
                                 </BarChart>
                               ) : (
-                                <ComposedChart data={ordenarPorAno(datosTendenciaComp)} margin={{ top: 30, right: 25, left: 0, bottom: 5 }}>
-                                  <defs>
-                                    <linearGradient id="gradA" x1="0" y1="0" x2="0" y2="1">
-                                      <stop offset="5%" stopColor={PALETTE.wine} stopOpacity={0.35} />
-                                      <stop offset="95%" stopColor={PALETTE.wine} stopOpacity={0} />
-                                    </linearGradient>
-                                    <linearGradient id="gradB" x1="0" y1="0" x2="0" y2="1">
-                                      <stop offset="5%" stopColor={PALETTE.gold} stopOpacity={0.35} />
-                                      <stop offset="95%" stopColor={PALETTE.gold} stopOpacity={0} />
-                                    </linearGradient>
-                                  </defs>
-                                  <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#3c3245' : '#eee'} />
-                                  <XAxis dataKey="ano" stroke={isDarkMode ? '#fff' : '#000'} tick={{ fontSize: 12 }} />
-                                  <YAxis stroke={isDarkMode ? '#fff' : '#000'} tickFormatter={formatCompacto} width={55} tick={{ fontSize: 12 }} domain={['auto', 'auto']} />
+                                <ComposedChart data={ordenarPorAno(datosTendenciaComp)} margin={{ top: 20, right: 25, left: 0, bottom: 5 }}>
+                                  <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
+                                  <XAxis dataKey="ano" stroke={isDarkMode ? '#94a3b8' : '#475569'} tick={{ fontSize: 11 }} />
+                                  <YAxis stroke={isDarkMode ? '#94a3b8' : '#475569'} tickFormatter={formatCompacto} width={45} tick={{ fontSize: 11 }} domain={['auto', 'auto']} />
                                   <Tooltip content={<TendenciaComparativaTooltip />} />
-                                  <Area type="monotone" dataKey="a" stroke="none" fill="url(#gradA)" />
-                                  <Area type="monotone" dataKey="b" stroke="none" fill="url(#gradB)" />
-                                  <Line type="monotone" dataKey="a" name={nombresTendenciaComp.a} stroke={PALETTE.wine} strokeWidth={4} dot={{ r: 5, fill: PALETTE.wine, stroke: isDarkMode ? '#1a1520' : '#ffffff', strokeWidth: 2 }} activeDot={{ r: 7 }} />
-                                  <Line type="monotone" dataKey="b" name={nombresTendenciaComp.b} stroke={PALETTE.gold} strokeWidth={4} dot={{ r: 5, fill: PALETTE.gold, stroke: isDarkMode ? '#1a1520' : '#ffffff', strokeWidth: 2 }} activeDot={{ r: 7 }} />
+                                  <Line type="monotone" dataKey="a" name={nombresTendenciaComp.a} stroke={PALETTE.wine} strokeWidth={2} dot={{ r: 4, fill: PALETTE.wine }} activeDot={{ r: 6 }} />
+                                  <Line type="monotone" dataKey="b" name={nombresTendenciaComp.b} stroke="#8b9bb0" strokeWidth={2} dot={{ r: 4, fill: '#8b9bb0' }} activeDot={{ r: 6 }} />
                                 </ComposedChart>
                               )}
                             </ResponsiveContainer>
@@ -1961,16 +1738,16 @@ function App() {
                           </div>
                         </div>
                       ) : (
-                        <div style={{ textAlign: 'center', padding: '30px' }}>
-                          <p style={{ fontSize: '13px', color: isDarkMode ? '#ccc' : '#666', marginBottom: '15px' }}>Configura el periodo y genera las tendencias comparadas.</p>
-                          <div style={{ display: 'flex', gap: '10px', marginBottom: '12px' }}>
+                        <div style={{ textAlign: 'center', padding: '20px' }}>
+                          <p style={{ fontSize: '13px', color: isDarkMode ? '#94a3b8' : PALETTE.navyLabel, marginBottom: '12px' }}>Configura el periodo y genera las tendencias comparadas.</p>
+                          <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
                             <div style={{ flex: 1 }}>
                               <label style={{ ...styles.label, fontSize: '10px' }}>Periodo Inicio</label>
-                              <input className="interactive-input" style={{ ...styles.input, padding: '10px' }} type="number" value={rangoInicioComp} onChange={(e) => setRangoInicioComp(e.target.value)} />
+                              <input className="interactive-input" style={{ ...styles.input, padding: '8px' }} type="number" value={rangoInicioComp} onChange={(e) => setRangoInicioComp(e.target.value)} />
                             </div>
                             <div style={{ flex: 1 }}>
                               <label style={{ ...styles.label, fontSize: '10px' }}>Periodo Fin</label>
-                              <input className="interactive-input" style={{ ...styles.input, padding: '10px' }} type="number" value={rangoFinComp} onChange={(e) => setRangoFinComp(e.target.value)} />
+                              <input className="interactive-input" style={{ ...styles.input, padding: '8px' }} type="number" value={rangoFinComp} onChange={(e) => setRangoFinComp(e.target.value)} />
                             </div>
                           </div>
                           <button className="interactive-btn" type="button" style={styles.button(cargandoTendenciaComp, isDarkMode)} onClick={consultarTendenciaComparativa} disabled={cargandoTendenciaComp}>
@@ -1985,21 +1762,13 @@ function App() {
                   ) : null}
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div style={{
-                    backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
-                    padding: '18px',
-                    borderRadius: '20px',
-                    border: isDarkMode ? `1px solid ${PALETTE.gold}33` : `1px solid ${PALETTE.wine}22`,
-                    boxShadow: isDarkMode ? '0 4px 16px rgba(0,0,0,0.3)' : '0 4px 16px rgba(116,27,42,0.06)'
-                  }}>
-                    <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
-                      Contraste de Datos
-                    </h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  <div className="panel-section">
+                    <div className="section-header">Contraste de Datos</div>
                     <button
                       type="button"
                       className="interactive-btn"
-                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0', background: PALETTE.gold }}
+                      style={styles.button(cargando, isDarkMode)}
                       onClick={() => {
                         if (!munA || !munB) {
                           mostrarToast('Selecciona ambos municipios para contrastar.');
@@ -2013,20 +1782,12 @@ function App() {
                     </button>
                   </div>
 
-                  <div style={{
-                    backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
-                    padding: '18px',
-                    borderRadius: '20px',
-                    border: isDarkMode ? `1px solid ${PALETTE.gold}33` : `1px solid ${PALETTE.wine}22`,
-                    boxShadow: isDarkMode ? '0 4px 16px rgba(0,0,0,0.3)' : '0 4px 16px rgba(116,27,42,0.06)'
-                  }}>
-                    <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
-                      Gráfica de municipios
-                    </h4>
+                  <div className="panel-section">
+                    <div className="section-header">Gráfica de municipios</div>
                     <button
                       className="interactive-btn"
                       type="button"
-                      style={{ ...styles.button(cargando, isDarkMode), marginTop: '0' }}
+                      style={styles.button(cargando, isDarkMode)}
                       onClick={alternarGraficaComparativa}
                       disabled={cargando}
                     >
@@ -2037,30 +1798,22 @@ function App() {
                     </button>
                   </div>
 
-                  <div style={{
-                    backgroundColor: isDarkMode ? '#221c2a' : '#fcf8f4',
-                    padding: '18px',
-                    borderRadius: '20px',
-                    border: isDarkMode ? `1px solid ${PALETTE.gold}33` : `1px solid ${PALETTE.wine}22`,
-                    boxShadow: isDarkMode ? '0 4px 16px rgba(0,0,0,0.3)' : '0 4px 16px rgba(116,27,42,0.06)'
-                  }}>
-                    <h4 style={{ color: isDarkMode ? PALETTE.goldSoft : PALETTE.wine, fontSize: '14px', fontWeight: '800', margin: '0 0 10px 0' }}>
-                      Ver Tendencias
-                    </h4>
-                    <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+                  <div className="panel-section">
+                    <div className="section-header">Ver Tendencias</div>
+                    <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
                       <div style={{ flex: 1 }}>
                         <label style={{ ...styles.label, fontSize: '10px', marginBottom: '4px' }}>Inicio</label>
-                        <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoInicioComp} onChange={(e) => setRangoInicioComp(e.target.value)} />
+                        <input className="interactive-input" style={{ ...styles.input, padding: '8px', marginBottom: '0' }} type="number" value={rangoInicioComp} onChange={(e) => setRangoInicioComp(e.target.value)} />
                       </div>
                       <div style={{ flex: 1 }}>
                         <label style={{ ...styles.label, fontSize: '10px', marginBottom: '4px' }}>Fin</label>
-                        <input className="interactive-input" style={{ ...styles.input, padding: '10px', marginBottom: '0' }} type="number" value={rangoFinComp} onChange={(e) => setRangoFinComp(e.target.value)} />
+                        <input className="interactive-input" style={{ ...styles.input, padding: '8px', marginBottom: '0' }} type="number" value={rangoFinComp} onChange={(e) => setRangoFinComp(e.target.value)} />
                       </div>
                     </div>
                     <button
                       className="interactive-btn"
                       type="button"
-                      style={{ ...styles.button(cargandoTendenciaComp, isDarkMode), marginTop: '0' }}
+                      style={styles.button(cargandoTendenciaComp, isDarkMode)}
                       onClick={() => {
                         const targetA = munA || nombresCongelados.a;
                         const targetB = munB || nombresCongelados.b;
