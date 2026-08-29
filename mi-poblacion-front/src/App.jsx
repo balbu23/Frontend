@@ -8,7 +8,7 @@ import jsPDF from 'jspdf';
 import MapaInteractivo from './MapaInteractivo';
 import FondoAnimado from './FondoAnimado';
 
-const baseUrl = 'https://backend-production-1a3af.up.railway.app';
+const baseUrl = 'http://localhost:8000';
 
 const PALETTE = {
   wine: '#6b1d2f',
@@ -965,7 +965,7 @@ function App() {
           </div>
           <div style={styles.headerCenter}>
             <h1 style={styles.sedTitle}>S E D</h1>
-            <span style={{ fontSize: '11px', color: isDarkMode ? '#cbd5e1' : PALETTE.navyLabel, fontWeight: '700', letterSpacing: '1px', marginTop: '4px', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '11px', color: isDarkMode ? '#cbd5e1' : PALETTE.navyLabel, fontWeight: '700', letterSpacing: '1px', marginTop: '5px', textTransform: 'uppercase' }}>
               Sistema de Estimación Demográfica
             </span>
           </div>
