@@ -1,8 +1,14 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
-import { MapContainer, TileLayer, GeoJSON, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, Popup, useMap, ZoomControl } from 'react-leaflet';
 import { BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
+// LÍMITES GEOGRÁFICOS MÁXIMOS (Tuxtla Gutiérrez)
+const TUXTLA_MAX_BOUNDS = [
+  [16.6500, -93.2500], // Esquina Suroeste
+  [16.8500, -93.0000]  // Esquina Noreste
+];
 
 const normalizarTexto = (texto) => {
   if (!texto) return '';
@@ -140,7 +146,6 @@ export default function MapaSED() {
           c.secundaria_completa += toNum(item.pob_15mas_secundaria_completa);
           c.educacion_superior += toNum(item.pob_18mas_educacion_superior_o_mas);
 
-          // ACUMULACIÓN CORRECTA DE LA ESCOLARIDAD
           const gradoVal = toNum(item.grado_promedio_escolaridad || item.graproes);
           if (gradoVal > 0) {
             c.suma_escolaridad += gradoVal;
@@ -148,7 +153,6 @@ export default function MapaSED() {
           }
         });
 
-        // CÁLCULO DE LA MEDIA PROMEDIO POR COLONIA
         Object.values(acumulado).forEach((col) => {
           col.grado_promedio_escolaridad = col.conteo_registros > 0
             ? Number((col.suma_escolaridad / col.conteo_registros).toFixed(2))
@@ -247,7 +251,7 @@ export default function MapaSED() {
         { nombre: 'Teléfono Fijo', colA: infoColoniaA.viv_telefono_fijo || 0, colB: infoColoniaB?.viv_telefono_fijo || 0 }
       ],
       educacion: [
-        { nombre: 'Secundaria Completa', colA: infoColoniaA.secundaria_completa || 0, colB: infoColoniaB?.secundaria_completa || 0 },
+        { nombre: 'Secundaria Completa', colA: infoColoniaA.secundaria_completa || 0, colB: infoColoniaB?.educacion_superior || 0 },
         { nombre: 'Educación Superior', colA: infoColoniaA.educacion_superior || 0, colB: infoColoniaB?.educacion_superior || 0 }
       ],
       movilidad: [
@@ -305,7 +309,7 @@ export default function MapaSED() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100%', fontFamily: 'Inter, system-ui, sans-serif', background: '#f8fafc', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', height: '100vh', width: '100%', fontFamily: 'Inter, system-ui, sans-serif', background: '#f8fafc', overflow: 'hidden', position: 'relative' }}>
       <style>{`
         .label-colonia-mapa {
           background: #ffffff !important;
@@ -317,14 +321,20 @@ export default function MapaSED() {
           border-radius: 4px !important;
           box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
         }
+
+        /* ALINEACIÓN VERTICAL CENTRAL DEL BOTÓN DE ZOOM */
+        .leaflet-top.leaflet-right {
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+        }
       `}</style>
 
-      {/* BOTÓN COLAPSAR PANEL */}
+      {/* BOTÓN COLAPSAR PANEL BAJADO PARA EVITAR SOLAPAMIENTO CON LA BARRA SUPERIOR */}
       <button
         onClick={() => setPanelAbierto(!panelAbierto)}
         style={{
           position: 'absolute',
-          top: '12px',
+          top: '120px',
           left: panelAbierto ? '350px' : '12px',
           zIndex: 1000,
           background: '#ffffff',
@@ -332,7 +342,7 @@ export default function MapaSED() {
           borderRadius: '4px',
           padding: '6px 10px',
           cursor: 'pointer',
-          boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
           transition: 'left 0.3s ease'
         }}
       >
@@ -480,7 +490,18 @@ export default function MapaSED() {
         
         {/* MAPA LEAFLET */}
         <div style={{ flex: mostrarPerfilDemografico ? 0.55 : 1, height: '100%', position: 'relative', transition: 'flex 0.3s ease' }}>
-          <MapContainer center={[16.7528, -93.1164]} zoom={13} zoomControl={true} style={{ height: '100%', width: '100%' }}>
+          <MapContainer 
+            center={[16.7528, -93.1164]} 
+            zoom={13} 
+            minZoom={12}
+            maxZoom={18}
+            maxBounds={TUXTLA_MAX_BOUNDS}
+            maxBoundsViscosity={1.0}
+            zoomControl={false} 
+            style={{ height: '100%', width: '100%' }}
+          >
+            <ZoomControl position="topright" />
+
             <TileLayer
               url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
               attribution='&copy; OpenStreetMap'
