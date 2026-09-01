@@ -8,18 +8,19 @@ import jsPDF from 'jspdf';
 import MapaInteractivo from './MapaInteractivo';
 import FondoAnimado from './FondoAnimado';
 
+
 const baseUrl = 'http://localhost:8000';
 
 const PALETTE = {
   wine: '#6b1d2f',
   wineDeep: '#4a121f',
   wineLight: '#8c273e',
-  gold: '#8b9bb0', // Botón principal gris-azulado idéntico a la imagen
+  gold: '#8b9bb0',
   goldSoft: '#718096',
   danger: '#dc2626',
   success: '#16a34a',
-  piramideHombres: '#6b1d2f',
-  piramideMujeres: '#8b9bb0',
+  piramideHombres: '#6b1d2f',  // Tono vino/oscuro
+  piramideMujeres: '#d97706',  // Tono dorado/cálido de alto contraste
   navyTitle: '#2b3648',
   navyLabel: '#4a5568',
   borderLight: '#e2e8f0',

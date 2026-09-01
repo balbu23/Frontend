@@ -1,0 +1,910 @@
+[
+  {
+    "colonia_o_sector":"Centro (Sector Norte - San Marcos)",
+    "codigo_ageb":"001A"
+  },
+  {
+    "colonia_o_sector":"Terán (Sector Centro)",
+    "codigo_ageb":"0363"
+  },
+  {
+    "colonia_o_sector":"Plan de Ayala (Sector Sur)",
+    "codigo_ageb":"0433"
+  },
+  {
+    "colonia_o_sector":"Moctezuma",
+    "codigo_ageb":"0518"
+  },
+  {
+    "colonia_o_sector":"Arboledas",
+    "codigo_ageb":"0522"
+  },
+  {
+    "colonia_o_sector":"La Hacienda",
+    "codigo_ageb":"0537"
+  },
+  {
+    "colonia_o_sector":"El Retiro",
+    "codigo_ageb":"0541"
+  },
+  {
+    "colonia_o_sector":"Tzocotumbak",
+    "codigo_ageb":"0556"
+  },
+  {
+    "colonia_o_sector":"Xamaipak",
+    "codigo_ageb":"0560"
+  },
+  {
+    "colonia_o_sector":"San Cristóbal",
+    "codigo_ageb":"0575"
+  },
+  {
+    "colonia_o_sector":"Penipak (Sector Norte)",
+    "codigo_ageb":"058A"
+  },
+  {
+    "colonia_o_sector":"Bienestar Social",
+    "codigo_ageb":"0594"
+  },
+  {
+    "colonia_o_sector":"Caminera",
+    "codigo_ageb":"0607"
+  },
+  {
+    "colonia_o_sector":"Francisco I. Madero",
+    "codigo_ageb":"0611"
+  },
+  {
+    "colonia_o_sector":"Popular",
+    "codigo_ageb":"0626"
+  },
+  {
+    "colonia_o_sector":"Colón",
+    "codigo_ageb":"0630"
+  },
+  {
+    "colonia_o_sector":"El Cerrito",
+    "codigo_ageb":"0645"
+  },
+  {
+    "colonia_o_sector":"La Pimienta",
+    "codigo_ageb":"065A"
+  },
+  {
+    "colonia_o_sector":"Potrerillo",
+    "codigo_ageb":"0664"
+  },
+  {
+    "colonia_o_sector":"El Roble",
+    "codigo_ageb":"0679"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva (Sector 1)",
+    "codigo_ageb":"0698"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva (Sector 2)",
+    "codigo_ageb":"0700"
+  },
+  {
+    "colonia_o_sector":"Las Palmas",
+    "codigo_ageb":"0715"
+  },
+  {
+    "colonia_o_sector":"Las Palmas Norte",
+    "codigo_ageb":"072A"
+  },
+  {
+    "colonia_o_sector":"El Brasil",
+    "codigo_ageb":"0734"
+  },
+  {
+    "colonia_o_sector":"Paso Limón",
+    "codigo_ageb":"0749"
+  },
+  {
+    "colonia_o_sector":"Capulines (Sector Oriente)",
+    "codigo_ageb":"0753"
+  },
+  {
+    "colonia_o_sector":"San José Terán (Sector Norte)",
+    "codigo_ageb":"0768"
+  },
+  {
+    "colonia_o_sector":"San José Terán (Sector Sur)",
+    "codigo_ageb":"0787"
+  },
+  {
+    "colonia_o_sector":"Santa Cruz (Terán)",
+    "codigo_ageb":"0791"
+  },
+  {
+    "colonia_o_sector":"Plan de Ayala (Sector Sur)",
+    "codigo_ageb":"0804"
+  },
+  {
+    "colonia_o_sector":"Plan de Ayala (Sector Poniente)",
+    "codigo_ageb":"0819"
+  },
+  {
+    "colonia_o_sector":"Juan Crispín",
+    "codigo_ageb":"0823"
+  },
+  {
+    "colonia_o_sector":"Juan Crispín (Sector Norte)",
+    "codigo_ageb":"0838"
+  },
+  {
+    "colonia_o_sector":"Santa María La Ribera",
+    "codigo_ageb":"0857"
+  },
+  {
+    "colonia_o_sector":"San José Terán (Sector Poniente)",
+    "codigo_ageb":"0861"
+  },
+  {
+    "colonia_o_sector":"Buenos Aires (Terán)",
+    "codigo_ageb":"0876"
+  },
+  {
+    "colonia_o_sector":"Club Campestre",
+    "codigo_ageb":"0880"
+  },
+  {
+    "colonia_o_sector":"La Gloria (Terán)",
+    "codigo_ageb":"0895"
+  },
+  {
+    "colonia_o_sector":"San Juan (Terán)",
+    "codigo_ageb":"0908"
+  },
+  {
+    "colonia_o_sector":"Lomas del Valle (Sector Sur)",
+    "codigo_ageb":"0912"
+  },
+  {
+    "colonia_o_sector":"Xamaipak Sur",
+    "codigo_ageb":"0927"
+  },
+  {
+    "colonia_o_sector":"Penipak",
+    "codigo_ageb":"0931"
+  },
+  {
+    "colonia_o_sector":"Maldonado",
+    "codigo_ageb":"0946"
+  },
+  {
+    "colonia_o_sector":"Caminera Sur",
+    "codigo_ageb":"0950"
+  },
+  {
+    "colonia_o_sector":"Las Terrazas",
+    "codigo_ageb":"0965"
+  },
+  {
+    "colonia_o_sector":"Bienestar Social Sur",
+    "codigo_ageb":"097A"
+  },
+  {
+    "colonia_o_sector":"El Calvario",
+    "codigo_ageb":"0984"
+  },
+  {
+    "colonia_o_sector":"San Francisco",
+    "codigo_ageb":"0999"
+  },
+  {
+    "colonia_o_sector":"Lomas del Venado",
+    "codigo_ageb":"1003"
+  },
+  {
+    "colonia_o_sector":"El Retiro Sur",
+    "codigo_ageb":"1022"
+  },
+  {
+    "colonia_o_sector":"Las Delicias Norte",
+    "codigo_ageb":"1037"
+  },
+  {
+    "colonia_o_sector":"Magisterial Norte",
+    "codigo_ageb":"1041"
+  },
+  {
+    "colonia_o_sector":"Tzocotumbak Norte",
+    "codigo_ageb":"1056"
+  },
+  {
+    "colonia_o_sector":"Brasilito Norte",
+    "codigo_ageb":"1060"
+  },
+  {
+    "colonia_o_sector":"San Cristóbal Norte",
+    "codigo_ageb":"1075"
+  },
+  {
+    "colonia_o_sector":"La Pimienta Sur",
+    "codigo_ageb":"108A"
+  },
+  {
+    "colonia_o_sector":"San Pedro Progresivo (Sector 1)",
+    "codigo_ageb":"1094"
+  },
+  {
+    "colonia_o_sector":"San Pedro Progresivo (Sector 2)",
+    "codigo_ageb":"1107"
+  },
+  {
+    "colonia_o_sector":"Las Palmas Sur",
+    "codigo_ageb":"1111"
+  },
+  {
+    "colonia_o_sector":"El Vergel Oriente",
+    "codigo_ageb":"1130"
+  },
+  {
+    "colonia_o_sector":"Electricistas Oriente",
+    "codigo_ageb":"1145"
+  },
+  {
+    "colonia_o_sector":"Rafael Pascacio Norte",
+    "codigo_ageb":"1164"
+  },
+  {
+    "colonia_o_sector":"Paso Limón Sur",
+    "codigo_ageb":"1179"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva (Sector 3)",
+    "codigo_ageb":"1183"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva (Sector 4)",
+    "codigo_ageb":"1198"
+  },
+  {
+    "colonia_o_sector":"Vida Mejor (Sector Poniente)",
+    "codigo_ageb":"1215"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque (Sector 1)",
+    "codigo_ageb":"1234"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque (Sector 2)",
+    "codigo_ageb":"1249"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque (Sector Homún)",
+    "codigo_ageb":"1253"
+  },
+  {
+    "colonia_o_sector":"Valle Dorado",
+    "codigo_ageb":"1268"
+  },
+  {
+    "colonia_o_sector":"Copoya (Zona Urbana)",
+    "codigo_ageb":"1272"
+  },
+  {
+    "colonia_o_sector":"El Jobo (Zona Urbana)",
+    "codigo_ageb":"1287"
+  },
+  {
+    "colonia_o_sector":"Copoya Sur",
+    "codigo_ageb":"1291"
+  },
+  {
+    "colonia_o_sector":"El Jobo Sur",
+    "codigo_ageb":"1319"
+  },
+  {
+    "colonia_o_sector":"Cerro Hueco",
+    "codigo_ageb":"1323"
+  },
+  {
+    "colonia_o_sector":"Fraccionamiento El Bosque",
+    "codigo_ageb":"1338"
+  },
+  {
+    "colonia_o_sector":"Lomas del Sunset",
+    "codigo_ageb":"1357"
+  },
+  {
+    "colonia_o_sector":"Club Campestre",
+    "codigo_ageb":"1361"
+  },
+  {
+    "colonia_o_sector":"Bosques del Zapotal",
+    "codigo_ageb":"1380"
+  },
+  {
+    "colonia_o_sector":"Pedregal de San Ángel",
+    "codigo_ageb":"1408"
+  },
+  {
+    "colonia_o_sector":"Fraccionamiento La Hacienda",
+    "codigo_ageb":"1427"
+  },
+  {
+    "colonia_o_sector":"Lomas del Paroy",
+    "codigo_ageb":"1431"
+  },
+  {
+    "colonia_o_sector":"Monte Bello",
+    "codigo_ageb":"1450"
+  },
+  {
+    "colonia_o_sector":"San Fernando (Terán)",
+    "codigo_ageb":"1465"
+  },
+  {
+    "colonia_o_sector":"Laguna Verde",
+    "codigo_ageb":"147A"
+  },
+  {
+    "colonia_o_sector":"Las Casitas",
+    "codigo_ageb":"1484"
+  },
+  {
+    "colonia_o_sector":"Las Casitas II",
+    "codigo_ageb":"1499"
+  },
+  {
+    "colonia_o_sector":"El Relicario (Terán)",
+    "codigo_ageb":"1501"
+  },
+  {
+    "colonia_o_sector":"Paredón Norte",
+    "codigo_ageb":"1588"
+  },
+  {
+    "colonia_o_sector":"Albania Alta",
+    "codigo_ageb":"1681"
+  },
+  {
+    "colonia_o_sector":"Albania Baja",
+    "codigo_ageb":"1696"
+  },
+  {
+    "colonia_o_sector":"Las Granjas (Sector 1)",
+    "codigo_ageb":"1709"
+  },
+  {
+    "colonia_o_sector":"Las Granjas (Sector 2)",
+    "codigo_ageb":"1713"
+  },
+  {
+    "colonia_o_sector":"Las Granjas (Sector 3)",
+    "codigo_ageb":"1728"
+  },
+  {
+    "colonia_o_sector":"Kilómetro 4 Norte",
+    "codigo_ageb":"1732"
+  },
+  {
+    "colonia_o_sector":"Cruz con Casitas",
+    "codigo_ageb":"1747"
+  },
+  {
+    "colonia_o_sector":"Agripino Gutiérrez",
+    "codigo_ageb":"1751"
+  },
+  {
+    "colonia_o_sector":"Shanka",
+    "codigo_ageb":"1766"
+  },
+  {
+    "colonia_o_sector":"Shanka",
+    "codigo_ageb":"1770"
+  },
+  {
+    "colonia_o_sector":"San Georgio",
+    "codigo_ageb":"1785"
+  },
+  {
+    "colonia_o_sector":"Capulines Sur",
+    "codigo_ageb":"179A"
+  },
+  {
+    "colonia_o_sector":"Ampliación San Pedro",
+    "codigo_ageb":"1802"
+  },
+  {
+    "colonia_o_sector":"San José Terán Norte",
+    "codigo_ageb":"1817"
+  },
+  {
+    "colonia_o_sector":"Terán Poniente",
+    "codigo_ageb":"1821"
+  },
+  {
+    "colonia_o_sector":"Plan de Ayala Norte",
+    "codigo_ageb":"1836"
+  },
+  {
+    "colonia_o_sector":"Ampliación Plan de Ayala",
+    "codigo_ageb":"1840"
+  },
+  {
+    "colonia_o_sector":"Aura Norte",
+    "codigo_ageb":"1855"
+  },
+  {
+    "colonia_o_sector":"Potrerillo Sur",
+    "codigo_ageb":"186A"
+  },
+  {
+    "colonia_o_sector":"La Reliquia",
+    "codigo_ageb":"1874"
+  },
+  {
+    "colonia_o_sector":"La Reliquia II",
+    "codigo_ageb":"1889"
+  },
+  {
+    "colonia_o_sector":"Paredón Poniente",
+    "codigo_ageb":"1893"
+  },
+  {
+    "colonia_o_sector":"Lomas del Valle Norte",
+    "codigo_ageb":"1906"
+  },
+  {
+    "colonia_o_sector":"Arboledas Norte",
+    "codigo_ageb":"1910"
+  },
+  {
+    "colonia_o_sector":"Burocrática Norte",
+    "codigo_ageb":"1925"
+  },
+  {
+    "colonia_o_sector":"Moctezuma Sur",
+    "codigo_ageb":"193A"
+  },
+  {
+    "colonia_o_sector":"Santa Elena Sur",
+    "codigo_ageb":"1959"
+  },
+  {
+    "colonia_o_sector":"Retiro Oriente",
+    "codigo_ageb":"1978"
+  },
+  {
+    "colonia_o_sector":"Magisterial Sur",
+    "codigo_ageb":"1982"
+  },
+  {
+    "colonia_o_sector":"San Cristóbal Sur",
+    "codigo_ageb":"2016"
+  },
+  {
+    "colonia_o_sector":"Brasilito Sur",
+    "codigo_ageb":"2020"
+  },
+  {
+    "colonia_o_sector":"Pimienta Norte",
+    "codigo_ageb":"2035"
+  },
+  {
+    "colonia_o_sector":"San Pedro Progresivo Sur",
+    "codigo_ageb":"204A"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva Oriente",
+    "codigo_ageb":"211A"
+  },
+  {
+    "colonia_o_sector":"Vida Mejor Sur",
+    "codigo_ageb":"2139"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque Sur",
+    "codigo_ageb":"2143"
+  },
+  {
+    "colonia_o_sector":"Copoya Norte",
+    "codigo_ageb":"2158"
+  },
+  {
+    "colonia_o_sector":"El Jobo Norte",
+    "codigo_ageb":"2177"
+  },
+  {
+    "colonia_o_sector":"Cerro Hueco Norte",
+    "codigo_ageb":"2181"
+  },
+  {
+    "colonia_o_sector":"Zapotal Norte",
+    "codigo_ageb":"2196"
+  },
+  {
+    "colonia_o_sector":"Pedregal Norte",
+    "codigo_ageb":"2209"
+  },
+  {
+    "colonia_o_sector":"Laguna Verde Norte",
+    "codigo_ageb":"2213"
+  },
+  {
+    "colonia_o_sector":"Las Casitas III",
+    "codigo_ageb":"2228"
+  },
+  {
+    "colonia_o_sector":"Albania Alta Norte",
+    "codigo_ageb":"2232"
+  },
+  {
+    "colonia_o_sector":"Las Granjas Norte",
+    "codigo_ageb":"2251"
+  },
+  {
+    "colonia_o_sector":"Shanka Norte",
+    "codigo_ageb":"2266"
+  },
+  {
+    "colonia_o_sector":"La Reliquia III",
+    "codigo_ageb":"2285"
+  },
+  {
+    "colonia_o_sector":"Plan de Ayala Oriente",
+    "codigo_ageb":"229A"
+  },
+  {
+    "colonia_o_sector":"Terán Oriente",
+    "codigo_ageb":"2317"
+  },
+  {
+    "colonia_o_sector":"San José Terán Oriente",
+    "codigo_ageb":"2321"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque Oriente",
+    "codigo_ageb":"2336"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva Sur",
+    "codigo_ageb":"2389"
+  },
+  {
+    "colonia_o_sector":"Paso Limón Oriente",
+    "codigo_ageb":"2425"
+  },
+  {
+    "colonia_o_sector":"Capulines Norte",
+    "codigo_ageb":"243A"
+  },
+  {
+    "colonia_o_sector":"Las Granjas Poniente",
+    "codigo_ageb":"2444"
+  },
+  {
+    "colonia_o_sector":"Shanka Poniente",
+    "codigo_ageb":"2459"
+  },
+  {
+    "colonia_o_sector":"Albania Baja Norte",
+    "codigo_ageb":"2463"
+  },
+  {
+    "colonia_o_sector":"San Pedro Progresivo Poniente",
+    "codigo_ageb":"2478"
+  },
+  {
+    "colonia_o_sector":"Pimienta Poniente",
+    "codigo_ageb":"2482"
+  },
+  {
+    "colonia_o_sector":"Centro Poniente",
+    "codigo_ageb":"250A"
+  },
+  {
+    "colonia_o_sector":"Centro Oriente",
+    "codigo_ageb":"2514"
+  },
+  {
+    "colonia_o_sector":"Centro Sur",
+    "codigo_ageb":"2529"
+  },
+  {
+    "colonia_o_sector":"San Francisco Sur",
+    "codigo_ageb":"2533"
+  },
+  {
+    "colonia_o_sector":"Colón Sur",
+    "codigo_ageb":"2548"
+  },
+  {
+    "colonia_o_sector":"Maldonado Sur",
+    "codigo_ageb":"2552"
+  },
+  {
+    "colonia_o_sector":"Terrazas Sur",
+    "codigo_ageb":"2586"
+  },
+  {
+    "colonia_o_sector":"Bienestar Social Oriente",
+    "codigo_ageb":"2590"
+  },
+  {
+    "colonia_o_sector":"Las Palmas Poniente",
+    "codigo_ageb":"2618"
+  },
+  {
+    "colonia_o_sector":"El Vergel Poniente",
+    "codigo_ageb":"2622"
+  },
+  {
+    "colonia_o_sector":"Electricistas Poniente",
+    "codigo_ageb":"2637"
+  },
+  {
+    "colonia_o_sector":"Rafael Pascacio Sur",
+    "codigo_ageb":"2641"
+  },
+  {
+    "colonia_o_sector":"Vida Mejor Oriente",
+    "codigo_ageb":"2675"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque Poniente",
+    "codigo_ageb":"268A"
+  },
+  {
+    "colonia_o_sector":"Copoya Oriente",
+    "codigo_ageb":"2694"
+  },
+  {
+    "colonia_o_sector":"El Jobo Oriente",
+    "codigo_ageb":"2707"
+  },
+  {
+    "colonia_o_sector":"Cerro Hueco Sur",
+    "codigo_ageb":"2711"
+  },
+  {
+    "colonia_o_sector":"Zapotal Sur",
+    "codigo_ageb":"2726"
+  },
+  {
+    "colonia_o_sector":"Pedregal Sur",
+    "codigo_ageb":"2730"
+  },
+  {
+    "colonia_o_sector":"Laguna Verde Sur",
+    "codigo_ageb":"2745"
+  },
+  {
+    "colonia_o_sector":"Las Casitas Sur",
+    "codigo_ageb":"275A"
+  },
+  {
+    "colonia_o_sector":"Albania Alta Sur",
+    "codigo_ageb":"2764"
+  },
+  {
+    "colonia_o_sector":"Las Granjas Sur",
+    "codigo_ageb":"2779"
+  },
+  {
+    "colonia_o_sector":"Shanka Sur",
+    "codigo_ageb":"2783"
+  },
+  {
+    "colonia_o_sector":"La Reliquia Sur",
+    "codigo_ageb":"2798"
+  },
+  {
+    "colonia_o_sector":"Plan de Ayala Sur-Poniente",
+    "codigo_ageb":"2800"
+  },
+  {
+    "colonia_o_sector":"Terán Sur-Poniente",
+    "codigo_ageb":"2815"
+  },
+  {
+    "colonia_o_sector":"San José Terán Sur",
+    "codigo_ageb":"282A"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque Sur-Poniente",
+    "codigo_ageb":"2834"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva Poniente",
+    "codigo_ageb":"2849"
+  },
+  {
+    "colonia_o_sector":"Paso Limón Poniente",
+    "codigo_ageb":"2853"
+  },
+  {
+    "colonia_o_sector":"Capulines Oriente",
+    "codigo_ageb":"2868"
+  },
+  {
+    "colonia_o_sector":"Las Granjas Oriente",
+    "codigo_ageb":"2872"
+  },
+  {
+    "colonia_o_sector":"Shanka Oriente",
+    "codigo_ageb":"2887"
+  },
+  {
+    "colonia_o_sector":"Albania Baja Sur",
+    "codigo_ageb":"2904"
+  },
+  {
+    "colonia_o_sector":"San Pedro Progresivo Oriente",
+    "codigo_ageb":"2919"
+  },
+  {
+    "colonia_o_sector":"Pimienta Oriente",
+    "codigo_ageb":"2923"
+  },
+  {
+    "colonia_o_sector":"Centro Norte",
+    "codigo_ageb":"2938"
+  },
+  {
+    "colonia_o_sector":"San Francisco Norte",
+    "codigo_ageb":"2942"
+  },
+  {
+    "colonia_o_sector":"Colón Norte",
+    "codigo_ageb":"2957"
+  },
+  {
+    "colonia_o_sector":"Maldonado Norte",
+    "codigo_ageb":"2961"
+  },
+  {
+    "colonia_o_sector":"Terrazas Norte",
+    "codigo_ageb":"2976"
+  },
+  {
+    "colonia_o_sector":"Bienestar Social Norte",
+    "codigo_ageb":"2980"
+  },
+  {
+    "colonia_o_sector":"Las Palmas Sur-Oriente",
+    "codigo_ageb":"2995"
+  },
+  {
+    "colonia_o_sector":"El Vergel Sur",
+    "codigo_ageb":"300A"
+  },
+  {
+    "colonia_o_sector":"Electricistas Sur",
+    "codigo_ageb":"3014"
+  },
+  {
+    "colonia_o_sector":"Rafael Pascacio Poniente",
+    "codigo_ageb":"3029"
+  },
+  {
+    "colonia_o_sector":"Vida Mejor Norte",
+    "codigo_ageb":"3033"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque Norte",
+    "codigo_ageb":"3048"
+  },
+  {
+    "colonia_o_sector":"Copoya Poniente",
+    "codigo_ageb":"3052"
+  },
+  {
+    "colonia_o_sector":"El Jobo Poniente",
+    "codigo_ageb":"3067"
+  },
+  {
+    "colonia_o_sector":"Cerro Hueco Oriente",
+    "codigo_ageb":"3071"
+  },
+  {
+    "colonia_o_sector":"Zapotal Oriente",
+    "codigo_ageb":"3086"
+  },
+  {
+    "colonia_o_sector":"Pedregal Oriente",
+    "codigo_ageb":"3090"
+  },
+  {
+    "colonia_o_sector":"Laguna Verde Oriente",
+    "codigo_ageb":"3103"
+  },
+  {
+    "colonia_o_sector":"Las Casitas Oriente",
+    "codigo_ageb":"3137"
+  },
+  {
+    "colonia_o_sector":"Albania Alta Oriente",
+    "codigo_ageb":"3141"
+  },
+  {
+    "colonia_o_sector":"Las Granjas Sur-Oriente",
+    "codigo_ageb":"3156"
+  },
+  {
+    "colonia_o_sector":"Shanka Sur-Oriente",
+    "codigo_ageb":"3160"
+  },
+  {
+    "colonia_o_sector":"La Reliquia Norte",
+    "codigo_ageb":"3175"
+  },
+  {
+    "colonia_o_sector":"Plan de Ayala Norte-Oriente",
+    "codigo_ageb":"318A"
+  },
+  {
+    "colonia_o_sector":"Terán Norte-Oriente",
+    "codigo_ageb":"3194"
+  },
+  {
+    "colonia_o_sector":"San José Terán Norte-Oriente",
+    "codigo_ageb":"3207"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque Norte-Oriente",
+    "codigo_ageb":"3211"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva Norte",
+    "codigo_ageb":"3226"
+  },
+  {
+    "colonia_o_sector":"Paso Limón Norte",
+    "codigo_ageb":"3230"
+  },
+  {
+    "colonia_o_sector":"Capulines Poniente",
+    "codigo_ageb":"3245"
+  },
+  {
+    "colonia_o_sector":"San Agustín (Terán)",
+    "codigo_ageb":"1639"
+  },
+  {
+    "colonia_o_sector":"Ampliación Terán",
+    "codigo_ageb":"1658"
+  },
+  {
+    "colonia_o_sector":"Real del Bosque (Sector Amanecer)",
+    "codigo_ageb":"2340"
+  },
+  {
+    "colonia_o_sector":"Valle Verde",
+    "codigo_ageb":"2355"
+  },
+  {
+    "colonia_o_sector":"Monte Real",
+    "codigo_ageb":"236A"
+  },
+  {
+    "colonia_o_sector":"Bosques del Sur",
+    "codigo_ageb":"2374"
+  },
+  {
+    "colonia_o_sector":"Nuevo Jerusalén",
+    "codigo_ageb":"3122"
+  },
+  {
+    "colonia_o_sector":"Lomas del Oriente",
+    "codigo_ageb":"2656"
+  },
+  {
+    "colonia_o_sector":"Patria Nueva (Sector Margaritas)",
+    "codigo_ageb":"2660"
+  },
+  {
+    "colonia_o_sector":"12 de Noviembre",
+    "codigo_ageb":"2891"
+  },
+  {
+    "colonia_o_sector":"El Rosario",
+    "codigo_ageb":"3118"
+  }
+]
