@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import Map, { Source, Layer, Popup } from 'react-map-gl/mapbox';
-import mapboxgl from 'mapbox-gl';
 import { 
   BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip as RechartsTooltip, 
   ResponsiveContainer, Legend 
@@ -18,7 +17,7 @@ const PALETTE = {
   borderLight: '#e2e8f0',
 };
 
-// Normalización estricta de texto
+// 1. Limpieza estándar para comparaciones de texto
 const normalizarTexto = (texto) => {
   if (!texto) return '';
   return texto
@@ -31,21 +30,19 @@ const normalizarTexto = (texto) => {
     .replace(/\s+/g, ' ');
 };
 
-// Extrae el nombre base de la colonia eliminando sufijos de sector u orientación
-const obtenerNombreBase = (texto) => {
+// 2. Extrae el nombre de la colonia principal eliminando sectores, números y palabras secundarias
+const obtenerColoniaPrincipal = (texto) => {
   if (!texto) return '';
   let limpio = texto.toString().split('(')[0];
   limpio = normalizarTexto(limpio);
-  
-  // Removemos sufijos de orientación o sectores explícitos
-  limpio = limpio
-    .replace(/\b(oriente|poniente|sur|norte|centro|sector\s*\d+)\b/g, '')
-    .trim();
 
-  return limpio;
+  return limpio
+    .replace(/\b(sector|seccion|etapa|fracc|fraccionamiento|zona|oriente|poniente|sur|norte|centro)\s*\d*\b/gi, '')
+    .replace(/\b(i|ii|iii|iv|v|vi|1|2|3|4|5|6|7|8|9)\b/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 };
 
-// Estandarizar etiquetas en el tooltip hover
 const formatearEtiqueta = (textoOriginal) => {
   if (!textoOriginal) return 'Sin colonia';
   const texto = String(textoOriginal).trim();
@@ -77,8 +74,7 @@ export default function MapaInteractivo() {
   useEffect(() => {
     Promise.all([
       fetch(`/tuxtla_completo_100percent.geojson?v=${Date.now()}`).then((res) => res.json()),
-      fetch('http://localhost:8000/api/colonias_tuxtla').then((res) => res.json()),
-      fetch(`/colonias_ageb_tuxtla.json?v=${Date.now()}`).then((res) => res.json()).catch(() => [])
+      fetch('http://localhost:8000/api/colonias_tuxtla').then((res) => res.json())
     ])
     .then(([geo, dbResponse, sectoresData]) => {
       const mapaSectoresByAgeb = {};
@@ -86,7 +82,6 @@ export default function MapaInteractivo() {
 
       if (Array.isArray(sectoresData)) {
         sectoresData.forEach((item) => {
-          // Lectura adaptada a las claves del JSON local ('codigoageb' y 'colonia')
           const rawAgeb = item.codigoageb ? String(item.codigoageb).trim() : (item.codigo_ageb ? String(item.codigo_ageb).trim() : '');
           const rawNombre = item.colonia ? String(item.colonia).trim() : (item.colonia_o_sector ? String(item.colonia_o_sector).trim() : '');
 
@@ -121,15 +116,15 @@ export default function MapaInteractivo() {
         { rango: '60+',   f: 'pob_60ymas_f_y', m: 'pob_60ymas_m_y' }
       ];
 
+      // Agrupar base de datos censal por Colonia Principal
       dbRows.forEach((item) => {
         const colNombre = item.colonia || item.colonia_unificada || item.colonia_final || item.colonia_o_sector;
         if (!colNombre) return;
 
-        // Agrupamos bajo la colonia base principal
-        const key = obtenerNombreBase(colNombre);
-        const agebCode = item.codigoageb || item.codigo_ageb || item.CVE_AGEB || item.codigo_ageb_id || '';
+        const key = obtenerColoniaPrincipal(colNombre);
+        if (!key) return;
 
-        // Formato bonito para el título (capitalizado)
+        const agebCode = item.codigoageb || item.codigo_ageb || item.CVE_AGEB || item.codigo_ageb_id || '';
         const nombreFormateado = key.replace(/\b\w/g, l => l.toUpperCase());
 
         if (!acumulado[key]) {
@@ -204,7 +199,6 @@ export default function MapaInteractivo() {
           c.pob_hombres += valM;
         });
 
-        // Promedio Ponderado para la escolaridad
         const gradoVal = toNum(item.grado_promedio_escolaridad);
         if (gradoVal > 0 && pobItem > 0) {
           c.suma_escolaridad_ponderada += (gradoVal * pobItem);
@@ -212,13 +206,13 @@ export default function MapaInteractivo() {
         }
       });
 
-      // Cálculo final del promedio ponderado
       Object.values(acumulado).forEach((col) => {
         col.grado_promedio_escolaridad = col.poblacion_con_escolaridad > 0
           ? Number((col.suma_escolaridad_ponderada / col.poblacion_con_escolaridad).toFixed(2))
           : 0;
       });
 
+      // Procesamiento de GeoJSON vinculando sectores por Colonia Principal
       if (geo && geo.features) {
         geo.features = geo.features.filter(f => {
           const props = f.properties || {};
@@ -231,7 +225,7 @@ export default function MapaInteractivo() {
           const props = f.properties || {};
           const nombreCol = props.colonia_o_sector || props.colonia_unificada || props.colonia || props.colonia_final || props.NAME || '';
           const norm = normalizarTexto(nombreCol);
-          const normBase = obtenerNombreBase(nombreCol);
+          const normBase = obtenerColoniaPrincipal(nombreCol);
           const agebGeo = String(props.codigoageb || props.codigo_ageb || props.CVE_AGEB || props.ageb || '').trim();
 
           const etiquetaSector = mapaSectoresByAgeb[agebGeo] || mapaSectoresByNombre[norm] || formatearEtiqueta(nombreCol);
@@ -251,7 +245,6 @@ export default function MapaInteractivo() {
     .catch((err) => console.error('Error cargando recursos:', err));
   }, []);
 
-  // Lista única sin duplicados ni sectores repetidos
   const listaColonias = useMemo(() => {
     if (!geoData?.features) return [];
     const setN = new Set();
@@ -259,7 +252,7 @@ export default function MapaInteractivo() {
       const props = f.properties || {};
       const nombre = props.colonia_o_sector || props.colonia_unificada || props.colonia || props.colonia_final || props.nombre_raw;
       if (nombre) {
-        const baseLimpia = obtenerNombreBase(nombre);
+        const baseLimpia = obtenerColoniaPrincipal(nombre);
         if (baseLimpia) {
           const nombreCapitalizado = baseLimpia.replace(/\b\w/g, l => l.toUpperCase());
           setN.add(nombreCapitalizado);
@@ -274,17 +267,18 @@ export default function MapaInteractivo() {
     return geoData;
   }, [geoData, verColonias]);
 
-  // Encuadrar todos los polígonos correspondientes a la colonia consolidada
+  // Encuadre global (Bounding Box) de todos los sectores agrupados por colonia principal
   const centroPopup = useMemo(() => {
     if (!coloniaSeleccionada || !geoData?.features) return null;
 
-    const normSelBase = obtenerNombreBase(coloniaSeleccionada);
+    const selLimpia = obtenerColoniaPrincipal(coloniaSeleccionada);
 
-    const featuresCoincidentes = geoData.features.filter((f) => {
-      return f.properties?.norm_base === normSelBase;
+    const sectoresEncontrados = geoData.features.filter((f) => {
+      const baseGeo = f.properties?.norm_base || obtenerColoniaPrincipal(f.properties?.colonia_o_sector || '');
+      return baseGeo === selLimpia || baseGeo.includes(selLimpia) || selLimpia.includes(baseGeo);
     });
 
-    if (featuresCoincidentes.length === 0) return null;
+    if (sectoresEncontrados.length === 0) return null;
 
     let minLng = Infinity, maxLng = -Infinity, minLat = Infinity, maxLat = -Infinity;
 
@@ -302,7 +296,7 @@ export default function MapaInteractivo() {
       });
     };
 
-    featuresCoincidentes.forEach((f) => extractCoords(f.geometry.coordinates));
+    sectoresEncontrados.forEach((f) => extractCoords(f.geometry.coordinates));
 
     if (minLng === Infinity || maxLng === -Infinity) return null;
 
@@ -316,8 +310,8 @@ export default function MapaInteractivo() {
   useEffect(() => {
     if (centroPopup?.bounds && mapRef.current) {
       mapRef.current.fitBounds(centroPopup.bounds, {
-        padding: 80,
-        duration: 1200,
+        padding: 60,
+        duration: 1500,
         maxZoom: 16
       });
     }
@@ -325,13 +319,13 @@ export default function MapaInteractivo() {
 
   const infoColoniaA = useMemo(() => {
     if (!coloniaSeleccionada) return null;
-    const normBase = obtenerNombreBase(coloniaSeleccionada);
+    const normBase = obtenerColoniaPrincipal(coloniaSeleccionada);
     return datosDB[normBase] || null;
   }, [coloniaSeleccionada, datosDB]);
 
   const infoColoniaB = useMemo(() => {
     if (!coloniaComparar) return null;
-    const normBase = obtenerNombreBase(coloniaComparar);
+    const normBase = obtenerColoniaPrincipal(coloniaComparar);
     return datosDB[normBase] || null;
   }, [coloniaComparar, datosDB]);
 
@@ -449,10 +443,10 @@ export default function MapaInteractivo() {
     return metricaMap[graficaMetrica] || [];
   }, [infoColoniaA, infoColoniaB, graficaMetrica]);
 
-  // Estilos visuales del mapa
+  // Estilos visuales del mapa ajustados para abarcar todos los sectores pertenecientes a la colonia base
   const layerFillStyle = useMemo(() => {
-    const normSelBase = obtenerNombreBase(coloniaSeleccionada);
-    const normCompBase = obtenerNombreBase(coloniaComparar);
+    const selLimpia = obtenerColoniaPrincipal(coloniaSeleccionada);
+    const compLimpia = obtenerColoniaPrincipal(coloniaComparar);
 
     let fillColorExpr;
     let opacityExpr;
@@ -467,22 +461,22 @@ export default function MapaInteractivo() {
         8000, '#7f1d1d'
       ];
       opacityExpr = 0.6;
-    } else if (normSelBase || normCompBase) {
+    } else if (selLimpia || compLimpia) {
       fillColorExpr = [
         'case',
-        ['==', ['get', 'norm_base'], normSelBase], '#ef4444',
-        ['==', ['get', 'norm_base'], normCompBase], '#10b981',
-        '#3b82f6'
+        ['==', ['get', 'norm_base'], selLimpia], '#ef4444',
+        ['==', ['get', 'norm_base'], compLimpia], '#10b981',
+        '#cbd5e1'
       ];
       opacityExpr = [
         'case',
-        ['==', ['get', 'norm_base'], normSelBase], 0.65,
-        ['==', ['get', 'norm_base'], normCompBase], 0.65,
-        0.08
+        ['==', ['get', 'norm_base'], selLimpia], 0.65,
+        ['==', ['get', 'norm_base'], compLimpia], 0.65,
+        0.15
       ];
     } else {
       fillColorExpr = '#2563eb';
-      opacityExpr = 0.12;
+      opacityExpr = 0.2;
     }
 
     return {
@@ -496,26 +490,26 @@ export default function MapaInteractivo() {
   }, [mapaCalorActivo, coloniaSeleccionada, coloniaComparar]);
 
   const layerLineStyle = useMemo(() => {
-    const normSelBase = obtenerNombreBase(coloniaSeleccionada);
-    const normCompBase = obtenerNombreBase(coloniaComparar);
+    const selLimpia = obtenerColoniaPrincipal(coloniaSeleccionada);
+    const compLimpia = obtenerColoniaPrincipal(coloniaComparar);
 
     return {
       id: 'colonias-line',
       type: 'line',
       paint: {
-        'line-color': (normSelBase || normCompBase)
+        'line-color': (selLimpia || compLimpia)
           ? [
               'case',
-              ['==', ['get', 'norm_base'], normSelBase], '#dc2626',
-              ['==', ['get', 'norm_base'], normCompBase], '#047857',
-              '#cbd5e1'
+              ['==', ['get', 'norm_base'], selLimpia], '#dc2626',
+              ['==', ['get', 'norm_base'], compLimpia], '#047857',
+              '#94a3b8'
             ]
           : '#2563eb',
-        'line-width': (normSelBase || normCompBase)
+        'line-width': (selLimpia || compLimpia)
           ? [
               'case',
-              ['==', ['get', 'norm_base'], normSelBase], 3.0,
-              ['==', ['get', 'norm_base'], normCompBase], 3.0,
+              ['==', ['get', 'norm_base'], selLimpia], 2.5,
+              ['==', ['get', 'norm_base'], compLimpia], 2.5,
               0.5
             ]
           : 1,
